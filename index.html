@@ -1,0 +1,2201 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salt Class Lesson Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F9F9F6;
+    --ink: #2C3E50;
+    --ink-soft: #5B6B7B;
+    --line: #EDE4DA;
+    --peach: #FFE3D3;
+    --apricot: #FFD3B8;
+    --cream: #FFF8EC;
+    --sky: #DCEBFA;
+    --lavender: #E9E0F8;
+    --shadow: 0 10px 28px rgba(44,62,80,0.08);
+    --paper: #FFFFFF;
+    --accent: #F4B392;
+    --accent-soft: #FFE6D6;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { min-height: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); font-size: 16px; }
+  @media (min-width: 700px)  { html { font-size: 18px; } }
+  @media (min-width: 1000px) { html { font-size: 19px; } }
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: linear-gradient(180deg, #FFFAF2 0%, #FFF1E6 28%, #FBE9E4 45%, #F1E9FA 68%, #E4F0FC 100%);
+    color: var(--ink);
+    font-family: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* 화면 전체에 은은한 빛 입자 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cpath d='M40 30c.6 7 3.4 9.8 10 10.4-6.6.6-9.4 3.4-10 10.4-.6-7-3.4-9.8-10-10.4 6.6-.6 9.4-3.4 10-10.4z' fill='%23FFD66B'/%3E%3Cpath d='M200 90c.4 4.6 2.2 6.4 6.6 6.8-4.4.4-6.2 2.2-6.6 6.8-.4-4.6-2.2-6.4-6.6-6.8 4.4-.4 6.2-2.2 6.6-6.8z' fill='%23F4B392'/%3E%3Cpath d='M110 190c.5 5.6 2.8 7.9 8.2 8.4-5.4.5-7.7 2.8-8.2 8.4-.5-5.6-2.8-7.9-8.2-8.4 5.4-.5 7.7-2.8 8.2-8.4z' fill='%23C9B6EE'/%3E%3Ccircle cx='160' cy='40' r='2.2' fill='%23FFD66B'/%3E%3Ccircle cx='60' cy='140' r='1.8' fill='%23A9CBEF'/%3E%3Ccircle cx='230' cy='210' r='2.4' fill='%23FFD66B'/%3E%3Crect x='20' y='225' width='6' height='6' rx='1' transform='rotate(20 23 228)' fill='%23FFFFFF' stroke='%23C8D3E0'/%3E%3Crect x='180' y='160' width='5' height='5' rx='1' transform='rotate(-15 182 162)' fill='%23FFFFFF' stroke='%23C8D3E0'/%3E%3C/svg%3E");
+  }
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1.25rem 1.25rem 2rem;
+  }
+
+  /* 상단: 반 이름 + 날짜 */
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding: 0.5rem 0.25rem 1.25rem;
+  }
+  .class-name {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 4.5vw, 2.5rem);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .class-name .sparkle { margin-right: 0.35rem; }
+  .today {
+    font-size: 1.3rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* 탭 */
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.25rem 0.25rem 0.75rem;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1 1 0;
+    min-width: 5.25rem;
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    padding: 0.5rem 0.6rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    color: var(--ink);
+    background: rgba(255,255,255,0.85);
+    border: 2px solid var(--line);
+    border-radius: 22px;
+    cursor: pointer;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.15;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  }
+  .tab .icon { font-size: 1.5rem; line-height: 1; }
+  .tab:active { transform: scale(0.97); }
+  .tab[aria-selected="true"] {
+    background: linear-gradient(135deg, var(--peach), var(--accent-soft) 50%, var(--lavender));
+    border-color: var(--ink);
+    font-weight: 700;
+    box-shadow: 0 4px 0 var(--accent);
+  }
+  .tab:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+
+  /* 패널 */
+  .panel {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(241,233,250,0.9));
+    border: 2px solid var(--line);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    min-height: 55vh;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .panel[hidden] { display: none !important; }
+  .panel .big-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship) h2 {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-weight: 400;
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem;
+  }
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship) p {
+    font-size: 1.45rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ===== 공과 탭 ===== */
+  .panel.lesson {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    text-align: left;
+  }
+  .en { font-family: "Fredoka", "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+  .cover {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    text-align: center;
+    border-radius: 36px;
+    padding: clamp(2.25rem, 5vw, 3.75rem) clamp(1.25rem, 4vw, 3rem) clamp(6rem, 12vw, 8rem);
+    background:
+      radial-gradient(circle at 15% 12%, rgba(255,255,255,0.8) 0, rgba(255,255,255,0) 38%),
+      linear-gradient(145deg, #FFF8EC 0%, #FFE3D3 28%, #FFD9C2 45%, #DCEBFA 75%, #E9E0F8 100%);
+    border: 2px solid rgba(44,62,80,0.10);
+    box-shadow: 0 10px 30px rgba(44,62,80,0.08);
+  }
+  .cover .tag {
+    display: inline-block;
+    font-size: 1.1rem;
+    padding: 0.35rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.75);
+    margin: 0 0 1.1rem;
+  }
+  .cover .title-en {
+    font-size: clamp(2.3rem, 6.5vw, 4.1rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+  .cover .amp { color: #E39B2E; }
+  .cover .title-ko {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin: 0.6rem 0 0;
+    word-break: keep-all;
+  }
+  .cover .sub-en {
+    font-size: clamp(1.3rem, 3.2vw, 1.8rem);
+    font-weight: 600;
+    margin: 1.5rem 0 0;
+  }
+  .cover .sub-ko {
+    font-size: clamp(1.3rem, 2.8vw, 1.6rem);
+    margin: 0.3rem 0 0;
+    word-break: keep-all;
+  }
+  .cover .divider {
+    width: 5rem; height: 4px; border-radius: 4px;
+    background: rgba(44,62,80,0.18);
+    margin: clamp(1.75rem, 4vw, 2.5rem) auto;
+  }
+  .question {
+    position: relative;
+    max-width: 44rem;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 1.75rem 2rem;
+    box-shadow: 0 6px 0 rgba(44,62,80,0.07);
+  }
+  .question::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: -14px;
+    transform: translateX(-50%);
+    border: 14px solid transparent;
+    border-bottom: 0;
+    border-top-color: #FFFFFF;
+  }
+  .question .label {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 1.2rem;
+    color: #C9822A;
+    margin: 0 0 0.6rem;
+  }
+  .question .q-en {
+    font-size: clamp(1.45rem, 3.3vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .question .q-ko {
+    font-size: clamp(1.4rem, 3vw, 1.7rem);
+    line-height: 1.6;
+    margin: 0.7rem 0 0;
+    word-break: keep-all;
+  }
+  .verse-box {
+    max-width: 48rem;
+    margin: 2.75rem auto 0;
+    position: relative;
+    background: linear-gradient(170deg, rgba(255,255,255,0.85), rgba(246,240,253,0.85));
+    border-radius: 28px;
+    padding: 2rem clamp(1.25rem, 4vw, 2.5rem);
+    text-align: left;
+    box-shadow: 0 6px 18px rgba(44,62,80,0.06);
+  }
+  .verse-ref { text-align: center; margin: 0 0 1.25rem; }
+  .verse-ref .en { display: block; font-size: clamp(1.6rem, 3.8vw, 2.1rem); font-weight: 700; }
+  .verse-ref .ko { font-size: 1.2rem; color: var(--ink-soft); }
+  .verse-ko {
+    font-size: clamp(1.55rem, 3.4vw, 1.9rem);
+    line-height: 1.85;
+    margin: 0;
+    word-break: keep-all;
+  }
+  .verse-en.nv { margin-top: 0; padding-top: 0; border-top: 0; font-size: clamp(1.5rem, 3.3vw, 1.85rem); line-height: 1.75; color: var(--ink); }
+  .verse-en {
+    font-size: clamp(1.3rem, 2.8vw, 1.55rem);
+    line-height: 1.7;
+    margin: 1.25rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 2px dashed rgba(44,62,80,0.15);
+    color: #3E5163;
+  }
+  .verse-box sup {
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.62em;
+    font-weight: 600;
+    color: #C9822A;
+    margin-right: 0.2em;
+  }
+  .verse-box .key { background: linear-gradient(transparent 60%, #FFE08A 60%); }
+  .verse-src { text-align: right; font-size: 0.95rem; color: var(--ink-soft); margin: 1rem 0 0; }
+
+  /* 수업 흐름 (교사용, 기본 접힘) */
+  .flow {
+    position: relative;
+    margin-top: 1.5rem;
+    background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(228,240,252,0.92));
+    border: 2px solid var(--line);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+  }
+  .flow summary {
+    list-style: none;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.35rem;
+    cursor: pointer;
+    border-radius: 26px;
+    user-select: none;
+  }
+  .flow summary::-webkit-details-marker { display: none; }
+  .flow summary:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .flow summary .when-open { display: none; }
+  .flow[open] summary .when-open { display: inline; }
+  .flow[open] summary .when-closed { display: none; }
+  .flow[open] summary { border-bottom: 2px solid var(--line); border-radius: 26px 26px 0 0; }
+  .flow-body { padding: 1rem 1.5rem 1.5rem; }
+  .table-scroll { overflow-x: auto; }
+  .flow table {
+    width: 100%;
+    min-width: 36rem;
+    border-collapse: separate;
+    border-spacing: 0 0.6rem;
+    font-size: 1.3rem;
+  }
+  .flow th {
+    text-align: left;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    padding: 0 1rem;
+  }
+  .flow td {
+    background: var(--bg);
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  .flow td:first-child {
+    border-radius: 16px 0 0 16px;
+    font-weight: 700;
+    white-space: nowrap;
+    width: 4.5rem;
+    border-left: 8px solid var(--c);
+  }
+  .flow td:last-child { border-radius: 0 16px 16px 0; }
+  .flow td.step { white-space: nowrap; font-weight: 700; }
+  .flow tr.r1 { --c: #FFC8B0; } .flow tr.r2 { --c: #FFE08A; } .flow tr.r3 { --c: #B9DFB4; }
+  .flow tr.r4 { --c: #F7B9C4; } .flow tr.r5 { --c: #D3C2F0; }
+  .flow .total-line {
+    text-align: right;
+    font-size: 1.3rem;
+    margin: 0.5rem 0 0;
+  }
+  .flow .total-line strong { font-size: 1.3rem; }
+
+
+  /* ===== Salt & Light Journey 장식 ===== */
+  .deco { position: absolute; pointer-events: none; z-index: 0; overflow: visible; }
+  .cover > :not(.deco) { position: relative; z-index: 1; }
+  .deco.salt1   { top: 24px;  left: 26px;  width: 56px; transform: rotate(-8deg); }
+  .deco.salt2   { top: 84px;  left: 80px;  width: 34px; transform: rotate(14deg); }
+  .deco.salt3   { top: 34px;  left: 104px; width: 24px; transform: rotate(-20deg); }
+  .deco.crown   { top: 26px;  right: 30px; width: 86px; transform: rotate(12deg); }
+  .deco.house   { bottom: 14px; left: 26px; width: 104px; }
+  .deco.bulb    { bottom: 24px; right: 34px; width: 76px; transform: rotate(-10deg); }
+  .deco.spk     { width: 28px; animation: twinkle 3.2s ease-in-out infinite; }
+  .deco.s1 { top: 120px; right: 60px; }
+  .deco.s2 { top: 46%;  left: 24px; width: 22px; animation-delay: .8s; }
+  .deco.s3 { top: 38%;  right: 30px; width: 20px; animation-delay: 1.6s; }
+  .deco.s4 { bottom: 60px; right: 140px; width: 22px; animation-delay: 2.2s; }
+  .deco.s5 { top: 160px; left: 44px; width: 16px; animation-delay: 1.2s; }
+  .verse-box .deco.v1 { top: -12px; right: 18px; width: 26px; }
+  .verse-box .deco.v2 { top: 14px;  right: 52px; width: 14px; animation-delay: 1s; }
+  .verse-box .deco.v3 { top: -14px; left: 26px; width: 30px; transform: rotate(10deg); animation: none; }
+  .verse-box > :not(.deco) { position: relative; z-index: 1; }
+  .panel .deco.p1 { top: 26px; right: 30px; width: 48px; transform: rotate(10deg); }
+  .panel .deco.p2 { bottom: 28px; left: 30px; width: 34px; }
+  .panel .deco.p3 { top: 40%; left: 12%; width: 18px; }
+  .panel .deco.p4 { bottom: 30%; right: 14%; width: 14px; animation-delay: 1.4s; }
+  .panel > :not(.deco) { position: relative; z-index: 1; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 1;   transform: scale(1) rotate(0deg); }
+    50%      { opacity: .35; transform: scale(.7) rotate(20deg); }
+  }
+  @media (max-width: 760px) {
+    .deco.house { width: 70px; }
+    .deco.bulb { width: 54px; }
+    .deco.crown { width: 56px; }
+    .deco.salt1 { width: 42px; } .deco.salt2 { width: 26px; top: 70px; left: 62px; }
+    .deco.salt3, .deco.s1, .deco.s4 { display: none; }
+    .cover { padding-top: 5.5rem; }
+    .deco.salt2 { top: 30px; left: 72px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .deco.spk { animation: none; }
+  }
+
+  /* ===== 성경 이야기 탭 ===== */
+  .panel.story {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    overflow: visible;
+    text-align: left;
+  }
+  .story-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin: 0 0.25rem 1rem;
+  }
+  .story-head h2 {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.9rem, 4.5vw, 2.4rem);
+    margin: 0;
+  }
+  .story-head p { margin: 0; font-size: 1.2rem; color: var(--ink-soft); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .step-btn {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    color: var(--ink);
+    background: rgba(255,255,255,0.85);
+    border: 2px solid var(--line);
+    border-radius: 22px;
+    cursor: pointer;
+    line-height: 1.25;
+    word-break: keep-all;
+    transition: transform .1s ease, background .15s ease;
+  }
+  .step-btn .num {
+    flex: none;
+    width: 2rem; height: 2rem;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--bg);
+    font-family: "Fredoka", sans-serif;
+    font-weight: 700;
+  }
+  .step-btn:active { transform: scale(.97); }
+  .step-btn[aria-pressed="true"] {
+    background: linear-gradient(135deg, var(--peach), var(--accent-soft) 50%, var(--lavender));
+    border-color: var(--ink);
+    font-weight: 700;
+    box-shadow: 0 4px 0 var(--accent);
+  }
+  .step-btn[aria-pressed="true"] .num { background: #FFFFFF; }
+  .step-btn:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+
+  .scene-card {
+    border-radius: 32px;
+    overflow: hidden;
+    border: 2px solid var(--line);
+    box-shadow: var(--shadow);
+    background: #FFF6E8;
+  }
+  .scene { display: block; width: 100%; height: auto; }
+  .scene text { font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+
+  /* 장면 상태 */
+  .scene .dusk { opacity: 0; transition: opacity 1.2s ease; }
+  .scene[data-step="3"] .dusk { opacity: .55; }
+  .scene[data-step="3"] .dusk-land { opacity: .28; }
+  .scene.shining[data-step="3"] .dusk-land { opacity: .2; }
+  .scene .focus { opacity: 0; transition: opacity .4s ease; }
+  .scene[data-step="1"] .f1,
+  .scene[data-step="2"] .f2,
+  .scene[data-step="3"] .f3 { opacity: 1; animation: ring 1.8s ease-in-out infinite; }
+  @keyframes ring { 0%,100% { stroke-width: 4; } 50% { stroke-width: 7; } }
+
+  .scene .lamp-pos { transform: translate(92px, 548px); transition: transform 1s cubic-bezier(.5,0,.3,1.2); }
+  .scene.shining .lamp-pos { transform: translate(180px, 428px); }
+  .scene .bowl { transform-box: fill-box; transform-origin: center; transition: transform .8s ease; }
+  .scene.shining .bowl { transform: translate(-30px, 8px) rotate(180deg); }
+  .scene .big-glow { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(.3); transition: opacity 1s ease .6s, transform 1.2s ease .6s; }
+  .scene.shining .big-glow { opacity: 1; transform: scale(1); }
+  .scene .win { transition: fill .6s ease; }
+  .scene.shining .win { fill: #FFD66B; }
+  .scene .win-glow { opacity: 0; transition: opacity .8s ease .8s; }
+  .scene.shining .win-glow { opacity: 1; }
+
+  .scene .jar { transform-box: fill-box; transform-origin: center; transition: transform .8s ease; }
+  .scene.salted .jar { transform: translate(-60px, -76px) rotate(-120deg); }
+  .scene .grain { opacity: 0; }
+  .scene.salted .grain { animation: fall 1.4s ease-in .7s 2 both; }
+  .scene.salted .grain:nth-child(2) { animation-delay: .85s; }
+  .scene.salted .grain:nth-child(3) { animation-delay: 1s; }
+  .scene.salted .grain:nth-child(4) { animation-delay: 1.15s; }
+  .scene.salted .grain:nth-child(5) { animation-delay: 1.3s; }
+  .scene.salted .grain:nth-child(6) { animation-delay: 1.45s; }
+  @keyframes fall {
+    0%   { opacity: 0; transform: translateY(0); }
+    15%  { opacity: 1; }
+    70%  { opacity: 1; transform: translateY(46px); }
+    100% { opacity: 0; transform: translateY(54px); }
+  }
+  .scene .soup { transition: fill 1s ease 2.4s; }
+  .scene .house-dark { opacity: 0; transition: opacity 1s ease .5s; }
+  .scene[data-step="3"] .house-dark { opacity: .62; }
+  .scene.shining[data-step="3"] .house-dark { opacity: 0; }
+  .scene .praise { opacity: 0; transition: opacity 1.2s ease 1.4s; }
+  .scene.shining[data-step="3"] .praise { opacity: 1; animation: shimmer 4s ease-in-out 2.6s infinite; }
+  @keyframes shimmer { 0%,100% { opacity: 1; } 50% { opacity: .6; } }
+  .scene .smile { opacity: 0; transition: opacity .5s ease 1.2s; }
+  .scene.shining .smile, .scene:not([data-step="3"]) .smile { opacity: 1; }
+  .scene.salted .soup { fill: #F6C77E; }
+  .scene .yum { opacity: 0; transform-box: fill-box; transform-origin: bottom center; transform: scale(.6); transition: opacity .5s ease 3s, transform .5s cubic-bezier(.3,1.6,.5,1) 3s; }
+  .scene.salted .yum { opacity: 1; transform: scale(1); }
+  .scene .soup-spark { opacity: 0; transition: opacity .6s ease 2.8s; }
+  .scene.salted .soup-spark { opacity: 1; animation: twinkle 2.4s ease-in-out 3s infinite; }
+  .scene .steam { animation: steam 3s ease-in-out infinite; }
+  .scene .steam:nth-of-type(2) { animation-delay: 1s; }
+  @keyframes steam { 0%,100% { opacity: .25; transform: translateY(0); } 50% { opacity: .7; transform: translateY(-6px); } }
+
+  /* 설명 카드 */
+  .story-card {
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.92);
+    border: 2px solid var(--line);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  }
+  .story-card .s-en {
+    font-size: clamp(1.2rem, 2.8vw, 1.5rem);
+    font-weight: 600;
+    color: #C9822A;
+    margin: 0;
+    letter-spacing: .02em;
+  }
+  .story-card .s-ko {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: clamp(1.9rem, 4.5vw, 2.5rem);
+    margin: 0.2rem 0 0.75rem;
+    word-break: keep-all;
+  }
+  .story-card .s-text {
+    font-size: clamp(1.35rem, 3vw, 1.6rem);
+    line-height: 1.8;
+    margin: 0;
+    word-break: keep-all;
+  }
+  .story-card .s-text strong, .story-card .s-text-en strong { background: linear-gradient(transparent 60%, #FFE08A 60%); font-weight: 700; }
+  .story-card .s-en:empty, .story-card .s-text-en:empty, .story-card .s-text:empty { display: none; }
+  .story-card .s-text-en {
+    font-size: clamp(1.25rem, 2.8vw, 1.5rem);
+    line-height: 1.7;
+    margin: 1rem 0 0;
+    padding-top: 1rem;
+    border-top: 2px dashed rgba(44,62,80,0.15);
+    color: #3E5163;
+  }
+  .step-btn .lbl { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+  .step-btn .lbl small { font-size: 0.82em; font-weight: 500; color: var(--ink-soft); margin-top: 0.1rem; }
+  .story-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .verse-pill {
+    display: inline-block;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    background: var(--bg);
+    font-size: 1.15rem;
+  }
+  .action-btn {
+    min-height: 64px;
+    padding: 0.6rem 1.6rem;
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 1.45rem;
+    color: var(--ink);
+    background: linear-gradient(135deg, #FFE08A, #FFD3B8);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 5px 0 var(--ink);
+    cursor: pointer;
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .action-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+  .action-btn:focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
+  .action-btn[hidden] { display: none; }
+
+  /* 팔복 (예수님이 말씀하시는 복) */
+  .bless { display: grid; gap: 1rem; margin-top: 1.5rem; }
+  .bless-box { border-radius: 24px; padding: 1.25rem 1.5rem 1.5rem; }
+  .bless-box h4 {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem;
+    margin: 0 0 0.9rem;
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.45rem, 3.2vw, 1.75rem);
+  }
+  .bless-box h4 small { font-family: "Gowun Dodum", sans-serif; font-size: 1.05rem; color: var(--ink-soft); }
+  .bless-box.jesus  { background: linear-gradient(150deg, #FFF8EC, #FFE6D6 60%, #F6EEFB); border: 2px solid #F3D9C4; }
+  .bless-box.world  { background: #F2F3F3; border: 2px solid #E1E4E6; }
+  .bless-box.deeper { background: linear-gradient(150deg, #F3EEFC, #E4F0FC); border: 2px solid #DAD3F0; }
+  .bless .beat, .bless .world-list {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem;
+  }
+  .bless .beat { counter-reset: beat; }
+  .bless .beat li, .bless .world-list li {
+    position: relative;
+    display: flex; flex-direction: column; gap: 0.15rem;
+    background: rgba(255,255,255,0.82);
+    border-radius: 16px;
+    padding: 0.8rem 1rem;
+    line-height: 1.45;
+    word-break: keep-all;
+  }
+  .bless .beat li { counter-increment: beat; padding-left: 3.3rem; }
+  .bless .beat li::before {
+    content: counter(beat);
+    position: absolute; left: 0.9rem; top: 0.85rem;
+    width: 1.8rem; height: 1.8rem; border-radius: 50%;
+    display: grid; place-items: center;
+    background: #FFD3B8;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1rem;
+  }
+  .bless .world-list li { padding-left: 3rem; }
+  .bless .world-list li::before {
+    content: "✕";
+    position: absolute; left: 1rem; top: 0.85rem;
+    color: #A3ADB7; font-weight: 700;
+  }
+  .bless li .en { font-size: clamp(1.2rem, 2.6vw, 1.4rem); font-weight: 600; }
+  .bless li .ko { font-size: clamp(1.15rem, 2.5vw, 1.35rem); color: var(--ink-soft); }
+  .bless .note { display: flex; flex-direction: column; gap: 0.15rem; margin: 0 0 0.9rem; font-size: clamp(1.2rem, 2.6vw, 1.4rem); line-height: 1.5; }
+  .bless .note .en { font-weight: 600; }
+  .bless .deeper p { margin: 0; font-size: clamp(1.3rem, 2.8vw, 1.55rem); line-height: 1.65; word-break: keep-all; }
+  .bless .deeper p.en { font-weight: 500; }
+  .bless .deeper p.ko { color: #3E5163; margin: 0.3rem 0 1rem; }
+  .bless .deeper p.ko:last-child { margin-bottom: 0; }
+  .bless strong { background: linear-gradient(transparent 60%, #FFE08A 60%); font-weight: 700; }
+  .bless .bridge {
+    display: flex; flex-direction: column; gap: 0.2rem;
+    margin: 0.25rem 0 0; text-align: center;
+    font-size: clamp(1.3rem, 2.8vw, 1.55rem); line-height: 1.5; word-break: keep-all;
+  }
+  .bless .bridge .en { font-weight: 600; }
+  @media (max-width: 640px) {
+    .steps { grid-template-columns: 1fr; }
+    .bless .beat, .bless .world-list { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scene *, .scene { transition: none !important; animation: none !important; }
+    .scene.salted .grain { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tab { transition: none; }
+  }
+
+  /* 소금이 녹는 돋보기 */
+  .scene .lens { opacity: 0; transform-box: fill-box; transform-origin: 85% 85%; transform: scale(.4); transition: opacity .5s ease, transform .6s cubic-bezier(.3,1.5,.5,1); }
+  .scene.salted .lens { opacity: 1; transform: scale(1); transition-delay: .6s; }
+  .scene .cube { transform-box: fill-box; transform-origin: center; }
+  .scene.salted .cube { animation: dissolve 3.2s ease-in 1.3s both; }
+  .scene.salted .cube.c2 { animation-delay: 1.6s; }
+  .scene.salted .cube.c3 { animation-delay: 1.9s; }
+  @keyframes dissolve {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    25%  { transform: translateY(66px) scale(1); opacity: 1; }
+    60%  { transform: translateY(92px) scale(.55); opacity: .8; }
+    100% { transform: translateY(112px) scale(0); opacity: 0; }
+  }
+  .scene .mol { opacity: 0; }
+  .scene.salted .mol { animation: spread 2.6s ease-out 2.6s both, drift 3s ease-in-out 5.2s infinite; }
+  .scene.salted .mol:nth-child(3n)   { animation-delay: 3s, 5.6s; }
+  .scene.salted .mol:nth-child(3n+1) { animation-delay: 3.4s, 6s; }
+  @keyframes spread { from { opacity: 0; transform: translate(0,-10px) scale(.2); } to { opacity: 1; transform: none; } }
+  @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(4px,-4px); } }
+  .scene .lens-cap { opacity: 0; transition: opacity .6s ease; }
+  .scene.salted .lens-cap { opacity: 1; transition-delay: 4.6s; }
+
+  /* 팔복 끌어다 놓기 */
+  .b-guide { display: flex; flex-direction: column; gap: .15rem; margin: 0 0 1rem; font-size: clamp(1.2rem, 2.6vw, 1.4rem); }
+  .b-guide .en { color: var(--ink-soft); font-size: .9em; }
+  .b-pool {
+    display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center;
+    min-height: 72px; padding: .9rem; margin-bottom: 1rem;
+    border-radius: 20px; background: rgba(255,255,255,.55); border: 2px dashed #F3D1B8;
+  }
+  .b-pool:empty { display: none; }
+  .b-card {
+    display: flex; flex-direction: column; gap: .1rem;
+    min-height: 64px; padding: .6rem 1rem;
+    background: linear-gradient(145deg, #FFF4C7, #FFD9C2);
+    border: 2px solid var(--ink); border-radius: 18px;
+    box-shadow: 0 4px 0 var(--ink);
+    font-family: inherit; color: var(--ink); text-align: left; line-height: 1.3;
+    cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+    word-break: keep-all;
+  }
+  .b-card .ko { font-size: clamp(1.2rem, 2.6vw, 1.4rem); font-weight: 700; }
+  .b-card .en { font-size: clamp(.95rem, 2vw, 1.05rem); color: #4A5C6E; }
+  .b-card.lifted { opacity: .3; }
+  .b-card.picked { outline: 4px dashed #E39B2E; outline-offset: 3px; }
+  .b-card.placed { cursor: default; box-shadow: none; background: #E3F5E6; border-color: #3E9B52; width: 100%; }
+  .b-ghost { position: fixed; left: 0; top: 0; z-index: 60; pointer-events: none; transform-origin: center; box-shadow: 0 14px 28px rgba(44,62,80,.25); }
+  .b-slots { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  .b-slot { background: rgba(255,255,255,.85); border-radius: 18px; padding: .75rem; display: flex; flex-direction: column; gap: .5rem; }
+  .b-drop {
+    min-height: 72px; border-radius: 14px; border: 3px dashed #D8C9EE;
+    display: flex; align-items: center; justify-content: center;
+    color: #A79BC4; font-size: 1.05rem; transition: background .2s ease, border-color .2s ease;
+  }
+  .b-drop.over { background: #FFF4C7; border-color: #E39B2E; }
+  .b-drop.filled { border: 0; padding: 0; }
+  .b-drop.nope { animation: shake .45s ease; border-color: #D9534F; background: #FDE6E5; }
+  .b-promise { display: flex; flex-direction: column; gap: .1rem; line-height: 1.4; word-break: keep-all; }
+  .b-promise .ref { font-family: "Fredoka", sans-serif; font-weight: 700; color: #C9822A; font-size: 1rem; }
+  .b-promise .ko { font-size: clamp(1.15rem, 2.5vw, 1.35rem); }
+  .b-promise .en { font-size: clamp(1rem, 2.2vw, 1.15rem); color: var(--ink-soft); font-weight: 400 !important; }
+  .b-card .en { font-weight: 400 !important; }
+  .b-card .bt { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(1.25rem, 2.7vw, 1.45rem); line-height: 1.3; }
+  .b-promise .bt { font-family: "Fredoka", sans-serif; font-weight: 500; font-size: clamp(1.25rem, 2.7vw, 1.45rem); }
+  .b-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1rem; }
+  .b-done { font-family: "Jua", "Apple SD Gothic Neo", sans-serif; font-size: clamp(1.4rem, 3vw, 1.7rem); color: #2F7D41; margin: 0; }
+  .b-done[hidden] { display: none; }
+  .verse-text sup { font-family: "Fredoka", sans-serif; font-size: .6em; font-weight: 700; color: #C9822A; margin-right: .15em; }
+  .story-card .s-text.verse-text { font-size: clamp(1.5rem, 3.4vw, 1.9rem); line-height: 1.85; }
+  .story-card .s-text-en.verse-text { font-size: clamp(1.3rem, 2.9vw, 1.6rem); }
+  @media (max-width: 640px) { .b-slots { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) {
+    .scene.salted .cube { opacity: 0; }
+    .scene.salted .mol, .scene.salted .lens-cap { opacity: 1; }
+  }
+
+
+  /* 말씀 구절 오버레이 */
+  .scene-card { position: relative; }
+  .verse-overlay {
+    position: absolute; inset: 4% 4.5%;
+    display: flex; flex-direction: column; justify-content: center; gap: .6rem;
+    background: rgba(255,253,247,.95);
+    border: 2px solid var(--line); border-radius: 28px;
+    box-shadow: 0 12px 30px rgba(44,62,80,.15);
+    padding: clamp(1rem, 3vw, 2rem) clamp(1.1rem, 3.5vw, 2.4rem);
+    overflow: auto;
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  .verse-overlay.gone { opacity: 0; transform: scale(.96); pointer-events: none; }
+  .vo-title { margin: 0; font-weight: 700; font-size: clamp(1.6rem, 3.6vw, 2.3rem); color: #C9822A; }
+  .vo-text { margin: 0; font-size: clamp(1.25rem, 2.8vw, 1.75rem); line-height: 1.6; }
+  .vo-text sup { font-family: "Fredoka", sans-serif; font-size: .6em; font-weight: 700; color: #C9822A; margin-right: .15em; }
+  .vo-text strong { background: linear-gradient(transparent 60%, #FFE08A 60%); }
+  .vo-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: .4rem; }
+  .again-btn {
+    position: absolute; left: 16px; top: 16px;
+    min-height: 56px; padding: .5rem 1.25rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.25rem;
+    color: var(--ink); background: rgba(255,255,255,.92);
+    border: 2px solid var(--ink); border-radius: 999px; box-shadow: 0 4px 0 var(--ink); cursor: pointer;
+  }
+  .again-btn[hidden] { display: none; }
+  .again-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  @media (max-width: 700px) {
+    .verse-overlay { position: static; border-radius: 0; border-width: 2px 0 0; box-shadow: none; }
+    .verse-overlay.gone { display: none; }
+  }
+
+
+  /* ===== 찬양 탭 ===== */
+  .panel.worship { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
+  .worship-head { margin: 0 .25rem 1rem; }
+  .worship-head h2 { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.9rem, 4.5vw, 2.4rem); margin: 0; }
+  .worship-head p { font-family: "Fredoka", sans-serif; margin: .2rem 0 0; font-size: 1.2rem; color: var(--ink-soft); }
+  .songs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); gap: 1.25rem; }
+  .song-card {
+    display: flex; flex-direction: column; gap: 1rem;
+    background: linear-gradient(165deg, rgba(255,255,255,.96), rgba(255,240,230,.94) 55%, rgba(233,224,248,.92));
+    border: 2px solid var(--line); border-radius: 32px; box-shadow: var(--shadow);
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+  }
+  .song-num { display: inline-block; align-self: flex-start; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.05rem; padding: .25rem .9rem; border-radius: 999px; background: rgba(255,255,255,.8); color: #C9822A; }
+  .song-title { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(2rem, 4.6vw, 2.7rem); line-height: 1.15; margin: 0; }
+  .video-wrap { position: relative; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: #2C3E50; border: 2px solid var(--ink); }
+  .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .yt-btn {
+    display: flex; align-items: center; justify-content: center; gap: .6rem;
+    min-height: 64px; padding: .6rem 1.5rem; margin-top: auto;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.45rem;
+    color: var(--ink); text-decoration: none;
+    background: linear-gradient(135deg, #FFE08A, #FFD3B8);
+    border: 2px solid var(--ink); border-radius: 999px; box-shadow: 0 5px 0 var(--ink);
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .yt-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+  .yt-btn:focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
+  .yt-btn .play { width: 2rem; height: 1.4rem; border-radius: 6px; background: #E5484D; display: grid; place-items: center; }
+  .yt-btn .play::before { content: ""; border-left: .6rem solid #FFFFFF; border-top: .38rem solid transparent; border-bottom: .38rem solid transparent; margin-left: .15rem; }
+
+  /* ===== 퀴즈 탭 ===== */
+  .mode-switch { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; margin-bottom: 1rem; }
+  .quiz-card[hidden], .q-bless[hidden] { display: none; }
+  .q-bless { border-radius: 32px; padding: clamp(1.25rem, 3.5vw, 2.25rem); box-shadow: var(--shadow); }
+  .q-bless h4 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .25rem .75rem; margin: 0 0 .9rem; font-family: "Jua", "Apple SD Gothic Neo", sans-serif; font-weight: 400; font-size: clamp(1.7rem, 3.8vw, 2.1rem); }
+  .q-bless h4 small { font-family: "Fredoka", sans-serif; font-size: 1.05rem; color: var(--ink-soft); }
+
+  .panel.quiz {
+    display: block; min-height: 0; padding: 0;
+    background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left;
+  }
+  .quiz-card {
+    position: relative;
+    background: linear-gradient(165deg, rgba(255,255,255,0.96), rgba(255,246,236,0.94) 55%, rgba(241,233,250,0.92));
+    border: 2px solid var(--line);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    padding: clamp(1.25rem, 3.5vw, 2.25rem);
+  }
+  .quiz-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .quiz-progress { flex: 1; min-width: 0; }
+  .quiz-progress .label {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: clamp(1.5rem, 3.4vw, 1.9rem);
+    margin: 0;
+  }
+  .quiz-progress .label small { font-family: "Fredoka", sans-serif; font-size: 0.65em; color: var(--ink-soft); margin-left: 0.5rem; }
+  .dots { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+  .dots span {
+    flex: 1; max-width: 5rem; height: 10px; border-radius: 5px;
+    background: rgba(44,62,80,0.12);
+    transition: background .3s ease;
+  }
+  .dots span.done-ok  { background: #6CC07A; }
+  .dots span.done-bad { background: #E98A86; }
+  .dots span.now      { background: #F4B392; }
+  .star-board {
+    flex: none;
+    display: flex; align-items: center; gap: 0.45rem;
+    min-height: 64px;
+    padding: 0.4rem 1.25rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #FFF4C7, #FFE08A);
+    border: 2px solid var(--ink);
+    box-shadow: 0 4px 0 var(--ink);
+    font-family: "Fredoka", "Jua", sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  .star-board .star { font-size: 1.9rem; }
+  .star-board .count { display: inline-block; min-width: 1.2ch; text-align: center; }
+  .star-board .count.pop { animation: pop .5s cubic-bezier(.3,1.8,.5,1); }
+  @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.7) rotate(-8deg); color: #E07F2E; } 100% { transform: scale(1); } }
+
+  .q-text {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: clamp(1.9rem, 4.6vw, 2.6rem);
+    line-height: 1.35;
+    margin: 0;
+    word-break: keep-all;
+  }
+  .q-text-en { font-size: clamp(1.35rem, 3vw, 1.7rem); font-weight: 500; line-height: 1.45; margin: 0.5rem 0 1.5rem; color: #3E5163; }
+  .options { display: grid; gap: 0.85rem; }
+  .opt {
+    display: flex; align-items: center; gap: 1rem;
+    width: 100%;
+    min-height: 88px;
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-family: inherit;
+    color: var(--ink);
+    background: #FFFFFF;
+    border: 3px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 5px 0 rgba(44,62,80,0.12);
+    cursor: pointer;
+    transition: transform .1s ease, opacity .3s ease, background .25s ease, border-color .25s ease;
+  }
+  .opt:not(:disabled):active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(44,62,80,0.12); }
+  .opt:focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
+  .opt .mark {
+    flex: none;
+    width: 3rem; height: 3rem; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--peach);
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.5rem;
+  }
+  .opt .txt { display: flex; flex-direction: column; gap: 0.1rem; }
+  .opt .ko { font-size: clamp(1.45rem, 3.3vw, 1.85rem); line-height: 1.35; word-break: keep-all; }
+  .opt .en { font-size: clamp(1.1rem, 2.4vw, 1.3rem); color: var(--ink-soft); }
+  .opt:disabled { cursor: default; }
+  .opt.dim { opacity: .35; }
+  .opt.ok  { background: #E3F5E6; border-color: #3E9B52; box-shadow: 0 5px 0 #3E9B52; }
+  .opt.ok .mark  { background: #3E9B52; color: #FFFFFF; }
+  .opt.bad { background: #FDE6E5; border-color: #D9534F; box-shadow: 0 5px 0 #D9534F; }
+  .opt.bad .mark { background: #D9534F; color: #FFFFFF; }
+
+  .feedback {
+    margin-top: 1.25rem;
+    border-radius: 24px;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid var(--line);
+    animation: rise .35s ease both;
+  }
+  .feedback[hidden] { display: none; }
+  .feedback.ok  { border-color: #9ED3A8; background: #F2FBF3; }
+  .feedback.bad { border-color: #F0B3B0; background: #FFF5F4; }
+  .feedback .verdict {
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: clamp(1.6rem, 3.6vw, 2rem);
+    margin: 0 0 0.5rem;
+  }
+  .feedback.ok .verdict  { color: #2F7D41; }
+  .feedback.bad .verdict { color: #B6403C; }
+  .feedback .verdict small { font-family: "Fredoka", sans-serif; font-size: .65em; margin-left: .4rem; }
+  .feedback .ex { font-size: clamp(1.35rem, 3vw, 1.6rem); line-height: 1.6; margin: 0; word-break: keep-all; }
+  .feedback .ex-en { font-size: clamp(1.15rem, 2.6vw, 1.35rem); line-height: 1.55; margin: 0.4rem 0 0; color: #3E5163; }
+  .feedback .ref { display: inline-block; margin-top: 0.85rem; padding: 0.35rem 1rem; border-radius: 999px; background: var(--bg); font-size: 1.1rem; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .quiz-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; margin-top: 1.25rem; }
+  .q-btn {
+    min-height: 64px;
+    padding: 0.6rem 1.6rem;
+    font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 1.45rem;
+    color: var(--ink);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .q-btn:focus-visible { outline: 3px dashed var(--ink); outline-offset: 4px; }
+  .q-btn.primary { background: linear-gradient(135deg, #FFE08A, #FFD3B8); border: 2px solid var(--ink); box-shadow: 0 5px 0 var(--ink); }
+  .q-btn.primary:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+  .q-btn.ghost { background: rgba(255,255,255,0.85); border: 2px solid var(--line); }
+  .q-btn.ghost:active { transform: scale(.97); }
+  .q-btn[hidden] { display: none; }
+
+  .result { text-align: center; padding: 1rem 0 0.5rem; }
+  .result .big { font-size: clamp(5rem, 14vw, 7.5rem); line-height: 1; display: inline-block; animation: bounce 1.2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .result h3 { font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-weight: 400; font-size: clamp(2.2rem, 5vw, 3rem); margin: 0.75rem 0 0.2rem; }
+  .result .title-en { font-size: clamp(1.3rem, 3vw, 1.6rem); font-weight: 600; color: var(--ink-soft); margin: 0; }
+  .result .score { font-size: clamp(1.5rem, 3.4vw, 1.9rem); margin: 1.25rem 0 0.2rem; }
+  .result .score strong { font-family: "Fredoka", sans-serif; font-size: 1.5em; color: #E07F2E; }
+  .result .score-en { font-size: 1.25rem; color: var(--ink-soft); margin: 0; }
+  .result .line {
+    display: flex; justify-content: center; gap: clamp(0.75rem, 3vw, 1.5rem);
+    margin: 1.5rem 0 0.5rem;
+    font-size: clamp(2.4rem, 6vw, 3.2rem);
+    line-height: 1;
+  }
+  .result .line span { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; min-width: 2.5rem; }
+  .result .line .dot { display: grid; place-items: center; width: 1em; height: 1em; color: transparent; font-size: 1em; }
+  .result .line .dot::before { content: ""; width: .32em; height: .32em; border-radius: 50%; background: #A3ADB7; }
+  .result .line small { font-family: "Fredoka", sans-serif; font-size: 1rem; color: var(--ink-soft); }
+  .result .quiz-actions { justify-content: center; margin-top: 1.75rem; }
+  #confettiCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+  @media (prefers-reduced-motion: reduce) {
+    .result .big, .star-board .count.pop, .feedback { animation: none; }
+  }
+
+  /* ===== Word Scramble 탭 ===== */
+  .panel.scramble {
+    display: block; min-height: 0; padding: 0;
+    background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left;
+  }
+  .scr-guide { font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-size: clamp(1.6rem, 3.8vw, 2.1rem); margin: 0; word-break: keep-all; }
+  .scr-guide-en { font-size: clamp(1.2rem, 2.7vw, 1.45rem); color: #3E5163; margin: 0.35rem 0 1.5rem; }
+  .slots, .tiles { display: flex; justify-content: center; flex-wrap: wrap; gap: clamp(0.5rem, 1.5vw, 0.85rem); }
+  .slots { padding: 1.25rem 0.5rem; border-radius: 24px; background: rgba(255,255,255,0.6); }
+  .slot, .tile {
+    width: clamp(60px, 11vw, 88px);
+    height: clamp(60px, 11vw, 88px);
+    display: grid; place-items: center;
+    border-radius: 20px;
+    font-family: "Fredoka", "Jua", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    color: var(--ink);
+    padding: 0;
+  }
+  .slot {
+    background: #FFFFFF;
+    border: 3px dashed #CFC6BB;
+    cursor: default;
+    transition: background .25s ease, border-color .25s ease, transform .15s ease;
+  }
+  .slot.filled { border-style: solid; border-color: var(--ink); background: #FFF8EC; cursor: pointer; }
+  .slot:focus-visible, .tile:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .slots.ok .slot { background: #E3F5E6; border-color: #3E9B52; color: #2F7D41; animation: hop .5s ease both; }
+  .slots.ok .slot:nth-child(2) { animation-delay: .06s; } .slots.ok .slot:nth-child(3) { animation-delay: .12s; }
+  .slots.ok .slot:nth-child(4) { animation-delay: .18s; } .slots.ok .slot:nth-child(5) { animation-delay: .24s; }
+  .slots.bad { animation: shake .45s ease; }
+  .slots.bad .slot { background: #FDE6E5; border-color: #D9534F; }
+  .slots.revealed .slot { background: #EEF1F4; border-color: #8EA3B4; border-style: solid; }
+  @keyframes hop { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-12px); } }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-10px); } 40%,80% { transform: translateX(10px); } }
+  .tiles { margin-top: 1.5rem; }
+  .tile {
+    background: linear-gradient(145deg, #FFF4C7, #FFD9C2);
+    border: 2px solid var(--ink);
+    box-shadow: 0 6px 0 var(--ink);
+    cursor: pointer;
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .tile:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--ink); }
+  .tile.used { visibility: hidden; }
+  .tiles.locked { display: none; }
+  .scr-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1.5rem; }
+  .feedback.hint { border-color: #D6CAF0; background: #F6F1FD; }
+  .feedback.hint .verdict { color: #6A55A8; }
+  .feedback.revealed { border-color: #C9D3DD; background: #F4F6F8; }
+  .feedback.revealed .verdict { color: #4F6476; }
+  .feedback .word-big { font-family: "Fredoka", sans-serif; font-weight: 700; letter-spacing: .08em; }
+  @media (prefers-reduced-motion: reduce) {
+    .slots.ok .slot, .slots.bad { animation: none; }
+  }
+
+
+  .opt .ko.en { font-size: clamp(1.45rem, 3.3vw, 1.85rem); color: var(--ink); }
+  .q-text.en { font-family: "Fredoka", sans-serif; font-weight: 600; margin-bottom: 1.5rem; }
+  .scr-guide.en { font-family: "Fredoka", sans-serif; font-weight: 600; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-salt" viewBox="0 0 40 40">
+        <path d="M20 4 34 12 20 20 6 12Z" fill="#FFFFFF"/>
+        <path d="M6 12 20 20 20 36 6 28Z" fill="#EAF0F8"/>
+        <path d="M34 12 20 20 20 36 34 28Z" fill="#D3DDEB"/>
+        <path d="M20 4 34 12 34 28 20 36 6 28 6 12Z M6 12 20 20 34 12 M20 20 20 36" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+      </symbol>
+      <symbol id="i-spark" viewBox="0 0 40 40">
+        <path d="M20 2C21 14 26 19 38 20 26 21 21 26 20 38 19 26 14 21 2 20 14 19 19 14 20 2Z" fill="#FFD66B" stroke="#E9B53F" stroke-width="1"/>
+      </symbol>
+      <symbol id="i-bulb" viewBox="0 0 48 52">
+        <g stroke="#E9B53F" stroke-width="2.5" stroke-linecap="round">
+          <path d="M24 2v4M6 8l3 3M42 8l-3 3M1 22h4M43 22h4"/>
+        </g>
+        <path d="M24 9a13 13 0 0 1 7.5 23.6V37h-15v-4.4A13 13 0 0 1 24 9Z" fill="#FFE38A" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M20 26q4-5 8 0" fill="none" stroke="#E9A23F" stroke-width="2" stroke-linecap="round"/>
+        <rect x="16.5" y="37" width="15" height="5" rx="1.5" fill="#CFD8E3" stroke="#2C3E50" stroke-width="2"/>
+        <rect x="19" y="42" width="10" height="5" rx="2" fill="#B9C5D3" stroke="#2C3E50" stroke-width="2"/>
+      </symbol>
+      <symbol id="i-crown" viewBox="0 0 48 40">
+        <path d="M5 30 8 9l9 10 7-14 7 14 9-10 3 21Z" fill="#FFD66B" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <rect x="5" y="30" width="38" height="6" rx="2" fill="#F4B392" stroke="#2C3E50" stroke-width="2"/>
+        <circle cx="24" cy="21" r="3" fill="#C9B6EE" stroke="#2C3E50" stroke-width="1.5"/>
+        <circle cx="8" cy="8" r="2.4" fill="#FFF" stroke="#2C3E50" stroke-width="1.5"/>
+        <circle cx="24" cy="4.5" r="2.4" fill="#FFF" stroke="#2C3E50" stroke-width="1.5"/>
+        <circle cx="40" cy="8" r="2.4" fill="#FFF" stroke="#2C3E50" stroke-width="1.5"/>
+      </symbol>
+      <symbol id="i-lighthouse" viewBox="0 0 80 100">
+        <path d="M46 24 80 12v26Z" fill="#FFE38A" opacity=".55"/>
+        <path d="M34 24 0 12v26Z" fill="#FFE38A" opacity=".55"/>
+        <path d="M30 42h20l6 50H24Z" fill="#FFFFFF" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M31.4 54h17.2l1.4 12H30Z" fill="#F4A28C"/>
+        <path d="M28.6 78h22.8l1.4 12H27.2Z" fill="#F4A28C"/>
+        <path d="M30 42h20l6 50H24Z" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <rect x="26" y="37" width="28" height="5" rx="1.5" fill="#2C3E50"/>
+        <rect x="32" y="22" width="16" height="15" rx="2" fill="#FFE38A" stroke="#2C3E50" stroke-width="2"/>
+        <path d="M28 22 40 10l12 12Z" fill="#F4A28C" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <rect x="14" y="92" width="52" height="6" rx="3" fill="#CFD8E3" stroke="#2C3E50" stroke-width="2"/>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="wrap">
+    <header>
+      <h1 class="class-name"><span class="sparkle" aria-hidden="true">✨</span><span class="en">Salt Class · Youth Group</span></h1>
+      <p class="today en" id="today"></p>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Class menu" id="tabs"></nav>
+    <main id="panels"></main>
+  </div>
+
+<template id="lesson-template">
+  <article class="cover">
+    <svg class="deco salt1" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>
+    <svg class="deco salt2" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>
+    <svg class="deco salt3" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>
+    <svg class="deco crown" aria-hidden="true" viewBox="0 0 48 40"><use href="#i-crown"/></svg>
+    <svg class="deco house" aria-hidden="true" viewBox="0 0 80 100"><use href="#i-lighthouse"/></svg>
+    <svg class="deco bulb" aria-hidden="true" viewBox="0 0 48 52"><use href="#i-bulb"/></svg>
+    <svg class="deco spk s1" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <svg class="deco spk s2" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <svg class="deco spk s3" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <svg class="deco spk s4" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <svg class="deco spk s5" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <p class="tag"><span class="en">Salt &amp; Light Journey</span> · <span class="en">Today’s Lesson</span></p>
+    <h2 class="title-en en">YOU ARE THE<br>SALT <span class="amp">&amp;</span> LIGHT</h2>
+    <p class="sub-en en">Let People See Jesus Through You</p>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="question">
+      <p class="label en">💭 Let’s Think</p>
+      <p class="q-en en">“If you never told your friends, ‘I’m a Christian,’ could they tell by the way you live?”</p>
+    </div>
+
+    <section class="verse-box" aria-label="Today’s verse">
+      <svg class="deco spk v1" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+      <svg class="deco spk v2" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+      <svg class="deco v3" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>
+      <p class="verse-ref"><span class="en">Matthew 5:13–16</span></p>
+      <p class="verse-en en nv">
+        <sup>13</sup><span class="key">“You are the salt of the earth.</span> But if the salt loses its saltiness, how can it be made salty again? It is no longer good for anything, except to be thrown out and trampled underfoot.
+        <sup>14</sup><span class="key">“You are the light of the world.</span> A town built on a hill cannot be hidden.
+        <sup>15</sup>Neither do people light a lamp and put it under a bowl. Instead they put it on its stand, and it gives light to everyone in the house.
+        <sup>16</sup>In the same way, let your light shine before others, that they may see your good deeds and glorify your Father in heaven.
+      </p>
+      <p class="verse-src en">NIV (New International Version®, © Biblica, Inc.)</p>
+    </section>
+  </article>
+
+  <details class="flow">
+    <summary>
+      <span class="when-closed en">View Lesson Flow ▾</span>
+      <span class="when-open en">Hide Lesson Flow ▴</span>
+    </summary>
+    <div class="flow-body">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">Time</th><th scope="col">Step</th><th scope="col">What We Do</th></tr>
+          </thead>
+          <tbody>
+            <tr class="r1"><td>5 min</td><td class="step">Opening · Open Hearts</td><td>“What kind of person do my friends think I am?”</td></tr>
+            <tr class="r2"><td>15 min</td><td class="step">Word · Bible Story</td><td>You ARE Salt &amp; Light → Salt Must Dissolve → Let Your Light Shine</td></tr>
+            <tr class="r3"><td>10 min</td><td class="step">Activity · Word Scramble &amp; Quiz</td><td>Connect the meaning of salt and light to real-life situations</td></tr>
+            <tr class="r4"><td>10 min</td><td class="step">Application · My Life</td><td>“God, change me.” / My Salt &amp; Light Challenge this week</td></tr>
+            <tr class="r5"><td>5 min</td><td class="step">Prayer · Together</td><td>“Let people see Jesus through me.”</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="total-line en">Total: <strong>45 minutes</strong></p>
+    </div>
+  </details>
+</template>
+
+<template id="scramble-template">
+  <div class="quiz-card">
+    <div class="quiz-top">
+      <div class="quiz-progress">
+        <p class="label" id="wLabel"></p>
+        <div class="dots" id="wDots" aria-hidden="true"></div>
+      </div>
+      <div class="star-board" aria-label="Score">
+        <span class="star" aria-hidden="true">⭐</span><span class="count" id="wScore">0</span>
+      </div>
+    </div>
+    <div id="wBody"></div>
+  </div>
+</template>
+
+<template id="worship-template">
+  <div class="worship-head">
+    <h2>🎵 Worship</h2>
+    <p>Let’s sing to God together!</p>
+  </div>
+  <div class="songs">
+    <article class="song-card">
+      <span class="song-num">Song 1</span>
+      <h3 class="song-title">Here I Am To Worship</h3>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube-nocookie.com/embed/03G52K9X2hQ" title="Here I Am To Worship – YouTube video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <a class="yt-btn" href="https://youtu.be/03G52K9X2hQ?si=A10VHAp2blRUI4wf" target="_blank" rel="noopener noreferrer"><span class="play" aria-hidden="true"></span>Open in YouTube</a>
+    </article>
+    <article class="song-card">
+      <span class="song-num">Song 2</span>
+      <h3 class="song-title">Goodness Of God</h3>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube-nocookie.com/embed/-f4MUUMWMV4" title="Goodness Of God – YouTube video" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <a class="yt-btn" href="https://youtu.be/-f4MUUMWMV4?si=ztwgofKTZ1gdG3Yu" target="_blank" rel="noopener noreferrer"><span class="play" aria-hidden="true"></span>Open in YouTube</a>
+    </article>
+  </div>
+</template>
+<template id="quiz-template">
+  <div class="mode-switch" role="group" aria-label="Quiz type">
+    <button type="button" class="step-btn" data-mode="quiz" aria-pressed="true"><span class="num">❓</span><span class="lbl en">Bible Quiz</span></button>
+    <button type="button" class="step-btn" data-mode="bless" aria-pressed="false"><span class="num">✨</span><span class="lbl en">Match the Beatitudes</span></button>
+  </div>
+  <div class="quiz-card" id="quizCard">
+    <div class="quiz-top">
+      <div class="quiz-progress">
+        <p class="label" id="qLabel"></p>
+        <div class="dots" id="qDots" aria-hidden="true"></div>
+      </div>
+      <div class="star-board" aria-label="Score">
+        <span class="star" aria-hidden="true">⭐</span><span class="count" id="qScore">0</span>
+      </div>
+    </div>
+    <div id="qBody"></div>
+  </div>
+  <section class="bless-box jesus q-bless" id="qBless" hidden></section>
+</template>
+
+<template id="story-template">
+  <div class="story-head">
+    <h2 class="en">📜 The Sermon on the Mount</h2>
+    <p class="en">Matthew 5:13–16 · Mount of Beatitudes, Sea of Galilee</p>
+  </div>
+
+  <div class="steps" role="group" aria-label="Story scenes">
+    <button type="button" class="step-btn" data-go="2" aria-pressed="true"><span class="num">1</span><span class="lbl en">Salt Must Dissolve</span></button>
+    <button type="button" class="step-btn" data-go="3" aria-pressed="false"><span class="num">2</span><span class="lbl en">Let Your Light Shine</span></button>
+  </div>
+
+  <div class="scene-card">
+    <svg class="scene" id="scene" data-step="2" viewBox="0 0 1000 600" role="img" aria-label="Jesus teaching His twelve disciples on the Mount of Beatitudes, on the northwest shore of the Sea of Galilee. A house with a lampstand on the left, a cooking pot and salt jar on the right, and a town on a hill in the distance.">
+      <defs>
+        <linearGradient id="st-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#CFE5F7"/>
+          <stop offset=".55" stop-color="#FDEFE0"/>
+          <stop offset="1" stop-color="#FFE4CF"/>
+        </linearGradient>
+        <linearGradient id="st-dusk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5E5A8E"/>
+          <stop offset="1" stop-color="#C79AB8"/>
+        </linearGradient>
+        <linearGradient id="st-mount" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#BFE0A4"/>
+          <stop offset="1" stop-color="#9FCF86"/>
+        </linearGradient>
+        <radialGradient id="st-glow">
+          <stop offset="0" stop-color="#FFF3C4" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#FFF3C4" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="st-praise" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#FFE7A3" stop-opacity=".85"/>
+          <stop offset="1" stop-color="#FFE7A3" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="st-lampglow">
+          <stop offset="0" stop-color="#FFE7A3" stop-opacity=".95"/>
+          <stop offset=".45" stop-color="#FFD98A" stop-opacity=".45"/>
+          <stop offset="1" stop-color="#FFD98A" stop-opacity="0"/>
+        </radialGradient>
+        <symbol id="st-disc" viewBox="-32 -44 64 84" overflow="visible">
+          <path d="M-27 38Q-29 2 0-6 29 2 27 38Z" fill="currentColor" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M-11-2-15 38M11-2 15 38" stroke="#5B4636" stroke-opacity=".28" stroke-width="5"/>
+          <path d="M14-10q8 6 4 16-4-2-6-8Z" fill="#5E3B28"/>
+          <path d="M-17-14Q-18-38 0-38 18-38 17-14L21 8Q0 13-21 8Z" style="fill:var(--hc,#EFE3C8)" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M-17-22Q0-29 17-22" fill="none" stroke="#8A5A3C" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M-6-14-8 6M6-14 8 6" stroke="#C9B48E" stroke-width="2" opacity=".7"/>
+        </symbol>
+        <symbol id="st-disc2" viewBox="-32 -44 64 84" overflow="visible">
+          <path d="M-27 38Q-29 2 0-6 29 2 27 38Z" fill="currentColor" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M-20 6Q-24-6-18 2 0 10 18 2 24-6 20 6Q0 14-20 6Z" fill="#E9DCC4" stroke="#2C3E50" stroke-width="2"/>
+          <path d="M-11 4-15 38M11 4 15 38" stroke="#5B4636" stroke-opacity=".28" stroke-width="5"/>
+          <path d="M11-8q9 6 5 18-6-2-8-10Z" fill="#3B2518"/>
+          <circle cx="0" cy="-18" r="15" fill="#4A2E1F" stroke="#2C3E50" stroke-width="2.5"/>
+          <g fill="#5E3B28"><circle cx="-7" cy="-26" r="4"/><circle cx="4" cy="-29" r="4"/><circle cx="9" cy="-19" r="3.5"/><circle cx="-10" cy="-15" r="3.5"/><circle cx="0" cy="-12" r="3.5"/></g>
+        </symbol>
+        <symbol id="st-person" viewBox="-30 -36 60 72" overflow="visible">
+          <path d="M-24 34Q-26 2 0-4 26 2 24 34Z" fill="currentColor" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="0" cy="-18" r="15" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2.5"/>
+          <path d="M-15-17Q-16-34 0-34 16-34 15-17Q14-8 0-8-14-8-15-17Z" fill="#7A5038"/>
+        </symbol>
+      </defs>
+
+      <!-- 하늘 -->
+      <rect width="1000" height="600" fill="url(#st-sky)"/>
+      <circle cx="150" cy="96" r="80" fill="url(#st-glow)"/>
+      <circle cx="150" cy="96" r="40" fill="#FFE08A"/>
+      <g fill="#FFFFFF" opacity=".9">
+        <ellipse cx="420" cy="86" rx="58" ry="20"/><ellipse cx="455" cy="72" rx="34" ry="20"/><ellipse cx="392" cy="76" rx="26" ry="16"/>
+        <ellipse cx="800" cy="62" rx="48" ry="16"/><ellipse cx="826" cy="51" rx="26" ry="15"/>
+      </g>
+      <rect class="dusk" width="1000" height="600" fill="url(#st-dusk)"/>
+
+      <!-- 갈릴리 바다 -->
+      <rect y="196" width="1000" height="112" fill="#A9D3EA"/>
+      <path d="M0 202Q160 180 380 194T780 186 1000 192V206H0Z" fill="#B7CDC3"/>
+      <path d="M0 206Q200 194 420 202T1000 200V210H0Z" fill="#C9DCD3"/>
+      <g stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".6">
+        <path d="M60 240h60M200 262h40M520 232h70M660 268h50M840 250h60M380 222h50"/>
+      </g>
+      <path d="M0 252Q120 210 240 246T480 244V360H0Z" fill="#D4E8C4"/>
+
+      <!-- 산 위의 동네 (오른쪽 언덕) -->
+      <path d="M560 310Q720 150 1000 186V430H560Z" fill="#C6E0B0"/>
+      <g stroke="#2C3E50" stroke-width="2" stroke-linejoin="round">
+        <rect x="736" y="182" width="40" height="30" fill="#F6E3C8"/>
+        <rect x="770" y="166" width="46" height="46" fill="#FBEBD4"/>
+        <rect x="812" y="176" width="38" height="36" fill="#F3DCC0"/>
+        <rect x="846" y="160" width="34" height="52" fill="#FBEBD4"/>
+        <rect x="876" y="178" width="44" height="34" fill="#F6E3C8"/>
+        <rect x="706" y="196" width="34" height="22" fill="#F3DCC0"/>
+      </g>
+      <g class="win-glow" fill="url(#st-lampglow)">
+        <circle cx="756" cy="195" r="18"/><circle cx="793" cy="186" r="20"/><circle cx="831" cy="192" r="18"/>
+        <circle cx="863" cy="180" r="18"/><circle cx="898" cy="193" r="18"/><circle cx="723" cy="206" r="14"/>
+      </g>
+      <g fill="#8EA3B4">
+        <rect class="win" x="750" y="190" width="10" height="10" rx="2"/>
+        <rect class="win" x="780" y="178" width="10" height="12" rx="2"/><rect class="win" x="798" y="178" width="10" height="12" rx="2"/>
+        <rect class="win" x="826" y="188" width="10" height="10" rx="2"/>
+        <rect class="win" x="858" y="172" width="10" height="12" rx="2"/>
+        <rect class="win" x="892" y="188" width="12" height="10" rx="2"/>
+        <rect class="win" x="718" y="202" width="9" height="8" rx="2"/>
+      </g>
+      <text x="815" y="146" text-anchor="middle" font-size="20" fill="#2C3E50" style="font-family:Fredoka,sans-serif">A Town on a Hill</text>
+
+      <text x="530" y="222" text-anchor="middle" font-size="19" fill="#3E6A8A" style="font-family:Fredoka,sans-serif;font-weight:600">Sea of Galilee</text>
+      <!-- 말씀하시는 산 -->
+      <path d="M-20 600V330Q150 252 330 236 520 226 700 330 800 380 1020 362V600Z" fill="url(#st-mount)"/>
+      <!-- 올리브 나무 -->
+      <g>
+        <rect x="604" y="276" width="14" height="60" rx="5" fill="#A87A52" stroke="#2C3E50" stroke-width="2"/>
+        <ellipse cx="611" cy="262" rx="46" ry="34" fill="#8FC27A" stroke="#2C3E50" stroke-width="2"/>
+        <ellipse cx="590" cy="250" rx="22" ry="16" fill="#A3D18C"/>
+      </g>
+
+      <!-- 예수님 -->
+      <g transform="translate(330 168) scale(1.12)">
+        <!-- 앉으신 바위 -->
+        <path d="M-58 92Q-62 70-40 66H40Q62 70 58 92Z" fill="#CDBFA8" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M-30 74q12-4 22 0M14 78q10-3 18 0" fill="none" stroke="#B3A48C" stroke-width="2" stroke-linecap="round"/>
+        <!-- 뒷머리 -->
+        <path d="M-21-14Q-24-43 0-43 24-43 21-14L25 16Q15 14 13 0H-13Q-15 14-25 16Z" fill="#7A4E33" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <!-- 흰 옷 -->
+        <path d="M-28 8Q-42 46-48 84H48Q42 46 28 8Q0-2-28 8Z" fill="#FFFDF6" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 붉은 겉옷 -->
+        <path d="M10 4Q34 6 39 38Q42 64 47 84H14Q20 56 2 36Q-14 22-26 12Q-8 2 10 4Z" fill="#D9675A" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M18 30Q28 50 30 78" fill="none" stroke="#B9473D" stroke-width="2" stroke-linecap="round"/>
+        <!-- 샌들 발 -->
+        <ellipse cx="-14" cy="86" rx="10" ry="5" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2"/>
+        <ellipse cx="8" cy="86" rx="10" ry="5" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2"/>
+        <path d="M-20 85h12M2 85h12" stroke="#8A5A3C" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- 두 팔을 벌리심 -->
+        <path d="M-22 16Q-44 12-58-6" fill="none" stroke="#2C3E50" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-22 16Q-44 12-58-6" fill="none" stroke="#FFFDF6" stroke-width="12" stroke-linecap="round"/>
+        <path d="M22 16Q44 12 58-6" fill="none" stroke="#2C3E50" stroke-width="17" stroke-linecap="round"/>
+        <path d="M22 16Q44 12 58-6" fill="none" stroke="#FFFDF6" stroke-width="12" stroke-linecap="round"/>
+        <circle cx="-61" cy="-10" r="7" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2"/>
+        <circle cx="61" cy="-10" r="7" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2"/>
+        <!-- 얼굴 -->
+        <rect x="-6" y="-2" width="12" height="8" fill="#F2C9A0"/>
+        <ellipse cx="0" cy="-15" rx="16" ry="18" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2.5"/>
+        <path d="M-15-9Q-16 9 0 11 16 9 15-9Q9-2 0-3-9-2-15-9Z" fill="#7A4E33"/>
+        <path d="M-5-4q5 4 10 0" fill="none" stroke="#5A3524" stroke-width="2" stroke-linecap="round"/>
+        <path d="M-16-19Q-13-35 0-34 13-35 16-19Q9-28 1-26L0-30-1-26Q-9-28-16-19Z" fill="#7A4E33"/>
+        <circle cx="-6" cy="-15" r="2.2" fill="#2C3E50"/>
+        <circle cx="6" cy="-15" r="2.2" fill="#2C3E50"/>
+        <circle cx="-10" cy="-9" r="2.6" fill="#F4A28C" opacity=".6"/>
+        <circle cx="10" cy="-9" r="2.6" fill="#F4A28C" opacity=".6"/>
+      </g>
+      <ellipse class="focus f1" cx="330" cy="200" rx="104" ry="112" fill="none" stroke="#E39B2E" stroke-width="4" stroke-dasharray="10 10"/>
+
+      <!-- 앞쪽 풀밭 -->
+      <path d="M-20 600V452Q250 404 500 432T1020 420V600Z" fill="#AFD892"/>
+      <g fill="#FFFFFF"><circle cx="300" cy="470" r="4"/><circle cx="352" cy="560" r="4"/><circle cx="760" cy="440" r="4"/></g>
+      <g fill="#F7B49A"><circle cx="270" cy="520" r="5"/><circle cx="790" cy="575" r="5"/><circle cx="420" cy="586" r="5"/></g>
+      <g fill="#FFD66B"><circle cx="330" cy="500" r="4"/><circle cx="720" cy="560" r="4"/><circle cx="560" cy="590" r="4"/></g>
+
+      <!-- 열두 제자 (뒷모습) -->
+      <g>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(430 440) scale(0.8)" color="#C9A27C" style="--hc:#EFE3C8"/>
+        <use href="#st-disc2" x="-32" y="-44" width="64" height="84" transform="translate(500 446) scale(0.8)" color="#8FA7B8"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(570 438) scale(0.8)" color="#B88A6A" style="--hc:#E7D2B0"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(640 446) scale(0.8)" color="#D8C9A8" style="--hc:#F4ECDD"/>
+        <use href="#st-disc2" x="-32" y="-44" width="64" height="84" transform="translate(710 440) scale(0.8)" color="#9DB08A"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(465 492) scale(0.92)" color="#C98B7A" style="--hc:#E9DCC4"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(540 498) scale(0.92)" color="#A99BC2" style="--hc:#DCCBA8"/>
+        <use href="#st-disc2" x="-32" y="-44" width="64" height="84" transform="translate(615 494) scale(0.92)" color="#C7B08A"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(690 500) scale(0.92)" color="#8FB3A8" style="--hc:#EFE3C8"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(500 548) scale(1.05)" color="#D19A72" style="--hc:#F1E6D2"/>
+        <use href="#st-disc2" x="-32" y="-44" width="64" height="84" transform="translate(585 552) scale(1.05)" color="#B3A08A"/>
+        <use href="#st-disc" x="-32" y="-44" width="64" height="84" transform="translate(670 548) scale(1.05)" color="#9AAFC9" style="--hc:#E3D3B6"/>
+      </g>
+
+      <!-- 집 (등불이 집 안 모든 사람에게 비침) -->
+      <g>
+        <rect x="8" y="378" width="314" height="230" fill="#F3E2C7" stroke="#2C3E50" stroke-width="2.5"/>
+        <path d="M30 400h270M30 440h270M30 480h270M30 520h270" stroke="#E6CFAE" stroke-width="2"/>
+        <rect x="8" y="566" width="314" height="40" fill="#D9BE97"/>
+        <rect class="win" x="236" y="404" width="44" height="40" rx="4" fill="#BFD7EC" stroke="#2C3E50" stroke-width="2"/>
+        <path d="M258 404v40M236 424h44" stroke="#2C3E50" stroke-width="2"/>
+        <!-- 가족 -->
+        <g class="family">
+          <path d="M228 576q0-44 26-44 26 0 26 44Z" fill="#9CC8EC" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="254" cy="518" r="15" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2.5"/>
+          <path d="M239 517q-1-18 15-18 16 0 15 18-6-9-15-9-9 0-15 9Z" fill="#7A5038"/>
+          <path d="M276 580q0-32 20-32 20 0 20 32Z" fill="#F7B49A" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="296" cy="538" r="12" fill="#F2C9A0" stroke="#2C3E50" stroke-width="2.5"/>
+          <path d="M284 537q0-14 12-14 12 0 12 14-5-7-12-7-7 0-12 7Z" fill="#5E3B28"/>
+          <g fill="#2C3E50"><circle cx="249" cy="519" r="1.8"/><circle cx="259" cy="519" r="1.8"/><circle cx="292" cy="539" r="1.6"/><circle cx="300" cy="539" r="1.6"/></g>
+          <path class="smile" d="M249 525q5 4 10 0M292 544q4 3 8 0" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </g>
+      <rect class="dusk dusk-land" width="1000" height="600" fill="#4B4A7A"/>
+      <rect class="house-dark" x="9" y="379" width="312" height="226" fill="#2E2C4F"/>
+      <!-- 하늘로 올라가는 영광의 빛 (16절) -->
+      <g class="praise">
+        <path d="M120 300 70 0H180L190 300Z" fill="url(#st-praise)"/>
+        <path d="M200 300 230 0H300L230 300Z" fill="url(#st-praise)" opacity=".7"/>
+        <g fill="#FFE08A">
+          <path d="M150 120c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12z"/>
+          <path d="M250 70c.8 6 3 8 9 9-6 .8-8 3-9 9-.8-6-3-8-9-9 6-.8 8-3 9-9z"/>
+          <path d="M120 40c.8 6 3 8 9 9-6 .8-8 3-9 9-.8-6-3-8-9-9 6-.8 8-3 9-9z"/>
+        </g>
+      </g>
+      <!-- 등불 장면 (왼쪽 아래) -->
+      <circle class="big-glow" cx="180" cy="420" r="260" fill="url(#st-lampglow)"/>
+      <circle class="big-glow" cx="180" cy="420" r="110" fill="url(#st-lampglow)"/>
+      <g>
+        <ellipse cx="180" cy="566" rx="34" ry="9" fill="#9C6D47" stroke="#2C3E50" stroke-width="2"/>
+        <rect x="174" y="440" width="12" height="124" rx="4" fill="#B98258" stroke="#2C3E50" stroke-width="2"/>
+        <ellipse cx="180" cy="440" rx="34" ry="8" fill="#C9935F" stroke="#2C3E50" stroke-width="2"/>
+      </g>
+      <g class="lamp-pos">
+        <circle cx="0" cy="-26" r="26" fill="url(#st-lampglow)"/>
+        <path d="M-24 2Q-24-12 0-12 18-12 30-6L36-8Q34 2 22 6 0 10-24 2Z" fill="#E39B6B" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M33-9Q28-22 34-34 42-22 33-9Z" fill="#FFB347" stroke="#E07F2E" stroke-width="1.5"/>
+        <path d="M34-12Q32-19 34-25 37-19 34-12Z" fill="#FFF0B3"/>
+      </g>
+      <g class="bowl">
+        <path d="M44 562Q44 504 92 504 140 504 140 562Z" fill="#C99A6B" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M54 532h76M50 548h84M70 510q-6 26-4 52M92 504v58M114 510q6 26 4 52" stroke="#A87A52" stroke-width="2" fill="none"/>
+      </g>
+      <path d="M-8 384 165 296 338 384Z" fill="#C98B5E" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M40 360 165 306 290 360" fill="none" stroke="#B0744B" stroke-width="3"/>
+      <ellipse class="focus f3" cx="165" cy="470" rx="170" ry="128" fill="none" stroke="#E39B2E" stroke-width="4" stroke-dasharray="10 10"/>
+
+      <!-- 소금 장면 (오른쪽 아래) -->
+      <g>
+        <ellipse cx="880" cy="580" rx="74" ry="9" fill="#9E9384" opacity=".6"/>
+        <!-- 화덕 돌 -->
+        <ellipse cx="836" cy="570" rx="18" ry="11" fill="#B9B0A3" stroke="#2C3E50" stroke-width="2"/>
+        <ellipse cx="924" cy="570" rx="18" ry="11" fill="#B9B0A3" stroke="#2C3E50" stroke-width="2"/>
+        <ellipse cx="880" cy="576" rx="16" ry="9" fill="#A79E90" stroke="#2C3E50" stroke-width="2"/>
+        <!-- 불 -->
+        <path d="M856 566q4-20 14-26 0 12 10 14 2-14 12-22 6 16 12 34Z" fill="#FFB347" stroke="#E07F2E" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M868 566q4-12 10-14 2 8 6 8 4-8 8-10 2 10 4 16Z" fill="#FFE08A"/>
+        <!-- 냄비 손잡이 -->
+        <path d="M827 506q-22-2-22 10t22 10" fill="none" stroke="#2C3E50" stroke-width="8" stroke-linecap="round"/>
+        <path d="M827 506q-22-2-22 10t22 10" fill="none" stroke="#A9653F" stroke-width="4" stroke-linecap="round"/>
+        <path d="M933 506q22-2 22 10t-22 10" fill="none" stroke="#2C3E50" stroke-width="8" stroke-linecap="round"/>
+        <path d="M933 506q22-2 22 10t-22 10" fill="none" stroke="#A9653F" stroke-width="4" stroke-linecap="round"/>
+        <!-- 냄비 몸통 -->
+        <path d="M824 498 830 544Q832 560 850 560H910Q928 560 930 544L936 498Z" fill="#D27F52" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M826.5 514H933.5L932.6 522H827.5Z" fill="#B5643C"/>
+        <path d="M842 506q-2 22 4 44" fill="none" stroke="#F2B08A" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+        <!-- 테두리와 국 -->
+        <ellipse cx="880" cy="498" rx="58" ry="13" fill="#E39C70" stroke="#2C3E50" stroke-width="2.5"/>
+        <ellipse class="soup" cx="880" cy="499" rx="49" ry="9" fill="#E9B98A"/>
+        <g fill="#F6D9A8"><circle cx="864" cy="499" r="3"/><circle cx="890" cy="501" r="2.5"/><circle cx="902" cy="497" r="2"/></g>
+        <path class="steam" d="M862 482q-8-12 0-22t0-22" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+        <path class="steam" d="M898 482q-8-12 0-22t0-22" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <g class="grains" fill="#FFFFFF" stroke="#9FB0C2" stroke-width="1">
+        <rect class="grain" x="866" y="458" width="6" height="6" rx="1"/>
+        <rect class="grain" x="878" y="454" width="5" height="5" rx="1"/>
+        <rect class="grain" x="886" y="462" width="6" height="6" rx="1"/>
+        <rect class="grain" x="872" y="466" width="5" height="5" rx="1"/>
+        <rect class="grain" x="880" y="470" width="6" height="6" rx="1"/>
+        <rect class="grain" x="892" y="456" width="5" height="5" rx="1"/>
+      </g>
+      <g class="jar">
+        <path d="M948 522Q944 496 954 490H982Q992 496 988 522 990 556 968 558 946 556 948 522Z" fill="#FFFFFF" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+        <rect x="952" y="482" width="32" height="10" rx="3" fill="#BFD3E8" stroke="#2C3E50" stroke-width="2"/>
+        <g fill="#DCE6F2"><rect x="958" y="520" width="6" height="6" transform="rotate(20 961 523)"/><rect x="972" y="530" width="5" height="5"/><rect x="966" y="540" width="6" height="6" transform="rotate(-15 969 543)"/></g>
+      </g>
+      <g class="soup-spark" fill="#FFD66B">
+        <path d="M850 474c1 8 4 11 12 12-8 1-11 4-12 12-1-8-4-11-12-12 8-1 11-4 12-12z"/>
+        <path d="M912 466c.8 6 3 8 9 9-6 .8-8 3-9 9-.8-6-3-8-9-9 6-.8 8-3 9-9z"/>
+      </g>
+<g class="lens">
+        <defs><clipPath id="lensClip"><circle cx="760" cy="310" r="86"/></clipPath></defs>
+        <path d="M812 378 848 438" stroke="#2C3E50" stroke-width="16" stroke-linecap="round"/>
+        <path d="M812 378 848 438" stroke="#B98258" stroke-width="10" stroke-linecap="round"/>
+        <circle cx="760" cy="310" r="86" fill="#FFFFFF"/>
+        <g clip-path="url(#lensClip)">
+          <rect x="670" y="290" width="180" height="120" fill="#DCEEFA"/>
+          <path d="M670 290q15-8 30 0t30 0 30 0 30 0 30 0 30 0" fill="none" stroke="#9CC8EC" stroke-width="3"/>
+          <g class="cube"><rect x="728" y="236" width="18" height="18" rx="3" fill="#FFFFFF" stroke="#2C3E50" stroke-width="2.5" transform="rotate(15 737 245)"/></g>
+          <g class="cube c2"><rect x="756" y="226" width="20" height="20" rx="3" fill="#FFFFFF" stroke="#2C3E50" stroke-width="2.5" transform="rotate(-10 766 236)"/></g>
+          <g class="cube c3"><rect x="784" y="240" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#2C3E50" stroke-width="2.5" transform="rotate(30 792 248)"/></g>
+          <g class="mols" fill="#FFFFFF" stroke="#8EA9C2" stroke-width="1">
+            <circle class="mol" cx="700" cy="318" r="3"/><circle class="mol" cx="722" cy="350" r="2.5"/><circle class="mol" cx="745" cy="324" r="3"/>
+            <circle class="mol" cx="768" cy="362" r="2.5"/><circle class="mol" cx="790" cy="330" r="3"/><circle class="mol" cx="812" cy="352" r="2.5"/>
+            <circle class="mol" cx="734" cy="378" r="3"/><circle class="mol" cx="758" cy="340" r="2"/><circle class="mol" cx="800" cy="376" r="3"/>
+            <circle class="mol" cx="826" cy="320" r="2.5"/><circle class="mol" cx="712" cy="372" r="2"/><circle class="mol" cx="780" cy="306" r="2"/>
+          </g>
+          <text class="lens-cap" x="760" y="356" text-anchor="middle" font-size="20" fill="#2C3E50" style="font-family:Fredoka,sans-serif">Dissolving…</text>
+        </g>
+        <circle cx="760" cy="310" r="86" fill="none" stroke="#2C3E50" stroke-width="5"/>
+        <circle cx="760" cy="310" r="80" fill="none" stroke="#FFFFFF" stroke-width="3" opacity=".7"/>
+        <path d="M712 258q20-22 50-24" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+      </g>
+            <ellipse class="focus f2" cx="890" cy="510" rx="100" ry="86" fill="none" stroke="#E39B2E" stroke-width="4" stroke-dasharray="10 10"/>
+    </svg>
+    <div class="verse-overlay" id="vOverlay" aria-live="polite">
+      <p class="vo-title en" id="sKo"></p>
+      <p class="vo-text en" id="sText"></p>
+      <div class="vo-foot">
+        <span class="verse-pill en" id="sVerse"></span>
+        <button type="button" class="action-btn" id="sAction"></button>
+      </div>
+    </div>
+    <button type="button" class="again-btn" id="sAgain" hidden>📖 Read Again</button>
+  </div>
+
+</template>
+
+
+<script>
+(function () {
+  // 오늘 날짜
+  // 오늘 날짜 (일요일은 '주일'로 표시)
+  document.getElementById('today').textContent = new Date()
+    .toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+  // 탭 목록
+  const TABS = [
+    { id: 'lesson',     icon: '📖', label: 'Lesson' },
+    { id: 'story',      icon: '📜', label: 'Bible Story' },
+    { id: 'quiz',       icon: '❓', label: 'Quiz' },
+    { id: 'scramble',   icon: '🔤', label: 'Word Scramble' },
+    { id: 'worship',    icon: '🎵', label: 'Worship' },
+    { id: 'attendance', icon: '✅', label: 'Attendance' },
+    { id: 'talent',     icon: '🪙', label: 'Talents' },
+    { id: 'manage',     icon: '⚙️', label: 'Class Settings' }
+  ];
+
+  const tabsEl = document.getElementById('tabs');
+  const panelsEl = document.getElementById('panels');
+
+  TABS.forEach(t => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tab';
+    btn.id = 'tab-' + t.id;
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-controls', 'panel-' + t.id);
+    btn.innerHTML = '<span class="icon" aria-hidden="true">' + t.icon + '</span><span class="en">' + t.label + '</span>';
+    btn.addEventListener('click', () => select(t.id));
+    tabsEl.appendChild(btn);
+
+    const panel = document.createElement('section');
+    panel.className = 'panel';
+    panel.id = 'panel-' + t.id;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', 'tab-' + t.id);
+    if (t.id === 'lesson') {
+      panel.classList.add('lesson');
+      panel.innerHTML = document.getElementById('lesson-template').innerHTML;
+    } else if (t.id === 'worship') {
+      panel.classList.add('worship');
+      panel.innerHTML = document.getElementById('worship-template').innerHTML;
+    } else if (t.id === 'scramble') {
+      panel.classList.add('scramble');
+      panel.innerHTML = document.getElementById('scramble-template').innerHTML;
+    } else if (t.id === 'quiz') {
+      panel.classList.add('quiz');
+      panel.innerHTML = document.getElementById('quiz-template').innerHTML;
+    } else if (t.id === 'story') {
+      panel.classList.add('story');
+      panel.innerHTML = document.getElementById('story-template').innerHTML;
+    } else {
+      panel.innerHTML =
+        '<svg class="deco p1" aria-hidden="true" viewBox="0 0 48 52"><use href="#i-bulb"/></svg>' +
+        '<svg class="deco p2" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>' +
+        '<svg class="deco spk p3" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>' +
+        '<svg class="deco spk p4" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>' +
+        '<div class="big-icon" aria-hidden="true">' + t.icon + '</div>' +
+        '<h2>' + t.label + '</h2>' +
+        '<p>Coming next week</p>';
+    }
+    panelsEl.appendChild(panel);
+  });
+
+  function select(id) {
+    TABS.forEach(t => {
+      const on = t.id === id;
+      const btn = document.getElementById('tab-' + t.id);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      btn.tabIndex = on ? 0 : -1;
+      document.getElementById('panel-' + t.id).hidden = !on;
+      if (on) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    });
+    try { localStorage.setItem('saltClass:lastTab', id); } catch (e) {}
+  }
+
+  // 키보드 좌우 이동
+  tabsEl.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const idx = TABS.findIndex(t => document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true');
+    const next = (idx + (e.key === 'ArrowRight' ? 1 : -1) + TABS.length) % TABS.length;
+    select(TABS[next].id);
+    document.getElementById('tab-' + TABS[next].id).focus();
+  });
+
+  // 마지막으로 보던 탭 기억
+  let start = TABS[0].id;
+  try {
+    const saved = localStorage.getItem('saltClass:lastTab');
+    if (saved && TABS.some(t => t.id === saved)) start = saved;
+  } catch (e) {}
+  // ===== 성경 이야기 탭 =====
+  function initStory() {
+    const root = document.getElementById('panel-story');
+    if (!root) return;
+    const scene = root.querySelector('#scene');
+    const btns = root.querySelectorAll('.step-btn');
+    const sKo = root.querySelector('#sKo'),
+          sText = root.querySelector('#sText'), sTextEn = root.querySelector('#sTextEn'), sVerse = root.querySelector('#sVerse'),
+          sAction = root.querySelector('#sAction'), sExtra = root.querySelector('#sExtra');
+    const li = (en) => '<li><span class="en">' + en + '</span></li>';
+    const BLESS = '<div class="bless">' +
+      '<section class="bless-box jesus" id="bGame"></section>' +
+    '</div>';
+    const STEPS = {
+      2: {
+        en: '',
+        ko: 'Salt Must Dissolve',
+        verseText: true,
+        text: '<sup>13</sup><strong>“You are the salt of the earth.</strong> But if the salt loses its saltiness, how can it be made salty again? It is no longer good for anything, except to be thrown out and trampled underfoot.',
+        textEn: '',
+        verse: 'Matthew 5:13 (NIV)',
+        action: '🧂 Add Salt', cls: 'salted'
+      },
+      3: {
+        en: '',
+        ko: 'Let Your Light Shine',
+        verseText: true,
+        text: '<sup>14</sup><strong>“You are the light of the world.</strong> A town built on a hill cannot be hidden. <sup>15</sup>Neither do people light a lamp and put it under a bowl. Instead they put it on its stand, and it gives light to everyone in the house. <sup>16</sup>In the same way, <strong>let your light shine before others,</strong> that they may see your good deeds and glorify your Father in heaven.',
+        textEn: '',
+        verse: 'Matthew 5:14–16 (NIV)',
+        action: '💡 Put the Lamp on the Stand', cls: 'shining'
+      }
+    };
+
+    // 팔복 끌어다 놓기
+    const BEAT = [
+      { k: 'poor',  en: 'Blessed are the poor in spirit,' },
+      { k: 'mourn', en: 'Blessed are those who mourn,' },
+      { k: 'meek',  en: 'Blessed are the meek,' },
+      { k: 'hunger',en: 'Blessed are those who hunger and thirst for righteousness,' },
+      { k: 'mercy', en: 'Blessed are the merciful,' },
+      { k: 'pure',  en: 'Blessed are the pure in heart,' },
+      { k: 'peace', en: 'Blessed are the peacemakers,' },
+      { k: 'pers',  en: 'Blessed are those who are persecuted because of righteousness,' }
+    ];
+    const PROMISE = [
+      { ref: '5:3',  ok: ['poor', 'pers'], en: 'for theirs is the kingdom of heaven.' },
+      { ref: '5:4',  ok: ['mourn'],  en: 'for they will be comforted.' },
+      { ref: '5:5',  ok: ['meek'],   en: 'for they will inherit the earth.' },
+      { ref: '5:6',  ok: ['hunger'], en: 'for they will be filled.' },
+      { ref: '5:7',  ok: ['mercy'],  en: 'for they will be shown mercy.' },
+      { ref: '5:8',  ok: ['pure'],   en: 'for they will see God.' },
+      { ref: '5:9',  ok: ['peace'],  en: 'for they will be called children of God.' },
+      { ref: '5:10', ok: ['poor', 'pers'], en: 'for theirs is the kingdom of heaven.' }
+    ];
+    function setupBeatitudes(box) {
+      const order = BEAT.map((_, i) => i).sort(() => Math.random() - .5);
+      box.innerHTML =
+        '<h4><span>✨ Match the Beatitudes</span><small>Matthew 5:3–10</small></h4>' +
+        '<p class="b-guide en"><span>Drag each card to the promise that goes with it.</span><span class="en">(You can also tap a card, then tap a box.)</span></p>' +
+        '<div class="b-pool">' + order.map(i =>
+          '<button type="button" class="b-card" data-k="' + BEAT[i].k + '"><span class="bt">' + BEAT[i].en + '</span></button>').join('') + '</div>' +
+        '<ol class="b-slots">' + PROMISE.map((p, i) =>
+          '<li class="b-slot"><div class="b-drop" data-i="' + i + '" role="button" tabindex="0">Drop here</div>' +
+          '<p class="b-promise"><span class="ref">Matthew ' + p.ref + '</span><span class="bt">' + p.en + '</span></p></li>').join('') + '</ol>' +
+        '<div class="b-foot"><p class="b-done" hidden>🎉 You matched all eight!</p>' +
+        '<button type="button" class="q-btn ghost b-reset">↺ Reset</button></div>';
+      let picked = null;
+      const done = box.querySelector('.b-done');
+      function tryDrop(card, drop) {
+        if (!card || !drop || drop.classList.contains('filled')) return false;
+        const p = PROMISE[Number(drop.dataset.i)];
+        if (p.ok.includes(card.dataset.k)) {
+          card.classList.remove('picked', 'lifted');
+          card.classList.add('placed');
+          card.disabled = true;
+          drop.textContent = '';
+          drop.classList.add('filled');
+          drop.appendChild(card);
+          if (!box.querySelector('.b-pool .b-card')) {
+            done.hidden = false;
+            if (window.saltConfetti) window.saltConfetti(90);
+          }
+          return true;
+        }
+        drop.classList.remove('nope'); void drop.offsetWidth; drop.classList.add('nope');
+        setTimeout(() => drop.classList.remove('nope'), 500);
+        return false;
+      }
+      box.querySelectorAll('.b-card').forEach(card => {
+        let sx = 0, sy = 0, ghost = null, moved = false, over = null;
+        card.addEventListener('pointerdown', e => {
+          if (card.disabled) return;
+          sx = e.clientX; sy = e.clientY; moved = false;
+          card.setPointerCapture(e.pointerId);
+        });
+        card.addEventListener('pointermove', e => {
+          if (!card.hasPointerCapture(e.pointerId)) return;
+          if (!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 8) return;
+          if (!moved) {
+            moved = true;
+            const r = card.getBoundingClientRect();
+            ghost = card.cloneNode(true);
+            ghost.classList.add('b-ghost');
+            ghost.style.width = r.width + 'px';
+            ghost.dx = sx - r.left; ghost.dy = sy - r.top;
+            document.body.appendChild(ghost);
+            card.classList.add('lifted');
+          }
+          ghost.style.transform = 'translate(' + (e.clientX - ghost.dx) + 'px,' + (e.clientY - ghost.dy) + 'px) rotate(-3deg)';
+          const el = document.elementFromPoint(e.clientX, e.clientY);
+          const d = el && el.closest('.b-drop:not(.filled)');
+          if (d !== over) { if (over) over.classList.remove('over'); over = d; if (over) over.classList.add('over'); }
+        });
+        const end = e => {
+          if (over) over.classList.remove('over');
+          if (ghost) { ghost.remove(); ghost = null; }
+          if (moved) {
+            card.classList.remove('lifted');
+            tryDrop(card, over);
+          } else if (e.type === 'pointerup' && !card.disabled) {
+            const was = picked === card;
+            box.querySelectorAll('.b-card.picked').forEach(c => c.classList.remove('picked'));
+            picked = was ? null : card;
+            if (picked) card.classList.add('picked');
+          }
+          over = null; moved = false;
+        };
+        card.addEventListener('pointerup', end);
+        card.addEventListener('pointercancel', end);
+      });
+      box.querySelectorAll('.b-drop').forEach(drop => {
+        const go = () => { if (picked && tryDrop(picked, drop)) picked = null; };
+        drop.addEventListener('click', go);
+        drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      });
+      box.querySelector('.b-reset').addEventListener('click', () => setupBeatitudes(box));
+    }
+    window.setupBeatitudes = setupBeatitudes;
+    let step = 2;
+    const overlay = root.querySelector('#vOverlay'), again = root.querySelector('#sAgain');
+    let timer = null;
+
+    function render() {
+      const d = STEPS[step];
+      clearTimeout(timer);
+      scene.classList.remove('salted', 'shining');
+      scene.setAttribute('data-step', String(step));
+      btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.go === String(step))));
+      sKo.textContent = d.ko;
+      sText.innerHTML = d.text;
+      sVerse.textContent = d.verse;
+      sAction.textContent = d.action;
+      overlay.classList.remove('gone');
+      again.hidden = true;
+    }
+
+    btns.forEach(b => b.addEventListener('click', () => { step = Number(b.dataset.go); render(); }));
+    sAction.addEventListener('click', () => {
+      const d = STEPS[step];
+      overlay.classList.add('gone');
+      void scene.getBoundingClientRect();
+      timer = setTimeout(() => {
+        scene.classList.add(d.cls);
+        timer = setTimeout(() => { again.hidden = false; }, d.cls === 'salted' ? 5200 : 2600);
+      }, 350);
+    });
+    again.addEventListener('click', render);
+    render();
+  }
+  initStory();
+  // ===== 퀴즈 탭 =====
+  function initQuiz() {
+    const root = document.getElementById('panel-quiz');
+    if (!root) return;
+    const QUIZ = [
+      {
+        q: '예수님이 “너희는 세상의 ○○이니”라고 가장 먼저 하신 말씀은 무엇일까요?',
+        qEn: 'Jesus said, “You are the ___ of the earth.” What did He say first?',
+        opts: [['소금', 'Salt'], ['빛', 'Light'], ['반석', 'Rock']],
+        a: 0,
+        ex: '예수님은 “너희는 세상의 소금이니”를 먼저 말씀하시고, 이어서 14절에서 빛을 말씀하셨어요.',
+        exEn: 'Jesus first said, “You are the salt of the earth,” and then in verse 14 He said, “You are the light of the world.”',
+        ref: 'Matthew 5:13'
+      },
+      {
+        q: '소금이 맛을 잃으면 어떻게 된다고 하셨나요?',
+        qEn: 'What happens if salt loses its saltiness?',
+        opts: [['시간이 지나면 다시 짠맛을 되찾는다', 'It becomes salty again over time'], ['밖에 버려져 사람에게 밟힐 뿐이다', 'It is thrown out and trampled underfoot'], ['빛으로 변한다', 'It turns into light']],
+        a: 1,
+        ex: '맛을 잃은 소금은 “아무 쓸 데 없어 다만 밖에 버려져 사람에게 밟힐 뿐”이라고 하셨어요.',
+        exEn: '“It is no longer good for anything, except to be thrown out and trampled underfoot.”',
+        ref: 'Matthew 5:13'
+      },
+      {
+        q: '예수님이 “숨겨지지 못한다”고 말씀하신 것은 무엇일까요?',
+        qEn: 'What did Jesus say “cannot be hidden”?',
+        opts: [['바닷가의 배', 'A boat by the sea'], ['산 위에 있는 동네', 'A town built on a hill'], ['광야의 장막', 'A tent in the desert']],
+        a: 1,
+        ex: '“산 위에 있는 동네가 숨겨지지 못할 것이요”라고 하시며, 빛인 우리도 숨겨질 수 없음을 보여 주셨어요.',
+        exEn: '“A town built on a hill cannot be hidden.” As light, we can’t be hidden either.',
+        ref: 'Matthew 5:14'
+      },
+      {
+        q: '사람이 등불을 켜면 어디에 둔다고 하셨나요?',
+        qEn: 'Where do people put a lamp after they light it?',
+        opts: [['말 아래', 'Under a bowl'], ['등경 위', 'On its stand'], ['문 밖', 'Outside the door']],
+        a: 1,
+        ex: '등불은 말(곡식을 되는 그릇) 아래가 아니라 등경 위에 두어야 집 안 모든 사람에게 비친다고 하셨어요.',
+        exEn: '“Instead they put it on its stand, and it gives light to everyone in the house.”',
+        ref: 'Matthew 5:15'
+      },
+      {
+        q: '사람들이 우리의 착한 행실을 보고 무엇을 하게 하라고 하셨나요?',
+        qEn: 'When people see our good deeds, what should they do?',
+        opts: [['우리를 칭찬하게 하라', 'Praise us'], ['하늘에 계신 아버지께 영광을 돌리게 하라', 'Glorify our Father in heaven'], ['우리를 따라 하게 하라', 'Copy us']],
+        a: 1,
+        ex: '우리가 빛을 비추는 목적은 우리가 칭찬받는 것이 아니라 하나님께 영광을 돌리게 하는 것이에요.',
+        exEn: '“…that they may see your good deeds and glorify your Father in heaven.”',
+        ref: 'Matthew 5:16'
+      }
+    ];
+    const MARKS = ['①', '②', '③', '④'];
+    const label = root.querySelector('#qLabel'), dots = root.querySelector('#qDots'),
+          scoreEl = root.querySelector('#qScore'), body = root.querySelector('#qBody');
+    let idx = 0, score = 0, results = [];
+
+    dots.innerHTML = QUIZ.map(() => '<span></span>').join('');
+
+    function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+    function paintDots() {
+      [...dots.children].forEach((d, i) => {
+        d.className = results[i] === true ? 'done-ok' : results[i] === false ? 'done-bad' : (i === idx ? 'now' : '');
+      });
+    }
+
+    function showQuestion() {
+      const item = QUIZ[idx];
+      label.innerHTML = '<span class="en">Question ' + (idx + 1) + ' / ' + QUIZ.length + '</span>';
+      paintDots();
+      body.innerHTML =
+        '<p class="q-text en">' + esc(item.qEn) + '</p>' +
+        '<div class="options">' + item.opts.map((o, i) =>
+          '<button type="button" class="opt" data-i="' + i + '"><span class="mark" aria-hidden="true">' + MARKS[i] + '</span>' +
+          '<span class="txt"><span class="ko en">' + esc(o[1]) + '</span></span></button>'
+        ).join('') + '</div>' +
+        '<div class="feedback" id="qFeedback" hidden aria-live="polite"></div>' +
+        '<div class="quiz-actions">' +
+          '<button type="button" class="q-btn ghost" id="qRestart">↺ Restart</button>' +
+          '<button type="button" class="q-btn primary" id="qNext" hidden></button>' +
+        '</div>';
+      body.querySelectorAll('.opt').forEach(btn => btn.addEventListener('click', () => answer(Number(btn.dataset.i))));
+      body.querySelector('#qRestart').addEventListener('click', restart);
+      body.querySelector('#qNext').addEventListener('click', next);
+    }
+
+    function answer(choice) {
+      const item = QUIZ[idx];
+      const ok = choice === item.a;
+      results[idx] = ok;
+      body.querySelectorAll('.opt').forEach(btn => {
+        const i = Number(btn.dataset.i);
+        btn.disabled = true;
+        if (i === item.a) btn.classList.add('ok');
+        else if (i === choice) btn.classList.add('bad');
+        else btn.classList.add('dim');
+        if (i === item.a) btn.querySelector('.mark').textContent = '✓';
+        if (i === choice && !ok) btn.querySelector('.mark').textContent = '✕';
+      });
+      const fb = body.querySelector('#qFeedback');
+      fb.className = 'feedback ' + (ok ? 'ok' : 'bad');
+      fb.innerHTML =
+        '<p class="verdict en">' + (ok ? 'Correct! 🎉' : 'Not quite! The answer is ' + MARKS[item.a] + '.') + '</p>' +
+        '<p class="ex en">' + esc(item.exEn) + '</p>' +
+        '<span class="ref">📖 ' + esc(item.ref) + '</span>';
+      fb.hidden = false;
+      const nextBtn = body.querySelector('#qNext');
+      nextBtn.textContent = idx < QUIZ.length - 1 ? 'Next Question →' : 'See Results →';
+      nextBtn.hidden = false;
+      paintDots();
+      if (ok) {
+        score++;
+        scoreEl.textContent = score;
+        scoreEl.classList.remove('pop'); void scoreEl.offsetWidth; scoreEl.classList.add('pop');
+        confetti(70);
+      }
+      fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function next() {
+      if (idx < QUIZ.length - 1) { idx++; showQuestion(); root.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      else showResult();
+    }
+
+    function showResult() {
+      idx = QUIZ.length;
+      label.innerHTML = '<span class="en">Results</span>';
+      paintDots();
+      const n = QUIZ.length;
+      let big, ko, en, burst;
+      if (score === n) { big = '🏆'; ko = 'Perfect score!'; en = ''; burst = 3; }
+      else if (score >= Math.ceil(n * 0.6)) { big = '🏅'; ko = 'Great job!'; en = ''; burst = 2; }
+      else { big = '🎉'; ko = 'Nice try!'; en = 'Want to try again?'; burst = 1; }
+      body.innerHTML =
+        '<div class="result">' +
+          '<span class="big" aria-hidden="true">' + big + '</span>' +
+          '<h3 class="en">' + ko + '</h3>' +
+          '<p class="title-en en">' + en + '</p>' +
+          '<p class="score en">You got <strong>' + score + '</strong> out of ' + n + '!</p>' +
+          
+          '<div class="line" aria-label="Results by question">' + results.map((r, i) =>
+            '<span>' + (r ? '⭐' : '<b class="dot">·</b>') + '<small>' + (i + 1) + '</small></span>').join('') + '</div>' +
+          '<div class="quiz-actions"><button type="button" class="q-btn primary" id="qAgain">↺ Play Again</button></div>' +
+        '</div>';
+      body.querySelector('#qAgain').addEventListener('click', restart);
+      for (let k = 0; k < burst; k++) setTimeout(() => confetti(90), k * 450);
+    }
+
+    function restart() {
+      idx = 0; score = 0; results = [];
+      scoreEl.textContent = '0';
+      showQuestion();
+    }
+
+    // 색종이
+    const canvas = document.createElement('canvas');
+    canvas.id = 'confettiCanvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const COLORS = ['#F6C343', '#6FB7E9', '#7CC47F', '#EF7A85', '#B69CE6', '#F4B392'];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pieces = [], running = false, dpr = 1;
+    function resize() {
+      dpr = window.devicePixelRatio || 1;
+      canvas.width = innerWidth * dpr; canvas.height = innerHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    addEventListener('resize', resize); resize();
+    function confetti(count) {
+      count = reduce ? Math.round(count / 4) : count;
+      const x = innerWidth / 2, y = innerHeight * 0.45;
+      for (let i = 0; i < count; i++) {
+        const ang = Math.random() * Math.PI * 2, sp = 4 + Math.random() * 9;
+        pieces.push({ x, y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 6,
+          w: 7 + Math.random() * 7, h: 9 + Math.random() * 10, r: Math.random() * Math.PI,
+          vr: (Math.random() - .5) * .3, c: COLORS[(Math.random() * COLORS.length) | 0], life: 0 });
+      }
+      if (!running) { running = true; requestAnimationFrame(tick); }
+    }
+    function tick() {
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      pieces.forEach(p => {
+        p.vy += .28; p.vx *= .985; p.vy *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+        const f = Math.abs(Math.cos(p.life * .12));
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c;
+        ctx.fillRect(-p.w / 2, -p.h / 2 * f, p.w, p.h * f); ctx.restore();
+      });
+      pieces = pieces.filter(p => p.y < innerHeight + 40 && p.life < 400);
+      if (pieces.length) requestAnimationFrame(tick);
+      else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+    }
+
+    window.saltConfetti = confetti;
+    const qCard = root.querySelector('#quizCard'), qBless = root.querySelector('#qBless');
+    root.querySelectorAll('.mode-switch .step-btn').forEach(b => b.addEventListener('click', () => {
+      const bless = b.dataset.mode === 'bless';
+      root.querySelectorAll('.mode-switch .step-btn').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      qCard.hidden = bless; qBless.hidden = !bless;
+      if (bless && !qBless.childElementCount && window.setupBeatitudes) window.setupBeatitudes(qBless);
+    }));
+    showQuestion();
+  }
+  initQuiz();
+  // ===== Word Scramble 탭 =====
+  function initScramble() {
+    const root = document.getElementById('panel-scramble');
+    if (!root) return;
+    const WORDS = [
+      { w: 'SALT',  ko: '소금', clue: '“You are the ____ of the earth.”',
+        full: '“You are the salt of the earth.”', koVerse: '너희는 세상의 소금이니', ref: 'Matthew 5:13' },
+      { w: 'LIGHT', ko: '빛', clue: '“You are the _____ of the world.”',
+        full: '“You are the light of the world.”', koVerse: '너희는 세상의 빛이라', ref: 'Matthew 5:14' },
+      { w: 'TOWN',  ko: '동네', clue: '“A ____ built on a hill cannot be hidden.”',
+        full: '“A town built on a hill cannot be hidden.”', koVerse: '산 위에 있는 동네가 숨겨지지 못할 것이요', ref: 'Matthew 5:14' },
+      { w: 'LAMP',  ko: '등불', clue: '“Neither do people light a ____ and put it under a bowl.”',
+        full: '“Neither do people light a lamp and put it under a bowl.”', koVerse: '사람이 등불을 켜서 말 아래에 두지 아니하고', ref: 'Matthew 5:15' },
+      { w: 'DEEDS', ko: '행실', clue: '“…that they may see your good _____ and glorify your Father in heaven.”',
+        full: '“…that they may see your good deeds and glorify your Father in heaven.”', koVerse: '그들로 너희 착한 행실을 보고 하늘에 계신 너희 아버지께 영광을 돌리게 하라', ref: 'Matthew 5:16' }
+    ];
+    const label = root.querySelector('#wLabel'), dots = root.querySelector('#wDots'),
+          scoreEl = root.querySelector('#wScore'), body = root.querySelector('#wBody');
+    let idx = 0, score = 0, results = [], letters = [], filled = [], done = false;
+    dots.innerHTML = WORDS.map(() => '<span></span>').join('');
+
+    function shuffle(word) {
+      const a = word.split('');
+      let s;
+      do {
+        for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; }
+        s = a.join('');
+      } while (s === word);
+      return a;
+    }
+    function paintDots() {
+      [...dots.children].forEach((d, i) => {
+        d.className = results[i] === true ? 'done-ok' : results[i] === false ? 'done-bad' : (i === idx ? 'now' : '');
+      });
+    }
+
+    function showWord() {
+      const item = WORDS[idx];
+      done = false;
+      letters = shuffle(item.w);
+      filled = Array(item.w.length).fill(null);   // 각 칸에 들어간 타일 번호
+      label.innerHTML = '<span class="en">Word ' + (idx + 1) + ' / ' + WORDS.length + '</span>';
+      paintDots();
+      body.innerHTML =
+        '<p class="scr-guide en">Tap the letters in order to unscramble the word!</p>' +
+        '<div class="slots" id="wSlots" aria-label="Your word"></div>' +
+        '<div class="tiles" id="wTiles" aria-label="Scrambled letters"></div>' +
+        '<div class="scr-tools">' +
+          '<button type="button" class="q-btn ghost" id="wHint">💡 Hint</button>' +
+          '<button type="button" class="q-btn ghost" id="wReveal">👀 Show Answer</button>' +
+        '</div>' +
+        '<div class="feedback" id="wFeedback" hidden aria-live="polite"></div>' +
+        '<div class="quiz-actions">' +
+          '<button type="button" class="q-btn ghost" id="wRestart">↺ Restart</button>' +
+          '<button type="button" class="q-btn primary" id="wNext" hidden></button>' +
+        '</div>';
+      body.querySelector('#wHint').addEventListener('click', showHint);
+      body.querySelector('#wReveal').addEventListener('click', reveal);
+      body.querySelector('#wRestart').addEventListener('click', restart);
+      body.querySelector('#wNext').addEventListener('click', next);
+      drawBoard();
+    }
+
+    function drawBoard() {
+      const slots = body.querySelector('#wSlots'), tiles = body.querySelector('#wTiles');
+      slots.innerHTML = filled.map((t, i) =>
+        t === null
+          ? '<span class="slot" aria-label="Empty"></span>'
+          : '<button type="button" class="slot filled" data-s="' + i + '" aria-label="Remove ' + letters[t] + '">' + letters[t] + '</button>'
+      ).join('');
+      tiles.innerHTML = letters.map((ch, i) =>
+        '<button type="button" class="tile' + (filled.includes(i) ? ' used' : '') + '" data-t="' + i + '"' +
+        (filled.includes(i) || done ? ' disabled' : '') + '>' + ch + '</button>'
+      ).join('');
+      tiles.classList.toggle('locked', done);
+      if (!done) {
+        slots.querySelectorAll('.slot.filled').forEach(b => b.addEventListener('click', () => {
+          filled[Number(b.dataset.s)] = null; drawBoard();
+        }));
+        tiles.querySelectorAll('.tile:not(.used)').forEach(b => b.addEventListener('click', () => place(Number(b.dataset.t))));
+      } else {
+        slots.querySelectorAll('.slot').forEach(b => { b.disabled = true; });
+      }
+    }
+
+    function place(t) {
+      const empty = filled.indexOf(null);
+      if (empty === -1) return;
+      filled[empty] = t;
+      drawBoard();
+      if (filled.indexOf(null) === -1) check();
+    }
+
+    function check() {
+      const item = WORDS[idx];
+      const guess = filled.map(t => letters[t]).join('');
+      const slots = body.querySelector('#wSlots');
+      if (guess === item.w) {
+        done = true;
+        results[idx] = true;
+        score++;
+        scoreEl.textContent = score;
+        scoreEl.classList.remove('pop'); void scoreEl.offsetWidth; scoreEl.classList.add('pop');
+        drawBoard();
+        body.querySelector('#wSlots').classList.add('ok');
+        finish('ok');
+        if (window.saltConfetti) window.saltConfetti(70);
+      } else {
+        slots.classList.add('bad');
+        setTimeout(() => {
+          filled = Array(item.w.length).fill(null);
+          drawBoard();
+        }, 650);
+      }
+    }
+
+    function showHint() {
+      const item = WORDS[idx];
+      const fb = body.querySelector('#wFeedback');
+      fb.className = 'feedback hint';
+      fb.innerHTML =
+        '<p class="verdict en">💡 Hint</p>' +
+        '<p class="ex-en en">' + item.clue + '</p>' +
+        '<span class="ref">📖 ' + item.ref + '</span>';
+      fb.hidden = false;
+    }
+
+    function reveal() {
+      const item = WORDS[idx];
+      done = true;
+      results[idx] = false;
+      letters = item.w.split('');
+      filled = letters.map((_, i) => i);
+      drawBoard();
+      body.querySelector('#wSlots').classList.add('revealed');
+      finish('revealed');
+    }
+
+    function finish(kind) {
+      const item = WORDS[idx];
+      paintDots();
+      body.querySelector('#wHint').hidden = true;
+      body.querySelector('#wReveal').hidden = true;
+      const fb = body.querySelector('#wFeedback');
+      fb.className = 'feedback ' + (kind === 'ok' ? 'ok' : 'revealed');
+      fb.innerHTML =
+        '<p class="verdict en">' + (kind === 'ok' ? 'You got it! 🎉' : 'Here’s the answer') + '</p>' +
+        '<p class="ex"><span class="word-big">' + item.w + '</span></p>' +
+        '<p class="ex-en en">' + item.full + '</p>' +
+        '<span class="ref">📖 ' + item.ref + '</span>';
+      fb.hidden = false;
+      const nextBtn = body.querySelector('#wNext');
+      nextBtn.textContent = idx < WORDS.length - 1 ? 'Next Word →' : 'See Results →';
+      nextBtn.hidden = false;
+      fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function next() {
+      if (idx < WORDS.length - 1) { idx++; showWord(); root.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      else showResult();
+    }
+
+    function showResult() {
+      idx = WORDS.length;
+      label.innerHTML = '<span class="en">Results</span>';
+      paintDots();
+      const n = WORDS.length;
+      let big, ko, en, burst;
+      if (score === n) { big = '🏆'; ko = 'Perfect score!'; en = ''; burst = 3; }
+      else if (score >= Math.ceil(n * 0.6)) { big = '🏅'; ko = 'Great job!'; en = ''; burst = 2; }
+      else { big = '🎉'; ko = 'Nice try!'; en = 'Want to try again?'; burst = 1; }
+      body.innerHTML =
+        '<div class="result">' +
+          '<span class="big" aria-hidden="true">' + big + '</span>' +
+          '<h3 class="en">' + ko + '</h3>' +
+          '<p class="title-en en">' + en + '</p>' +
+          '<p class="score en">You got <strong>' + score + '</strong> out of ' + n + '!</p>' +
+          
+          '<div class="line" aria-label="Results by question">' + results.map((r, i) =>
+            '<span>' + (r ? '⭐' : '<b class="dot">·</b>') + '<small>' + WORDS[i].w + '</small></span>').join('') + '</div>' +
+          '<div class="quiz-actions"><button type="button" class="q-btn primary" id="wAgain">↺ Play Again</button></div>' +
+        '</div>';
+      body.querySelector('#wAgain').addEventListener('click', restart);
+      for (let k = 0; k < burst; k++) setTimeout(() => window.saltConfetti && window.saltConfetti(90), k * 450);
+    }
+
+    function restart() {
+      idx = 0; score = 0; results = [];
+      scoreEl.textContent = '0';
+      showWord();
+    }
+
+    showWord();
+  }
+  initScramble();
+
+
+
+  select(start);
+})();
+</script>
+</body>
+</html>
+
+</body></html>
