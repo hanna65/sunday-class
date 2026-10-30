@@ -140,13 +140,13 @@
   }
   .panel[hidden] { display: none !important; }
   .panel .big-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
-  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship) h2 {
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance) h2 {
     font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     font-weight: 400;
     font-size: 2.2rem;
     margin: 0 0 0.5rem;
   }
-  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship) p {
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance) p {
     font-size: 1.45rem;
     color: var(--ink-soft);
     margin: 0;
@@ -782,6 +782,90 @@
   }
 
 
+  /* ===== Attendance tab ===== */
+  .panel.attendance { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
+  .att-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+  .att-stat {
+    border-radius: 28px; padding: 1.25rem 1.5rem;
+    border: 2px solid var(--line); box-shadow: var(--shadow);
+    font-family: "Fredoka", sans-serif;
+  }
+  .att-stat.total { background: linear-gradient(150deg, #FFFFFF, #E6F4DF); }
+  .att-stat.top   { background: linear-gradient(150deg, #FFFFFF, #FFF1C9); }
+  .att-stat .k { margin: 0; font-size: clamp(1.1rem, 2.4vw, 1.3rem); font-weight: 600; color: var(--ink-soft); }
+  .att-stat .v { margin: .2rem 0 0; font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 700; line-height: 1.1; }
+  .att-stat .v small { font-size: .45em; font-weight: 500; color: var(--ink-soft); margin-left: .3rem; }
+  .att-stat .who { font-size: clamp(1.5rem, 3.6vw, 2.1rem); }
+  .att-stat .v.pop { animation: pop .5s cubic-bezier(.3,1.8,.5,1); display: inline-block; }
+  .att-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .85rem; }
+  .att-row {
+    display: grid; grid-template-columns: minmax(10rem, 15rem) 1fr auto; align-items: center; gap: 1rem;
+    background: rgba(255,255,255,.92); border: 2px solid var(--line); border-radius: 26px;
+    box-shadow: 0 6px 18px rgba(44,62,80,.06);
+    padding: .85rem 1rem .85rem 1.25rem;
+  }
+  .att-name { display: flex; align-items: center; gap: .6rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.15; }
+  .att-name .emo {
+    flex: none; width: 3.3rem; height: 3.3rem; display: grid; place-items: center;
+    border-radius: 50%; background: var(--bg); font-size: 1.9rem;
+  }
+  .att-vine { display: flex; flex-wrap: wrap; align-items: center; gap: .1rem .15rem; min-height: 3rem; }
+  .att-vine .leaf { font-size: 1.75rem; line-height: 1; }
+  .att-vine .leaf.new { animation: sprout .6s cubic-bezier(.3,1.7,.5,1) both; }
+  .att-vine .count { margin-left: .5rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.3rem, 2.8vw, 1.6rem); color: #2F7D41; white-space: nowrap; }
+  .att-vine .empty { font-family: "Fredoka", sans-serif; font-size: 1.15rem; color: #9AA7B3; }
+  @keyframes sprout { 0% { transform: scale(0) rotate(-40deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+  .att-btns { display: flex; gap: .6rem; }
+  .att-btn {
+    width: 72px; height: 72px; border-radius: 22px;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 2.4rem; line-height: 1;
+    color: var(--ink); cursor: pointer; display: grid; place-items: center;
+    border: 2px solid var(--ink); transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .att-btn.plus  { background: linear-gradient(145deg, #DFF3D8, #B9E2AE); box-shadow: 0 5px 0 var(--ink); }
+  .att-btn.minus { background: #FFFFFF; box-shadow: 0 5px 0 #B9C3CD; border-color: #B9C3CD; color: #6B7B8A; }
+  .att-btn:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+  .att-btn:disabled { opacity: .35; cursor: default; }
+  .att-btn:focus-visible, .att-all:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .att-foot { display: flex; flex-direction: column; align-items: center; gap: .75rem; margin-top: 1.5rem; }
+  .att-all {
+    min-height: 76px; min-width: min(100%, 26rem); padding: .75rem 2rem;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.5rem, 3.4vw, 1.9rem);
+    color: var(--ink); background: linear-gradient(135deg, #FFE08A, #B9E2AE);
+    border: 2px solid var(--ink); border-radius: 999px; box-shadow: 0 6px 0 var(--ink); cursor: pointer;
+  }
+  .att-all:active:not(:disabled) { transform: translateY(5px); box-shadow: 0 1px 0 var(--ink); }
+  .att-all:disabled { opacity: .45; cursor: default; }
+  .att-toast {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    padding: .6rem .6rem .6rem 1.25rem; border-radius: 999px; background: #2C3E50; color: #FFFFFF;
+    font-family: "Fredoka", sans-serif; font-size: 1.2rem;
+  }
+  .att-toast[hidden] { display: none; }
+  .att-toast button {
+    min-height: 52px; padding: .3rem 1.2rem; border-radius: 999px; border: 0; cursor: pointer;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.15rem; background: #FFE08A; color: #2C3E50;
+  }
+  .att-note { font-family: "Fredoka", sans-serif; font-size: 1rem; color: var(--ink-soft); margin: 0; text-align: center; }
+  .att-reset {
+    margin-top: 1.25rem; min-height: 60px; padding: .5rem 1.5rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.2rem;
+    color: #6B7B8A; background: rgba(255,255,255,.85);
+    border: 2px solid #C9D3DD; border-radius: 999px; cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .att-reset.armed { color: #FFFFFF; background: #D9534F; border-color: #B6403C; box-shadow: 0 5px 0 #8E2F2C; animation: shake .45s ease; }
+  .att-reset:active { transform: translateY(3px); }
+  .att-reset:disabled { opacity: .4; cursor: default; }
+  .att-reset:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .att-note[hidden] { display: none; }
+  @media (max-width: 760px) {
+    .att-row { grid-template-columns: 1fr auto; }
+    .att-vine { grid-column: 1 / -1; grid-row: 2; }
+  }
+  @media (max-width: 520px) { .att-stats { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .att-vine .leaf.new, .att-stat .v.pop { animation: none; } }
+
   /* ===== 찬양 탭 ===== */
   .panel.worship { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
   .worship-head { margin: 0 .25rem 1rem; }
@@ -1173,6 +1257,27 @@
   </div>
 </template>
 
+<template id="attendance-template">
+  <div class="att-stats">
+    <section class="att-stat total" aria-live="polite">
+      <p class="k">🌱 Our Class Total Attendance</p>
+      <p class="v" id="attTotal">0</p>
+    </section>
+    <section class="att-stat top" aria-live="polite">
+      <p class="k">🏆 Came the Most</p>
+      <p class="v who" id="attTop">—</p>
+    </section>
+  </div>
+  <ul class="att-list" id="attList"></ul>
+  <div class="att-foot">
+    <button type="button" class="att-all" id="attAll">🌿 Everyone +1 Today</button>
+    <div class="att-toast" id="attToast" role="status" hidden>
+      <span>Everyone got +1! 🌿</span><button type="button" id="attUndo">↺ Undo</button>
+    </div>
+    <p class="att-note" id="attNote" hidden></p>
+    <button type="button" class="att-reset" id="attReset">↺ Start Attendance Over</button>
+  </div>
+</template>
 <template id="worship-template">
   <div class="worship-head">
     <h2>🎵 Worship</h2>
@@ -1567,6 +1672,9 @@
     if (t.id === 'lesson') {
       panel.classList.add('lesson');
       panel.innerHTML = document.getElementById('lesson-template').innerHTML;
+    } else if (t.id === 'attendance') {
+      panel.classList.add('attendance');
+      panel.innerHTML = document.getElementById('attendance-template').innerHTML;
     } else if (t.id === 'worship') {
       panel.classList.add('worship');
       panel.innerHTML = document.getElementById('worship-template').innerHTML;
@@ -2189,6 +2297,237 @@
     showWord();
   }
   initScramble();
+  // ===== Attendance tab =====
+  function initAttendance() {
+    const root = document.getElementById('panel-attendance');
+    if (!root) return;
+
+    // Class roster — names exactly as given
+    const ROSTER = ['New Jersey', 'New York', 'Seattle', 'Ohio', 'Texas'];
+
+    // An emoji that fits each name; any other name gets one from POOL
+    const KNOWN = {
+      'new jersey': '🍅', '뉴저지': '🍅',
+      'new york': '🗽', '뉴욕': '🗽',
+      'seattle': '☕', '시애틀': '☕',
+      'ohio': '🌰', '오하이오': '🌰',
+      'texas': '🤠', '텍사스': '🤠'
+    };
+    const POOL = ['🦊','🐻','🐼','🐨','🦁','🐯','🐸','🐧','🦉','🐢','🐬','🦋','🐝','🐞','🦄','🐳','🦒','🦔','🐿️','🦜',
+                  '🍎','🍊','🍋','🍉','🍓','🍒','🥝','🍍','🥕','🌽','🌻','🌷','🌈','⭐','🌙','☀️','⚓','🚀','🎈','🎨',
+                  '⚽','🏀','🎸','🎺','🧩','🪁','🛶','🚲','🏰','🗻'];
+
+    // Every name gets an emoji, and no emoji is used twice in one class
+    function assignEmojis(names) {
+      const used = new Set(), out = {};
+      const all = [...new Set([...Object.values(KNOWN), ...POOL])];
+      names.forEach(n => {
+        const k = KNOWN[n.trim().toLowerCase()] || KNOWN[n.trim()];
+        if (k && !used.has(k)) { out[n] = k; used.add(k); }
+      });
+      names.forEach(n => {
+        if (out[n]) return;
+        let h = 0;
+        for (const ch of n) h = (h * 31 + ch.codePointAt(0)) >>> 0;
+        for (let i = 0; i < POOL.length; i++) {
+          const e = POOL[(h + i) % POOL.length];
+          if (!used.has(e)) { out[n] = e; used.add(e); return; }
+        }
+        // More names than emojis: fall back to the full set, then numbered
+        const e = all.find(x => !used.has(x));
+        out[n] = e || ('#' + (Object.keys(out).length + 1));
+        if (e) used.add(e);
+      });
+      return out;
+    }
+    const EMOJI = assignEmojis(ROSTER);
+
+    const totalEl = root.querySelector('#attTotal'), topEl = root.querySelector('#attTop'),
+          list = root.querySelector('#attList'), allBtn = root.querySelector('#attAll'),
+          toast = root.querySelector('#attToast'), undoBtn = root.querySelector('#attUndo'),
+          note = root.querySelector('#attNote'), resetBtn = root.querySelector('#attReset');
+
+    let counts = {};          // name -> number
+    let readOnly = false;
+    let prevShown = {};       // to animate only new leaves
+    let lastBulk = null, toastTimer = null;
+
+    // ---- storage: shared artifact db when available, otherwise this browser
+    const LS_KEY = 'saltClass:attendance';
+    let db = null, ref = null, writing = false, dirty = false, saveTimer = null;
+    function loadLocal() {
+      try { const v = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+    }
+    function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(counts)); } catch (e) {} }
+    function clean(obj) {
+      const o = {};
+      Object.keys(obj || {}).forEach(k => { const n = Math.max(0, Math.floor(Number(obj[k]) || 0)); if (n) o[k] = n; });
+      return o;
+    }
+    async function flush() {
+      if (!ref || writing) return;
+      writing = true; dirty = false;
+      try {
+        await ref.set({ counts: clean(counts), updatedAt: new Date().toISOString() });
+      } catch (e) {
+        if (e && e.code === 'quota_exceeded') { /* storage full: keep the screen working */ }
+        else if (e && (e.code === 'invalid_argument' || e.code === 'not_granted' || e.code === 'revoked')) {
+          setReadOnly('Only the teacher can change attendance on this page.');
+        } else if (e && e.code === 'unavailable') {
+          dirty = true; setTimeout(() => { writing = false; flush(); }, 1500 + Math.random() * 1000); return;
+        }
+      }
+      writing = false;
+      if (dirty) flush();
+    }
+    function persist() {
+      try {
+        saveLocal();
+        if (!ref) return;
+        dirty = true;
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => { flush().catch(() => { writing = false; }); }, 500);
+      } catch (e) { /* saving failed: keep going with what is on screen */ }
+    }
+    function setReadOnly(msg) {
+      readOnly = true;
+      note.textContent = msg; note.hidden = false;
+      render();
+    }
+
+    // ---- view
+    function leaders() {
+      let max = 0;
+      ROSTER.forEach(n => { max = Math.max(max, counts[n] || 0); });
+      return { max, names: max ? ROSTER.filter(n => (counts[n] || 0) === max) : [] };
+    }
+    function render() {
+      const total = ROSTER.reduce((a, n) => a + (counts[n] || 0), 0);
+      if (totalEl.dataset.v !== String(total)) {
+        totalEl.dataset.v = String(total);
+        totalEl.innerHTML = total + '<small>' + (total === 1 ? 'visit' : 'visits') + '</small>';
+        totalEl.classList.remove('pop'); void totalEl.offsetWidth; totalEl.classList.add('pop');
+      }
+      const top = leaders();
+      topEl.textContent = top.names.length
+        ? top.names.map(n => EMOJI[n] + ' ' + n).join(', ') + '  (' + top.max + ')'
+        : '—';
+
+      list.innerHTML = '';
+      ROSTER.forEach(n => {
+        const c = counts[n] || 0, before = prevShown[n] == null ? c : prevShown[n];
+        const li = document.createElement('li');
+        li.className = 'att-row';
+        const leaves = c
+          ? Array.from({ length: c }, (_, i) => '<span class="leaf' + (i >= before ? ' new' : '') + '" aria-hidden="true">🌿</span>').join('')
+          : '<span class="empty">No leaves yet</span>';
+        li.innerHTML =
+          '<div class="att-name"><span class="emo" aria-hidden="true">' + EMOJI[n] + '</span><span></span></div>' +
+          '<div class="att-vine" aria-label="' + c + (c === 1 ? ' time' : ' times') + '">' + leaves +
+            '<span class="count">' + c + (c === 1 ? ' time' : ' times') + '</span></div>' +
+          '<div class="att-btns">' +
+            '<button type="button" class="att-btn minus" aria-label="Take one away from ' + n + '"' + (c === 0 || readOnly ? ' disabled' : '') + '>−</button>' +
+            '<button type="button" class="att-btn plus" aria-label="Add one for ' + n + '"' + (readOnly ? ' disabled' : '') + '>＋</button>' +
+          '</div>';
+        li.querySelector('.att-name span:last-child').textContent = n;
+        li.querySelector('.minus').addEventListener('click', () => change(n, -1));
+        li.querySelector('.plus').addEventListener('click', () => change(n, +1));
+        list.appendChild(li);
+      });
+      allBtn.disabled = readOnly;
+      resetBtn.disabled = readOnly;
+      prevShown = Object.assign({}, counts);
+    }
+
+    function change(n, d) {
+      if (readOnly) return;
+      const next = Math.max(0, (counts[n] || 0) + d);
+      if (next === (counts[n] || 0)) return;
+      counts = Object.assign({}, counts, { [n]: next });
+      hideToast();
+      render(); persist();
+    }
+    function hideToast() { toast.hidden = true; lastBulk = null; clearTimeout(toastTimer); }
+    allBtn.addEventListener('click', () => {
+      if (readOnly) return;
+      lastBulk = Object.assign({}, counts);
+      const next = Object.assign({}, counts);
+      ROSTER.forEach(n => { next[n] = (next[n] || 0) + 1; });
+      counts = next;
+      render(); persist();
+      if (window.saltConfetti) window.saltConfetti(60);
+      toast.hidden = false;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideToast, 8000);
+    });
+    undoBtn.addEventListener('click', () => {
+      if (!lastBulk) return;
+      counts = lastBulk;
+      prevShown = Object.assign({}, counts);
+      hideToast(); render(); persist();
+    });
+
+    // "Start Attendance Over": first tap asks, second tap erases
+    const RESET_LABEL = '↺ Start Attendance Over', CONFIRM_LABEL = '⚠️ Really erase it all? Tap again';
+    let resetTimer = null;
+    function disarm() {
+      clearTimeout(resetTimer);
+      resetBtn.classList.remove('armed');
+      resetBtn.textContent = RESET_LABEL;
+    }
+    resetBtn.addEventListener('click', () => {
+      if (readOnly) return;
+      if (!resetBtn.classList.contains('armed')) {
+        resetBtn.classList.add('armed');
+        resetBtn.textContent = CONFIRM_LABEL;
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(disarm, 5000);   // changes its mind by itself after 5 seconds
+        return;
+      }
+      disarm();
+      counts = {};
+      prevShown = {};
+      hideToast(); render(); persist();
+    });
+    document.addEventListener('pointerdown', e => {
+      if (resetBtn.classList.contains('armed') && !resetBtn.contains(e.target)) disarm();
+    });
+
+    // first paint from this browser, then light up shared storage
+    counts = loadLocal();
+    prevShown = Object.assign({}, counts);
+    render();
+
+    (async () => {
+      try {
+        if (!window.claude || typeof window.claude.use !== 'function') return;
+        db = await window.claude.use('db');
+        if (!db) return;
+        ref = db.doc('attendance/counts');
+        const user = await window.claude.use('user');
+        if (user && typeof user.can === 'function') {
+          const ok = await user.can('data.write');
+          if (ok === false) setReadOnly('Only the teacher can change attendance on this page.');
+        }
+        let first = true;
+        ref.onSnapshot(snap => {
+          if (snap.metadata && snap.metadata.hasPendingWrites) return;
+          if (dirty || writing) return;
+          if (snap.exists) {
+            counts = clean((snap.data() || {}).counts);
+            saveLocal();
+            if (first) prevShown = Object.assign({}, counts);
+            render();
+          } else if (first && Object.keys(clean(counts)).length && !readOnly) {
+            persist();    // carry counts already kept in this browser into shared storage
+          }
+          first = false;
+        }, () => {});
+      } catch (e) { /* stay on this browser's copy */ }
+    })();
+  }
+  initAttendance();
+
 
 
 
