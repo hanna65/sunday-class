@@ -139,13 +139,13 @@
   }
   .panel[hidden] { display: none !important; }
   .panel .big-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
-  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance) h2 {
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance):not(.talents):not(.settings) h2 {
     font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     font-weight: 400;
     font-size: 2.2rem;
     margin: 0 0 0.5rem;
   }
-  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance) p {
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance):not(.talents):not(.settings) p {
     font-size: 1.45rem;
     color: var(--ink-soft);
     margin: 0;
@@ -872,6 +872,121 @@
   @media (max-width: 520px) { .att-stats { grid-template-columns: 1fr; } }
   @media (prefers-reduced-motion: reduce) { .att-vine .leaf.new, .att-stat .v.pop { animation: none; } }
 
+  /* ===== Semester record backup (Talents tab) ===== */
+  .bk-card { margin-top: 2rem; }
+  .bk-card h2 { display: flex; align-items: center; gap: .5rem; }
+  .bk-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin: .25rem 0 0; }
+  .bk-btn {
+    min-height: 64px; padding: .5rem 1.5rem;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.2rem, 2.8vw, 1.4rem); color: var(--ink);
+    border-radius: 999px; border: 2px solid var(--ink); cursor: pointer;
+    background: linear-gradient(135deg, #DCEBFA, #E9E0F8); box-shadow: 0 5px 0 var(--ink);
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .bk-btn.light { background: #FFFFFF; border-color: #C9D3DD; box-shadow: 0 4px 0 #C9D3DD; color: #4F6476; }
+  .bk-btn.restore { background: linear-gradient(135deg, #FFF1C9, #FFD9C2); }
+  .bk-btn.armed { color: #FFFFFF; background: #D9534F; border-color: #B6403C; box-shadow: 0 5px 0 #8E2F2C; animation: shake .45s ease; }
+  .bk-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+  .bk-btn:focus-visible, .bk-text:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .bk-out[hidden] { display: none; }
+  .bk-text {
+    display: block; width: 100%; margin: 1rem 0 .75rem; padding: 1rem 1.1rem;
+    min-height: 15rem; resize: vertical;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 1rem; line-height: 1.6; color: var(--ink);
+    background: #FFFDF7; border: 2px solid #CFC6BB; border-radius: 18px;
+  }
+  .bk-text.paste { min-height: 9rem; background: #FFFFFF; }
+  .bk-sub { margin: 1.5rem 0 .25rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.3rem; }
+
+  /* ===== Class Settings tab ===== */
+  .panel.settings { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
+  .set-notice {
+    display: flex; gap: .85rem; align-items: flex-start;
+    margin: 0 0 1.25rem; padding: 1rem 1.25rem; border-radius: 22px;
+    background: #FFF6E0; border: 2px solid #F2D49A; color: #6E4A12;
+    font-family: "Fredoka", sans-serif; font-size: clamp(1.1rem, 2.4vw, 1.25rem); line-height: 1.5;
+  }
+  .set-notice .ic { font-size: 1.6rem; line-height: 1.2; }
+  .set-notice p { margin: 0; }
+  .set-card {
+    background: rgba(255,255,255,.94); border: 2px solid var(--line); border-radius: 28px;
+    box-shadow: var(--shadow); padding: clamp(1.1rem, 3vw, 1.6rem); margin-bottom: 1.25rem;
+  }
+  .set-card h2 { margin: 0 0 .25rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.5rem, 3.4vw, 1.9rem); }
+  .set-card .hint { margin: 0 0 1rem; font-family: "Fredoka", sans-serif; font-size: 1.05rem; color: var(--ink-soft); }
+  .set-list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: .6rem; }
+  .set-row { display: flex; align-items: center; gap: .75rem; padding: .5rem .6rem .5rem .75rem; border-radius: 20px; background: var(--bg); }
+  .set-row .emo { flex: none; width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: 50%; background: #FFFFFF; font-size: 1.7rem; }
+  .set-input {
+    flex: 1; min-width: 0; min-height: 60px; padding: .4rem .9rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(1.3rem, 2.9vw, 1.6rem); color: var(--ink);
+    background: transparent; border: 2px dashed transparent; border-radius: 16px;
+  }
+  .set-row .set-input:hover { border-color: #D8CFC4; }
+  .set-input:focus { outline: none; background: #FFFFFF; border: 2px solid var(--ink); }
+  .set-input.bad { border-color: #D9534F; background: #FFF5F4; }
+  .set-row .pen { color: #A79B8E; font-size: 1.2rem; }
+  .set-btn {
+    flex: none; min-height: 60px; min-width: 6.5rem; padding: .4rem 1.2rem;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--ink);
+    border-radius: 999px; cursor: pointer; border: 2px solid var(--ink);
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .set-btn.remove { background: #FFFFFF; border-color: #E2B4B1; color: #B6403C; box-shadow: 0 4px 0 #E2B4B1; }
+  .set-btn.add, .set-btn.save { background: linear-gradient(135deg, #DFF3D8, #B9E2AE); box-shadow: 0 5px 0 var(--ink); }
+  .set-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--ink); }
+  .set-btn:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .set-add { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .set-add .set-input, .set-name .set-input { background: #FFFFFF; border: 2px solid #CFC6BB; }
+  .set-add .set-input:focus, .set-name .set-input:focus { border-color: var(--ink); }
+  .set-name { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .set-msg { min-height: 1.6rem; margin: .6rem 0 0; font-family: "Fredoka", sans-serif; font-size: 1.1rem; }
+  .set-msg.err { color: #B6403C; }
+  .set-msg.ok { color: #2F7D41; }
+  .set-empty { margin: 0 0 1rem; font-family: "Fredoka", sans-serif; font-size: 1.15rem; color: #9AA7B3; }
+  .set-toast { justify-content: center; margin: 0 auto 1.25rem; width: fit-content; }
+  @media (max-width: 560px) {
+    .set-row { flex-wrap: wrap; }
+    .set-row .set-input { flex-basis: calc(100% - 4rem); }
+    .set-row .set-btn { margin-left: auto; }
+  }
+
+  /* ===== Talents tab ===== */
+  .panel.talents { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
+  .tal-stat.total { background: linear-gradient(150deg, #FFFFFF, #FFF3CC); }
+  .tal-stat.top   { background: linear-gradient(150deg, #FFFFFF, #F1E9FA); }
+  .tal-row { grid-template-columns: minmax(10rem, 14rem) 1fr auto; }
+  .tal-pile { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .15rem .2rem; min-height: 3.4rem; }
+  .tal-pile svg { display: block; flex: none; }
+  .tal-pile .m-small { width: 30px; height: 40px; }
+  .tal-pile .m-big   { width: 52px; height: 68px; }
+  .tal-pile .m-new { animation: sprout .55s cubic-bezier(.3,1.7,.5,1) both; }
+  .tal-pile .more {
+    align-self: center; margin-left: .25rem; padding: .15rem .6rem; border-radius: 999px;
+    background: #FFF1C9; border: 1.5px solid #E9C25B;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.15rem; color: #9A6A12;
+  }
+  .tal-pile .count { align-self: center; margin-left: .5rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.3rem, 2.8vw, 1.6rem); color: #B07A12; white-space: nowrap; }
+  .tal-pile .empty { align-self: center; font-family: "Fredoka", sans-serif; font-size: 1.15rem; color: #9AA7B3; }
+  .tal-btns { display: flex; gap: .55rem; }
+  .att-btn.plus5 { width: 84px; font-size: 1.7rem; background: linear-gradient(145deg, #FFF1C9, #FFD66B); box-shadow: 0 5px 0 var(--ink); }
+  .tal-toast {
+    position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 70;
+    transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+    display: flex; align-items: center; gap: .6rem; max-width: calc(100% - 32px);
+    padding: .85rem 1.6rem; border-radius: 999px;
+    background: #2C3E50; color: #FFFFFF; box-shadow: 0 12px 30px rgba(44,62,80,.3);
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(1.3rem, 3vw, 1.6rem);
+    transition: opacity .25s ease, transform .3s cubic-bezier(.3,1.5,.5,1);
+  }
+  .tal-toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .tal-toast b { color: #FFD66B; }
+  @media (max-width: 760px) {
+    .tal-row { grid-template-columns: 1fr auto; }
+    .tal-pile { grid-column: 1 / -1; grid-row: 2; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tal-pile .m-new { animation: none; } .tal-toast { transition: opacity .2s ease; } }
+
   /* ===== 찬양 탭 ===== */
   .panel.worship { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
   .worship-head { margin: 0 .25rem 1rem; }
@@ -1285,6 +1400,97 @@
     <button type="button" class="att-reset" id="attReset">↺ Start Attendance Over</button>
   </div>
 </template>
+<template id="settings-template">
+  <div class="set-notice" role="note">
+    <span class="ic" aria-hidden="true">🔒</span>
+    <p>Use nicknames instead of children’s real names. Please don’t upload photos. Anyone who has this page’s link can see it.</p>
+  </div>
+  <p class="att-offline" id="setOffline" role="status" hidden>💾 Saved on this device only</p>
+
+  <section class="set-card" aria-labelledby="setRosterTitle">
+    <h2 id="setRosterTitle">👧🧒 Class List</h2>
+    <p class="hint">Tap a nickname to change it. Attendance and Talents use this same list.</p>
+    <ul class="set-list" id="setList"></ul>
+    <div class="att-toast set-toast" id="setToast" role="status" hidden><span id="setToastText"></span><button type="button" id="setUndo">↺ Undo</button></div>
+    <div class="set-add">
+      <input class="set-input" id="setNew" type="text" maxlength="50" placeholder="New child’s nickname" aria-label="New child’s nickname" autocomplete="off">
+      <button type="button" class="set-btn add" id="setAdd">＋ Add</button>
+    </div>
+    <p class="set-msg" id="setRosterMsg" aria-live="polite"></p>
+  </section>
+
+  <section class="set-card" aria-labelledby="setNameTitle">
+    <h2 id="setNameTitle">🏷️ Class Name</h2>
+    <p class="hint">Shown at the top of every page.</p>
+    <div class="set-name">
+      <input class="set-input" id="setClassName" type="text" maxlength="60" aria-label="Class name" autocomplete="off">
+      <button type="button" class="set-btn save" id="setSaveName">Save</button>
+    </div>
+    <p class="set-msg" id="setNameMsg" aria-live="polite"></p>
+  </section>
+</template>
+<template id="talents-template">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="tal-gold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#FFE9A0"/><stop offset=".55" stop-color="#F5C33B"/><stop offset="1" stop-color="#D89A1C"/>
+      </linearGradient>
+      <symbol id="tal-medal" viewBox="0 0 40 54">
+        <path d="M11 0h8l3 20h-8Z" fill="#6FB7E9" stroke="#2C3E50" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M21 0h8l-3 20h-8Z" fill="#EF7A85" stroke="#2C3E50" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle cx="20" cy="35" r="15.5" fill="url(#tal-gold)" stroke="#2C3E50" stroke-width="2"/>
+        <circle cx="20" cy="35" r="10.5" fill="none" stroke="#FFF3C4" stroke-width="1.6" opacity=".9"/>
+        <path d="M20 28.5l2 4.1 4.5.6-3.3 3.1.8 4.5-4-2.2-4 2.2.8-4.5-3.3-3.1 4.5-.6Z" fill="#FFF7D6"/>
+      </symbol>
+      <symbol id="tal-medal-big" viewBox="0 0 40 54">
+        <path d="M10 0h9l3 20h-9Z" fill="#B69CE6" stroke="#2C3E50" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M21 0h9l-3 20h-9Z" fill="#7CC47F" stroke="#2C3E50" stroke-width="1.4" stroke-linejoin="round"/>
+        <circle cx="20" cy="35" r="17" fill="url(#tal-gold)" stroke="#2C3E50" stroke-width="1.8"/>
+        <circle cx="20" cy="35" r="12.5" fill="none" stroke="#FFF3C4" stroke-width="1.4"/>
+        <text x="20" y="40.5" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="14" fill="#7A4E0C">10</text>
+      </symbol>
+    </defs>
+  </svg>
+  <p class="att-offline" id="talOffline" role="status" hidden>💾 Saved on this device only</p>
+  <div class="att-stats">
+    <section class="att-stat tal-stat total" aria-live="polite">
+      <p class="k">🥇 Class Total</p>
+      <p class="v" id="talTotal">0</p>
+    </section>
+    <section class="att-stat tal-stat top" aria-live="polite">
+      <p class="k">👑 Most Talents</p>
+      <p class="v who" id="talTop">—</p>
+    </section>
+  </div>
+  <ul class="att-list" id="talList"></ul>
+  <div class="att-foot">
+    <button type="button" class="att-reset" id="talReset">↺ Start Talents Over</button>
+  </div>
+  <section class="set-card bk-card" aria-labelledby="bkTitle">
+    <h2 id="bkTitle">📦 Semester Record</h2>
+    <p class="hint">Save everyone’s attendance and talents as text you can keep, and bring it back later.</p>
+    <div class="bk-actions">
+      <button type="button" class="bk-btn" id="bkExport">📤 Take Out Semester Record</button>
+    </div>
+    <div class="bk-out" id="bkOut" hidden>
+      <textarea class="bk-text" id="bkText" readonly spellcheck="false" aria-label="Semester record text"></textarea>
+      <div class="bk-actions">
+        <button type="button" class="bk-btn light" id="bkSelect">Select All</button>
+        <button type="button" class="bk-btn light" id="bkCopy">Copy</button>
+      </div>
+      <p class="set-msg" id="bkOutMsg" aria-live="polite">Select all the text and copy it into a note, email or document to keep it safe.</p>
+    </div>
+
+    <p class="bk-sub">📥 Bring a Record Back</p>
+    <p class="hint">Paste a whole record you saved before. Its last line (starting with #BACKUP) is what brings everything back.</p>
+    <textarea class="bk-text paste" id="bkPaste" spellcheck="false" placeholder="Paste the saved record here" aria-label="Paste a saved record"></textarea>
+    <div class="bk-actions">
+      <button type="button" class="bk-btn restore" id="bkRestore">↺ Bring This Record Back</button>
+    </div>
+    <p class="set-msg" id="bkInMsg" aria-live="polite"></p>
+  </section>
+  <div class="tal-toast" id="talToast" role="status" aria-live="polite"></div>
+</template>
 <template id="worship-template">
   <div class="worship-head">
     <h2>🎵 Worship</h2>
@@ -1682,6 +1888,12 @@
     } else if (t.id === 'attendance') {
       panel.classList.add('attendance');
       panel.innerHTML = document.getElementById('attendance-template').innerHTML;
+    } else if (t.id === 'manage') {
+      panel.classList.add('settings');
+      panel.innerHTML = document.getElementById('settings-template').innerHTML;
+    } else if (t.id === 'talent') {
+      panel.classList.add('talents');
+      panel.innerHTML = document.getElementById('talents-template').innerHTML;
     } else if (t.id === 'worship') {
       panel.classList.add('worship');
       panel.innerHTML = document.getElementById('worship-template').innerHTML;
@@ -2304,50 +2516,81 @@
     showWord();
   }
   initScramble();
+  // ===== Shared class list (Attendance and Talents use the same roster) =====
+  const ROSTER_KEY = 'saltClass:roster', CLASSNAME_KEY = 'saltClass:className';
+  const DEFAULT_ROSTER = ['New Jersey', 'New York', 'Seattle', 'Ohio', 'Texas'];
+  const DEFAULT_CLASS_NAME = 'Salt Class · Youth Group';
+  const CLASS_ROSTER = (() => {
+    try {
+      const v = JSON.parse(localStorage.getItem(ROSTER_KEY) || 'null');
+      if (Array.isArray(v)) return v.filter(x => typeof x === 'string' && x.trim()).slice(0, 200);
+    } catch (e) {}
+    return DEFAULT_ROSTER.slice();
+  })();
+
+  // An emoji that fits each name; any other name gets one from POOL
+  const KNOWN = {
+    'new jersey': '🍅', '뉴저지': '🍅',
+    'new york': '🗽', '뉴욕': '🗽',
+    'seattle': '☕', '시애틀': '☕',
+    'ohio': '🌰', '오하이오': '🌰',
+    'texas': '🤠', '텍사스': '🤠'
+  };
+  const POOL = ['🦊','🐻','🐼','🐨','🦁','🐯','🐸','🐧','🦉','🐢','🐬','🦋','🐝','🐞','🦄','🐳','🦒','🦔','🐿️','🦜',
+                '🍎','🍊','🍋','🍉','🍓','🍒','🥝','🍍','🥕','🌽','🌻','🌷','🌈','⭐','🌙','☀️','⚓','🚀','🎈','🎨',
+                '⚽','🏀','🎸','🎺','🧩','🪁','🛶','🚲','🏰','🗻'];
+
+  // Every name gets an emoji, and no emoji is used twice in one class
+  function assignEmojis(names) {
+    const used = new Set(), out = {};
+    const all = [...new Set([...Object.values(KNOWN), ...POOL])];
+    names.forEach(n => {
+      const k = KNOWN[n.trim().toLowerCase()] || KNOWN[n.trim()];
+      if (k && !used.has(k)) { out[n] = k; used.add(k); }
+    });
+    names.forEach(n => {
+      if (out[n]) return;
+      let h = 0;
+      for (const ch of n) h = (h * 31 + ch.codePointAt(0)) >>> 0;
+      for (let i = 0; i < POOL.length; i++) {
+        const e = POOL[(h + i) % POOL.length];
+        if (!used.has(e)) { out[n] = e; used.add(e); return; }
+      }
+      // More names than emojis: fall back to the full set, then numbered
+      const e = all.find(x => !used.has(x));
+      out[n] = e || ('#' + (Object.keys(out).length + 1));
+      if (e) used.add(e);
+    });
+    return out;
+  }
+  const CLASS_EMOJI = assignEmojis(CLASS_ROSTER);
+  const CLASS_HOOKS = {};   // lets the semester record read and restore each tab
+  const CLASS_SB_URL = 'https://zsgdirrfpnypupbrzzqm.supabase.co';
+  const CLASS_SB_KEY = 'sb_publishable_FHZ0ElB_V7ITnAKCP1DNIQ_LktU1AUP';   // public (publishable) key only
+  // Change a nickname inside one table (attendance or talents). Never throws; true when it worked.
+  async function classRenameRow(table, from, to) {
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 8000);
+    try {
+      const res = await fetch(CLASS_SB_URL + '/rest/v1/' + table + '?nickname=eq.' + encodeURIComponent(from), {
+        method: 'PATCH', signal: ctl.signal,
+        headers: { apikey: CLASS_SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify({ nickname: to })
+      });
+      return res.ok;
+    } catch (e) { return false; } finally { clearTimeout(t); }
+  }
+  function refreshClassEmoji() {
+    Object.keys(CLASS_EMOJI).forEach(k => { delete CLASS_EMOJI[k]; });
+    Object.assign(CLASS_EMOJI, assignEmojis(CLASS_ROSTER));
+  }
+
   // ===== Attendance tab =====
   function initAttendance() {
     const root = document.getElementById('panel-attendance');
     if (!root) return;
 
-    // Class roster — names exactly as given
-    const ROSTER = ['New Jersey', 'New York', 'Seattle', 'Ohio', 'Texas'];
-
-    // An emoji that fits each name; any other name gets one from POOL
-    const KNOWN = {
-      'new jersey': '🍅', '뉴저지': '🍅',
-      'new york': '🗽', '뉴욕': '🗽',
-      'seattle': '☕', '시애틀': '☕',
-      'ohio': '🌰', '오하이오': '🌰',
-      'texas': '🤠', '텍사스': '🤠'
-    };
-    const POOL = ['🦊','🐻','🐼','🐨','🦁','🐯','🐸','🐧','🦉','🐢','🐬','🦋','🐝','🐞','🦄','🐳','🦒','🦔','🐿️','🦜',
-                  '🍎','🍊','🍋','🍉','🍓','🍒','🥝','🍍','🥕','🌽','🌻','🌷','🌈','⭐','🌙','☀️','⚓','🚀','🎈','🎨',
-                  '⚽','🏀','🎸','🎺','🧩','🪁','🛶','🚲','🏰','🗻'];
-
-    // Every name gets an emoji, and no emoji is used twice in one class
-    function assignEmojis(names) {
-      const used = new Set(), out = {};
-      const all = [...new Set([...Object.values(KNOWN), ...POOL])];
-      names.forEach(n => {
-        const k = KNOWN[n.trim().toLowerCase()] || KNOWN[n.trim()];
-        if (k && !used.has(k)) { out[n] = k; used.add(k); }
-      });
-      names.forEach(n => {
-        if (out[n]) return;
-        let h = 0;
-        for (const ch of n) h = (h * 31 + ch.codePointAt(0)) >>> 0;
-        for (let i = 0; i < POOL.length; i++) {
-          const e = POOL[(h + i) % POOL.length];
-          if (!used.has(e)) { out[n] = e; used.add(e); return; }
-        }
-        // More names than emojis: fall back to the full set, then numbered
-        const e = all.find(x => !used.has(x));
-        out[n] = e || ('#' + (Object.keys(out).length + 1));
-        if (e) used.add(e);
-      });
-      return out;
-    }
-    const EMOJI = assignEmojis(ROSTER);
+    const ROSTER = CLASS_ROSTER, EMOJI = CLASS_EMOJI;   // shared class list (also used by Talents)
 
     const totalEl = root.querySelector('#attTotal'), topEl = root.querySelector('#attTop'),
           list = root.querySelector('#attList'), allBtn = root.querySelector('#attAll'),
@@ -2572,6 +2815,32 @@
       if (resetBtn.classList.contains('armed') && !resetBtn.contains(e.target)) disarm();
     });
 
+    CLASS_HOOKS.getAttendance = () => Object.assign({}, counts);
+    CLASS_HOOKS.setAttendance = obj => { counts = Object.assign({}, obj); prevShown = Object.assign({}, counts); render(); persist(); };
+
+    // the shared class list changed in Class Settings
+    document.addEventListener('saltclass:roster', e => {
+      const d = (e && e.detail) || {};
+      const r = d.renamed;
+      if (r && r.from !== r.to) {
+        if (counts[r.from] != null) {
+          const moved = Object.assign({}, counts);
+          moved[r.to] = moved[r.from];
+          delete moved[r.from];
+          counts = moved;
+        }
+        saveLocal();
+        prevShown = Object.assign({}, counts);
+        render();
+        // rename the same nickname in the 'attendance' table, then save (works offline too)
+        classRenameRow('attendance', r.from, r.to).then(() => persist(), () => persist());
+        return;
+      }
+      prevShown = Object.assign({}, counts);
+      render();
+      if (d.added) persist();
+    });
+
     // first paint from this device, then load from Supabase
     counts = loadLocal();
     prevShown = Object.assign({}, counts);
@@ -2581,6 +2850,615 @@
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
   }
   initAttendance();
+  // ===== Talents tab =====
+  function initTalents() {
+    const root = document.getElementById('panel-talent');
+    if (!root) return;
+    const ROSTER = CLASS_ROSTER, EMOJI = CLASS_EMOJI;   // same class list as Attendance
+
+    const totalEl = root.querySelector('#talTotal'), topEl = root.querySelector('#talTop'),
+          list = root.querySelector('#talList'), resetBtn = root.querySelector('#talReset'),
+          offlineBadge = root.querySelector('#talOffline'), toast = root.querySelector('#talToast');
+
+    let counts = {};
+    let prevShown = {};
+    const MAX_BIG = 5;   // show at most 5 big medals; anything more becomes "+N"
+
+    // ---- storage: Supabase "talents" table, with a copy always kept on this device
+    const LS_KEY = 'saltClass:talents';
+    const LS_PENDING = 'saltClass:talents:pending';
+    const SB_URL = 'https://zsgdirrfpnypupbrzzqm.supabase.co';
+    const SB_KEY = 'sb_publishable_FHZ0ElB_V7ITnAKCP1DNIQ_LktU1AUP';   // public (publishable) key only
+    const SB_TABLE = SB_URL + '/rest/v1/talents';
+    let writing = false, dirty = false, retryTimer = null, syncing = false;
+
+    function loadLocal() {
+      try { const v = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+    }
+    function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(counts)); } catch (e) {} }
+    function setPending(on) { try { on ? localStorage.setItem(LS_PENDING, '1') : localStorage.removeItem(LS_PENDING); } catch (e) {} }
+    function hasPending() { try { return localStorage.getItem(LS_PENDING) === '1'; } catch (e) { return false; } }
+    function num(v) { return Math.max(0, Math.floor(Number(v) || 0)); }
+
+    async function sbFetch(url, opts, ms) {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), ms || 8000);
+      try {
+        return await fetch(url, Object.assign({}, opts, {
+          signal: ctl.signal,
+          headers: Object.assign({ apikey: SB_KEY, 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+        }));
+      } finally { clearTimeout(t); }
+    }
+    async function sbLoad() {
+      const res = await sbFetch(SB_TABLE + '?select=nickname,talents', { method: 'GET' }, 8000);
+      if (!res.ok) throw { code: 'sb_' + res.status };
+      const rows = await res.json();
+      if (!Array.isArray(rows)) throw { code: 'sb_shape' };
+      const o = {};
+      rows.forEach(r => { if (r && typeof r.nickname === 'string') o[r.nickname] = num(r.talents); });
+      return o;
+    }
+    async function sbUpsert(rows, onConflict) {
+      const res = await sbFetch(SB_TABLE + '?on_conflict=nickname', {
+        method: 'POST',
+        headers: { Prefer: 'resolution=' + onConflict + ',return=minimal' },
+        body: JSON.stringify(rows)
+      });
+      if (!res.ok) throw { code: 'sb_' + res.status };
+    }
+    function allRows() {
+      const names = [...new Set([...ROSTER, ...Object.keys(counts)])];
+      return names.map(n => ({ nickname: n, talents: num(counts[n]) }));
+    }
+    function setOffline(off) {
+      offlineBadge.hidden = !off;
+      clearTimeout(retryTimer);
+      if (off) retryTimer = setTimeout(syncNow, 20000);
+    }
+    async function flush() {
+      if (writing) return;
+      writing = true; dirty = false;
+      try {
+        await sbUpsert(allRows(), 'merge-duplicates');
+        if (!dirty) setPending(false);
+        setOffline(false);
+      } catch (e) { setOffline(true); }
+      writing = false;
+      if (dirty) flush();
+    }
+    function persist() {
+      try {
+        saveLocal();
+        setPending(true);
+        dirty = true;
+        flush().catch(() => { writing = false; });
+      } catch (e) { /* keep going with what is on screen */ }
+    }
+    async function syncNow() {
+      if (syncing || writing) return;
+      syncing = true;
+      try {
+        if (hasPending()) {
+          await sbUpsert(allRows(), 'merge-duplicates');
+          setPending(false);
+        } else {
+          const online = await sbLoad();
+          const missing = ROSTER.filter(n => !(n in online));
+          if (missing.length) {
+            await sbUpsert(missing.map(n => ({ nickname: n, talents: 0 })), 'ignore-duplicates');
+            missing.forEach(n => { online[n] = 0; });
+          }
+          if (!dirty && !writing && !hasPending()) { counts = online; saveLocal(); render(); }
+        }
+        setOffline(false);
+      } catch (e) { setOffline(true); }
+      syncing = false;
+    }
+
+    // ---- medals
+    function medal(big, isNew) {
+      return '<svg class="' + (big ? 'm-big' : 'm-small') + (isNew ? ' m-new' : '') + '" viewBox="0 0 40 54" aria-hidden="true"><use href="#' + (big ? 'tal-medal-big' : 'tal-medal') + '"/></svg>';
+    }
+    function pileHTML(c, before) {
+      if (!c) return '<span class="empty">No talents yet</span>';
+      const big = Math.floor(c / 10), small = c % 10;
+      const bigShown = Math.min(big, MAX_BIG);
+      const beforeBig = Math.floor(before / 10), beforeSmall = before % 10;
+      let h = '';
+      for (let i = 0; i < bigShown; i++) h += medal(true, i >= beforeBig);
+      for (let i = 0; i < small; i++) h += medal(false, big !== beforeBig ? true : i >= beforeSmall);
+      const hidden = c - (bigShown * 10 + small);
+      if (hidden > 0) h += '<span class="more">+' + hidden + '</span>';
+      return h;
+    }
+
+    function render() {
+      const total = ROSTER.reduce((a, n) => a + num(counts[n]), 0);
+      if (totalEl.dataset.v !== String(total)) {
+        totalEl.dataset.v = String(total);
+        totalEl.innerHTML = total + '<small>' + (total === 1 ? 'talent' : 'talents') + '</small>';
+        totalEl.classList.remove('pop'); void totalEl.offsetWidth; totalEl.classList.add('pop');
+      }
+      let max = 0;
+      ROSTER.forEach(n => { max = Math.max(max, num(counts[n])); });
+      const leaders = max ? ROSTER.filter(n => num(counts[n]) === max) : [];
+      topEl.textContent = leaders.length ? leaders.map(n => EMOJI[n] + ' ' + n).join(', ') + '  (' + max + ')' : '—';
+
+      list.innerHTML = '';
+      ROSTER.forEach(n => {
+        const c = num(counts[n]), before = prevShown[n] == null ? c : num(prevShown[n]);
+        const li = document.createElement('li');
+        li.className = 'att-row tal-row';
+        li.innerHTML =
+          '<div class="att-name"><span class="emo" aria-hidden="true">' + EMOJI[n] + '</span><span></span></div>' +
+          '<div class="tal-pile" aria-label="' + c + (c === 1 ? ' talent' : ' talents') + '">' + pileHTML(c, before) +
+            '<span class="count">' + c + '</span></div>' +
+          '<div class="tal-btns">' +
+            '<button type="button" class="att-btn minus" aria-label="Take one talent from ' + n + '"' + (c === 0 ? ' disabled' : '') + '>−</button>' +
+            '<button type="button" class="att-btn plus" aria-label="Give one talent to ' + n + '">＋</button>' +
+            '<button type="button" class="att-btn plus5" aria-label="Give five talents to ' + n + '">＋5</button>' +
+          '</div>';
+        li.querySelector('.att-name span:last-child').textContent = n;
+        li.querySelector('.minus').addEventListener('click', () => change(n, -1));
+        li.querySelector('.plus').addEventListener('click', () => change(n, 1));
+        li.querySelector('.plus5').addEventListener('click', () => change(n, 5));
+        list.appendChild(li);
+      });
+      prevShown = Object.assign({}, counts);
+    }
+
+    let toastTimer = null;
+    function showToast(n, d) {
+      toast.innerHTML = '';
+      toast.append(EMOJI[n] + ' ' + n + ' ');
+      const b = document.createElement('b');
+      b.textContent = '+' + d + (d === 1 ? ' talent' : ' talents');
+      toast.appendChild(b);
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    function change(n, d) {
+      const cur = num(counts[n]);
+      const next = Math.max(0, cur + d);
+      if (next === cur) return;
+      counts = Object.assign({}, counts, { [n]: next });
+      render(); persist();
+      if (d > 0) {
+        showToast(n, d);
+        if (d >= 5 && window.saltConfetti) window.saltConfetti(40);
+      }
+    }
+
+    // "Start Talents Over": first tap asks, second tap erases
+    const RESET_LABEL = '↺ Start Talents Over', CONFIRM_LABEL = '⚠️ Really erase all talents? Tap again';
+    let resetTimer = null;
+    function disarm() { clearTimeout(resetTimer); resetBtn.classList.remove('armed'); resetBtn.textContent = RESET_LABEL; }
+    resetBtn.addEventListener('click', () => {
+      if (!resetBtn.classList.contains('armed')) {
+        resetBtn.classList.add('armed');
+        resetBtn.textContent = CONFIRM_LABEL;
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(disarm, 5000);
+        return;
+      }
+      disarm();
+      counts = {};
+      prevShown = {};
+      render(); persist();
+    });
+    document.addEventListener('pointerdown', e => {
+      if (resetBtn.classList.contains('armed') && !resetBtn.contains(e.target)) disarm();
+    });
+
+    CLASS_HOOKS.getTalents = () => Object.assign({}, counts);
+    CLASS_HOOKS.setTalents = obj => { counts = Object.assign({}, obj); prevShown = Object.assign({}, counts); render(); persist(); };
+
+    // the shared class list changed in Class Settings
+    document.addEventListener('saltclass:roster', e => {
+      const d = (e && e.detail) || {};
+      const r = d.renamed;
+      if (r && r.from !== r.to) {
+        if (counts[r.from] != null) {
+          const moved = Object.assign({}, counts);
+          moved[r.to] = moved[r.from];
+          delete moved[r.from];
+          counts = moved;
+        }
+        saveLocal();
+        prevShown = Object.assign({}, counts);
+        render();
+        // rename the same nickname in the 'talents' table, then save (works offline too)
+        classRenameRow('talents', r.from, r.to).then(() => persist(), () => persist());
+        return;
+      }
+      prevShown = Object.assign({}, counts);
+      render();
+      if (d.added) persist();
+    });
+
+    counts = loadLocal();
+    prevShown = Object.assign({}, counts);
+    render();
+    syncNow();
+    window.addEventListener('online', () => syncNow());
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
+  }
+  initTalents();
+  // ===== Class Settings tab =====
+  function initSettings() {
+    const header = document.querySelector('.class-name .en');
+    const LS_PENDING = 'saltClass:settings:pending';
+    const SB_URL = 'https://zsgdirrfpnypupbrzzqm.supabase.co';
+    const SB_KEY = 'sb_publishable_FHZ0ElB_V7ITnAKCP1DNIQ_LktU1AUP';   // public (publishable) key only
+    const ROSTER_TABLE = SB_URL + '/rest/v1/class_roster';
+    const INFO_TABLE = SB_URL + '/rest/v1/class_info';
+
+    let className = DEFAULT_CLASS_NAME;
+    try { const v = localStorage.getItem(CLASSNAME_KEY); if (v && v.trim()) className = v.trim().slice(0, 60); } catch (e) {}
+    function showClassName() { if (header) header.textContent = className; }
+    showClassName();
+
+    const root = document.getElementById('panel-manage');
+    const list = root && root.querySelector('#setList'), addInput = root && root.querySelector('#setNew'),
+          addBtn = root && root.querySelector('#setAdd'), rosterMsg = root && root.querySelector('#setRosterMsg'),
+          nameInput = root && root.querySelector('#setClassName'), saveName = root && root.querySelector('#setSaveName'),
+          nameMsg = root && root.querySelector('#setNameMsg'), offlineBadge = root && root.querySelector('#setOffline'),
+          toast = root && root.querySelector('#setToast'), toastText = root && root.querySelector('#setToastText'),
+          undoBtn = root && root.querySelector('#setUndo');
+
+    // ---- local + Supabase storage for the class list and class name
+    function saveLocal() {
+      try { localStorage.setItem(ROSTER_KEY, JSON.stringify(CLASS_ROSTER)); } catch (e) {}
+      try { localStorage.setItem(CLASSNAME_KEY, className); } catch (e) {}
+    }
+    function setPending(on) { try { on ? localStorage.setItem(LS_PENDING, '1') : localStorage.removeItem(LS_PENDING); } catch (e) {} }
+    function hasPending() { try { return localStorage.getItem(LS_PENDING) === '1'; } catch (e) { return false; } }
+    async function sbFetch(url, opts, ms) {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), ms || 8000);
+      try {
+        return await fetch(url, Object.assign({}, opts, {
+          signal: ctl.signal,
+          headers: Object.assign({ apikey: SB_KEY, 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+        }));
+      } finally { clearTimeout(t); }
+    }
+    async function sbLoad() {
+      const r1 = await sbFetch(ROSTER_TABLE + '?select=nickname,sort_order&order=sort_order.asc,nickname.asc', { method: 'GET' });
+      if (!r1.ok) throw { code: 'sb_' + r1.status };
+      const rows = await r1.json();
+      const r2 = await sbFetch(INFO_TABLE + '?select=class_name&id=eq.true', { method: 'GET' });
+      if (!r2.ok) throw { code: 'sb_' + r2.status };
+      const info = await r2.json();
+      return {
+        roster: Array.isArray(rows) ? rows.map(x => x && x.nickname) : [],
+        class_name: Array.isArray(info) && info[0] ? info[0].class_name : null
+      };
+    }
+    function pgQuote(v) { return '"' + String(v).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"'; }
+    async function sbSave() {
+      // 1) class list: add/update every name with its place in line
+      if (CLASS_ROSTER.length) {
+        const r1 = await sbFetch(ROSTER_TABLE + '?on_conflict=nickname', {
+          method: 'POST',
+          headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+          body: JSON.stringify(CLASS_ROSTER.map((n, i) => ({ nickname: n, sort_order: i + 1 })))
+        });
+        if (!r1.ok) throw { code: 'sb_' + r1.status };
+      }
+      // 2) remove names that are no longer in the class list
+      const filter = CLASS_ROSTER.length
+        ? 'nickname=not.in.(' + CLASS_ROSTER.map(pgQuote).map(encodeURIComponent).join(',') + ')'
+        : 'nickname=not.is.null';
+      const r2 = await sbFetch(ROSTER_TABLE + '?' + filter, { method: 'DELETE', headers: { Prefer: 'return=minimal' } });
+      if (!r2.ok) throw { code: 'sb_' + r2.status };
+      // 3) class name (one row)
+      const r3 = await sbFetch(INFO_TABLE + '?on_conflict=id', {
+        method: 'POST',
+        headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify([{ id: true, class_name: className }])
+      });
+      if (!r3.ok) throw { code: 'sb_' + r3.status };
+    }
+    let writing = false, dirty = false, syncing = false, retryTimer = null;
+    function setOffline(off) {
+      if (offlineBadge) offlineBadge.hidden = !off;
+      clearTimeout(retryTimer);
+      if (off) retryTimer = setTimeout(syncNow, 20000);
+    }
+    async function flush() {
+      if (writing) return;
+      writing = true; dirty = false;
+      try { await sbSave(); if (!dirty) setPending(false); setOffline(false); }
+      catch (e) { setOffline(true); }
+      writing = false;
+      if (dirty) flush();
+    }
+    function persist() {
+      try { saveLocal(); setPending(true); dirty = true; flush().catch(() => { writing = false; }); } catch (e) {}
+    }
+    function cleanList(arr) {
+      const seen = new Set(), out = [];
+      (Array.isArray(arr) ? arr : []).forEach(x => {
+        if (typeof x !== 'string') return;
+        const n = x.replace(/\s+/g, ' ').trim().slice(0, 50);
+        if (n && !seen.has(n.toLowerCase())) { seen.add(n.toLowerCase()); out.push(n); }
+      });
+      return out.slice(0, 200);
+    }
+    async function syncNow() {
+      if (syncing || writing) return;
+      syncing = true;
+      try {
+        if (hasPending()) {
+          await sbSave(); setPending(false);
+        } else {
+          const row = await sbLoad();
+          if (!row.roster.length && CLASS_ROSTER.length && !row.class_name) {
+            await sbSave();                       // first time: put this device's list online
+          } else if (!dirty && !writing && !hasPending()) {
+            const remoteList = cleanList(row.roster);
+            const remoteName = typeof row.class_name === 'string' && row.class_name.trim() ? row.class_name.trim().slice(0, 60) : className;
+            const listChanged = JSON.stringify(remoteList) !== JSON.stringify(CLASS_ROSTER);
+            className = remoteName;
+            showClassName();
+            if (nameInput && document.activeElement !== nameInput) nameInput.value = className;
+            if (listChanged) setRoster(remoteList, {}, false);
+            else saveLocal();
+          }
+        }
+        setOffline(false);
+      } catch (e) { setOffline(true); }
+      syncing = false;
+    }
+
+    // ---- change the shared list, then tell Attendance and Talents
+    function setRoster(next, detail, save) {
+      CLASS_ROSTER.splice(0, CLASS_ROSTER.length, ...next);
+      refreshClassEmoji();
+      if (save) persist(); else saveLocal();
+      try { document.dispatchEvent(new CustomEvent('saltclass:roster', { detail: detail || {} })); } catch (e) {}
+      render();
+    }
+
+    function tidy(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+    function problem(name, skipIndex) {
+      if (!name) return 'Please type a nickname.';
+      if (name.length > 50) return 'Please keep it under 50 letters.';
+      const low = name.toLowerCase();
+      if (CLASS_ROSTER.some((n, i) => i !== skipIndex && n.toLowerCase() === low)) return '“' + name + '” is already in the class.';
+      return '';
+    }
+    function say(el, text, kind) { if (!el) return; el.textContent = text; el.className = 'set-msg' + (kind ? ' ' + kind : ''); }
+
+    let lastRemoved = null, toastTimer = null;
+    function hideToast() { if (toast) toast.hidden = true; lastRemoved = null; clearTimeout(toastTimer); }
+
+    function render() {
+      if (!list) return;
+      list.innerHTML = '';
+      if (!CLASS_ROSTER.length) {
+        const li = document.createElement('li');
+        li.innerHTML = '<p class="set-empty">No children yet. Add a nickname below.</p>';
+        list.appendChild(li);
+        return;
+      }
+      CLASS_ROSTER.forEach((n, i) => {
+        const li = document.createElement('li');
+        li.className = 'set-row';
+        li.innerHTML =
+          '<span class="emo" aria-hidden="true"></span>' +
+          '<input class="set-input" type="text" maxlength="50" autocomplete="off">' +
+          '<span class="pen" aria-hidden="true">✏️</span>' +
+          '<button type="button" class="set-btn remove">Remove</button>';
+        li.querySelector('.emo').textContent = CLASS_EMOJI[n] || '🙂';
+        const input = li.querySelector('.set-input');
+        input.value = n;
+        input.setAttribute('aria-label', 'Nickname ' + (i + 1) + ', tap to change');
+        const commit = () => {
+          const name = tidy(input.value);
+          if (name === n) { input.classList.remove('bad'); return; }
+          const why = problem(name, i);
+          if (why) { input.classList.add('bad'); say(rosterMsg, why, 'err'); input.value = n; setTimeout(() => input.classList.remove('bad'), 1200); return; }
+          const next = CLASS_ROSTER.slice(); next[i] = name;
+          hideToast();
+          setRoster(next, { renamed: { from: n, to: name } }, true);
+          say(rosterMsg, '✓ Changed “' + n + '” to “' + name + '”.', 'ok');
+        };
+        input.addEventListener('keydown', e => {
+          if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+          if (e.key === 'Escape') { input.value = n; input.blur(); }
+        });
+        input.addEventListener('blur', commit);
+        li.querySelector('.remove').addEventListener('click', () => {
+          const next = CLASS_ROSTER.filter((_, k) => k !== i);
+          setRoster(next, { removed: n }, true);
+          lastRemoved = { name: n, index: i };
+          if (toast) {
+            toastText.textContent = 'Removed ' + n + '.';
+            toast.hidden = false;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(hideToast, 8000);
+          }
+          say(rosterMsg, '', '');
+        });
+        list.appendChild(li);
+      });
+    }
+
+    if (root) {
+      function addChild() {
+        const name = tidy(addInput.value);
+        const why = problem(name, -1);
+        if (why) { say(rosterMsg, why, 'err'); addInput.focus(); return; }
+        hideToast();
+        setRoster(CLASS_ROSTER.concat(name), { added: name }, true);
+        addInput.value = '';
+        say(rosterMsg, '✓ Added ' + name + '.', 'ok');
+      }
+      addBtn.addEventListener('click', addChild);
+      addInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addChild(); } });
+      undoBtn.addEventListener('click', () => {
+        if (!lastRemoved) return;
+        const r = lastRemoved;
+        if (problem(r.name, -1)) { hideToast(); return; }
+        const next = CLASS_ROSTER.slice();
+        next.splice(Math.min(r.index, next.length), 0, r.name);
+        hideToast();
+        setRoster(next, { added: r.name }, true);
+        say(rosterMsg, '✓ ' + r.name + ' is back.', 'ok');
+      });
+
+      nameInput.value = className;
+      function saveClassName() {
+        const v = tidy(nameInput.value);
+        if (!v) { say(nameMsg, 'Please type a class name.', 'err'); nameInput.value = className; return; }
+        if (v.length > 60) { say(nameMsg, 'Please keep it under 60 letters.', 'err'); return; }
+        className = v;
+        nameInput.value = v;
+        showClassName();
+        persist();
+        say(nameMsg, '✓ Saved.', 'ok');
+      }
+      saveName.addEventListener('click', saveClassName);
+      nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); saveClassName(); } });
+      render();
+    }
+
+    CLASS_HOOKS.getClassName = () => className;
+    CLASS_HOOKS.setClass = (name, roster) => {
+      className = name;
+      showClassName();
+      if (nameInput) nameInput.value = className;
+      setRoster(roster, {}, true);
+    };
+
+    syncNow();
+    window.addEventListener('online', () => syncNow());
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
+  }
+  initSettings();
+  // ===== Semester record: take out / bring back (shown in the Talents tab) =====
+  function initBackup() {
+    const root = document.getElementById('panel-talent');
+    if (!root) return;
+    const $ = id => root.querySelector('#' + id);
+    const exportBtn = $('bkExport'), out = $('bkOut'), text = $('bkText'), selectBtn = $('bkSelect'),
+          copyBtn = $('bkCopy'), outMsg = $('bkOutMsg'), paste = $('bkPaste'), restoreBtn = $('bkRestore'), inMsg = $('bkInMsg');
+    const MARK = '#BACKUP ';
+
+    function say(el, msg, kind) { el.textContent = msg; el.className = 'set-msg' + (kind ? ' ' + kind : ''); }
+    function n0(v) { return Math.max(0, Math.floor(Number(v) || 0)); }
+    function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+    function buildRecord() {
+      const att = (CLASS_HOOKS.getAttendance && CLASS_HOOKS.getAttendance()) || {};
+      const tal = (CLASS_HOOKS.getTalents && CLASS_HOOKS.getTalents()) || {};
+      const name = (CLASS_HOOKS.getClassName && CLASS_HOOKS.getClassName()) || DEFAULT_CLASS_NAME;
+      const today = new Date();
+      const lines = ['[Our Class Record] ' + name,
+                     'Saved: ' + today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), ''];
+      if (!CLASS_ROSTER.length) lines.push('· (no children in the class list)');
+      CLASS_ROSTER.forEach(n => {
+        lines.push('· ' + n + ' — ' + plural(n0(att[n]), 'visit', 'visits') + ', ' + plural(n0(tal[n]), 'talent', 'talents'));
+      });
+      const keep = o => { const r = {}; Object.keys(o).forEach(k => { const v = n0(o[k]); if (v) r[k] = v; }); return r; };
+      const data = { app: 'salt-class', v: 1, savedAt: today.toISOString(), className: name,
+                     roster: CLASS_ROSTER.slice(), attendance: keep(att), talents: keep(tal) };
+      lines.push('', '(Keep the line below. It lets you bring this record back later.)', MARK + JSON.stringify(data));
+      return lines.join('\n');
+    }
+
+    exportBtn.addEventListener('click', () => {
+      text.value = buildRecord();
+      out.hidden = false;
+      say(outMsg, 'Select all the text and copy it into a note, email or document to keep it safe.', '');
+      text.scrollTop = 0;
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    function selectAll() {
+      try { text.focus(); text.select(); text.setSelectionRange(0, text.value.length); } catch (e) {}
+    }
+    selectBtn.addEventListener('click', () => { selectAll(); say(outMsg, 'All selected. Now copy it (long-press › Copy, or Ctrl/Cmd + C).', ''); });
+    copyBtn.addEventListener('click', async () => {
+      selectAll();
+      let ok = false;
+      try { if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(text.value); ok = true; } } catch (e) {}
+      if (!ok) { try { ok = document.execCommand && document.execCommand('copy'); } catch (e) { ok = false; } }
+      say(outMsg, ok ? '✓ Copied. Paste it somewhere safe.' : 'Copy didn’t work here. The text is selected — please copy it yourself.', ok ? 'ok' : 'err');
+    });
+
+    // ---- read a pasted record
+    function parseRecord(raw) {
+      const s = String(raw || '');
+      const at = s.lastIndexOf(MARK.trim());
+      if (at < 0) return { error: 'Couldn’t find the #BACKUP line. Please paste the whole record, including its last line.' };
+      const start = s.indexOf('{', at);
+      if (start < 0) return { error: 'The #BACKUP line looks cut off. Please paste the whole line.' };
+      let line = s.slice(start).split('\n')[0].trim();
+      let d;
+      try { d = JSON.parse(line); } catch (e) { return { error: 'The #BACKUP line looks cut off or changed. Please paste it again exactly as it was.' }; }
+      if (!d || d.app !== 'salt-class' || typeof d !== 'object') return { error: 'This doesn’t look like a class record from this page.' };
+      const seen = new Set(), roster = [];
+      (Array.isArray(d.roster) ? d.roster : []).forEach(x => {
+        if (typeof x !== 'string') return;
+        const n = x.replace(/\s+/g, ' ').trim().slice(0, 50);
+        if (n && !seen.has(n.toLowerCase())) { seen.add(n.toLowerCase()); roster.push(n); }
+      });
+      const counts = o => {
+        const r = {};
+        if (o && typeof o === 'object') Object.keys(o).forEach(k => {
+          const name = String(k).replace(/\s+/g, ' ').trim().slice(0, 50);
+          const v = Math.min(100000, n0(o[k]));
+          if (name && v) r[name] = v;
+        });
+        return r;
+      };
+      const className = typeof d.className === 'string' && d.className.trim() ? d.className.trim().slice(0, 60) : DEFAULT_CLASS_NAME;
+      return { roster: roster.slice(0, 200), attendance: counts(d.attendance), talents: counts(d.talents), className, savedAt: d.savedAt };
+    }
+
+    // two taps: first shows what was found, second replaces everything
+    let pending = null, armTimer = null;
+    const LABEL = '↺ Bring This Record Back';
+    function disarm() { clearTimeout(armTimer); pending = null; restoreBtn.classList.remove('armed'); restoreBtn.textContent = LABEL; }
+    restoreBtn.addEventListener('click', () => {
+      if (!pending) {
+        const r = parseRecord(paste.value);
+        if (r.error) { say(inMsg, r.error, 'err'); return; }
+        pending = r;
+        let when = '';
+        try { if (r.savedAt) when = ' from ' + new Date(r.savedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) {}
+        say(inMsg, 'Found “' + r.className + '”' + when + ' with ' + plural(r.roster.length, 'child', 'children') + '. This will replace today’s class list, attendance and talents.', '');
+        restoreBtn.classList.add('armed');
+        restoreBtn.textContent = '⚠️ Replace everything? Tap again';
+        clearTimeout(armTimer);
+        armTimer = setTimeout(() => { disarm(); say(inMsg, '', ''); }, 8000);
+        return;
+      }
+      const r = pending;
+      disarm();
+      try {
+        if (CLASS_HOOKS.setClass) CLASS_HOOKS.setClass(r.className, r.roster);
+        if (CLASS_HOOKS.setAttendance) CLASS_HOOKS.setAttendance(r.attendance);
+        if (CLASS_HOOKS.setTalents) CLASS_HOOKS.setTalents(r.talents);
+        paste.value = '';
+        say(inMsg, '✓ Record brought back: ' + plural(r.roster.length, 'child', 'children') + '.', 'ok');
+        if (window.saltConfetti) window.saltConfetti(50);
+      } catch (e) {
+        say(inMsg, 'Something went wrong while bringing the record back. Nothing else was changed after that point.', 'err');
+      }
+    });
+    document.addEventListener('pointerdown', e => {
+      if (pending && !restoreBtn.contains(e.target) && e.target !== paste) { disarm(); }
+    });
+  }
+  initBackup();
+
+
 
 
 
