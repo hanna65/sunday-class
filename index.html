@@ -898,6 +898,123 @@
   .bk-text.paste { min-height: 9rem; background: #FFFFFF; }
   .bk-sub { margin: 1.5rem 0 .25rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.3rem; }
 
+  /* ===== Login (top right) and permission-based tabs ===== */
+  header { position: relative; align-items: center; }
+  .title-block { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+  .account { margin-left: auto; position: relative; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; font-family: "Fredoka", sans-serif; }
+  .acct-btn {
+    min-height: 52px; padding: .35rem 1.1rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.1rem; color: var(--ink);
+    background: rgba(255,255,255,.9); border: 2px solid var(--ink); border-radius: 999px;
+    box-shadow: 0 4px 0 var(--ink); cursor: pointer; transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .acct-btn.quiet { border-color: #C9D3DD; box-shadow: 0 3px 0 #C9D3DD; color: #4F6476; font-size: 1rem; }
+  .acct-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  .acct-btn:focus-visible, .acct-field input:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .acct-btn:disabled { opacity: .5; cursor: default; }
+  .acct-who { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; text-align: right; }
+  .acct-name { font-weight: 700; font-size: 1.15rem; max-width: 14rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .acct-role { font-size: .9rem; font-weight: 600; padding: .05rem .6rem; border-radius: 999px; background: var(--accent-soft); color: #8A4B2E; }
+  .acct-role.admin { background: #E9E0F8; color: #5B3E96; }
+  .acct-role.teacher { background: #DFF3D8; color: #2F6B3A; }
+  .acct-role.guest { background: #EEF1F4; color: #4F6476; }
+  .acct-panel {
+    position: absolute; top: calc(100% + .6rem); right: 0; z-index: 40;
+    width: min(23rem, calc(100vw - 32px));
+    padding: 1.25rem; border-radius: 22px;
+    background: #FFFFFF; border: 2px solid var(--ink); box-shadow: 0 16px 40px rgba(44,62,80,.2);
+    display: grid; gap: .75rem;
+  }
+  .acct-panel[hidden] { display: none; }
+  .acct-panel h2 { margin: 0; font-size: 1.35rem; font-weight: 700; }
+  .acct-field { display: grid; gap: .3rem; font-size: 1rem; font-weight: 600; }
+  .acct-field input {
+    min-height: 54px; padding: .4rem .9rem; border-radius: 14px; border: 2px solid #CFC6BB;
+    font-family: "Fredoka", sans-serif; font-size: 1.15rem; color: var(--ink); background: #FFFFFF;
+  }
+  .acct-field input:focus { border-color: var(--ink); outline: none; }
+  .acct-submit { width: 100%; background: linear-gradient(135deg, #DFF3D8, #B9E2AE); }
+  .acct-note { margin: 0; font-size: .95rem; color: var(--ink-soft); }
+  .acct-msg { margin: 0; min-height: 1.4rem; font-size: 1rem; font-weight: 600; }
+  .acct-msg.err { color: #B6403C; }
+  .acct-msg.ok { color: #2F7D41; }
+  .login-hint {
+    margin: -.35rem .25rem .75rem auto; width: fit-content;
+    padding: .3rem .85rem; border-radius: 999px; border: 0; cursor: pointer;
+    font-family: "Fredoka", sans-serif; font-size: 1rem; color: var(--ink-soft); background: rgba(255,255,255,.75);
+    display: block;
+  }
+  .login-hint[hidden] { display: none; }
+  .tab[hidden] { display: none !important; }
+  /* "view" access: show the tab but hide every button that changes records */
+  .panel.view-only .att-btns, .panel.view-only .tal-btns, .panel.view-only .att-all,
+  .panel.view-only .att-reset, .panel.view-only .att-toast, .panel.view-only .set-add,
+  .panel.view-only .set-btn.remove, .panel.view-only .set-btn.save, .panel.view-only .pen,
+  .panel.view-only .set-toast, .panel.view-only .bk-restore { display: none !important; }
+  .bk-restore[hidden] { display: none !important; }
+  @media (max-width: 640px) {
+    .account { margin-left: 0; width: 100%; justify-content: flex-start; }
+    .acct-who { align-items: flex-start; text-align: left; }
+    .acct-panel { left: 0; right: auto; }
+  }
+
+  /* ===== Birthdays (Class Settings picker + banner above the tabs) ===== */
+  .set-row .bday { display: flex; gap: .4rem; flex: none; }
+  .bday-select {
+    min-height: 60px; padding: .3rem .6rem; border-radius: 14px;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.15rem; color: var(--ink);
+    background: #FFFFFF; border: 2px solid #E7C9B8; cursor: pointer;
+  }
+  .bday-select.month { min-width: 6.4rem; }
+  .bday-select.day { min-width: 4.8rem; }
+  .bday-select:focus-visible { outline: 3px dashed var(--ink); outline-offset: 2px; }
+  .bday-select.set { border-color: #E39B7B; background: #FFF4EC; }
+  .bday-select.wait { border-color: #E39B2E; background: #FFF8E1; }
+  @media (max-width: 760px) {
+    .set-row { flex-wrap: wrap; }
+    .set-row .bday { order: 5; margin-left: 3.75rem; }
+  }
+
+  .bday-banner {
+    position: relative; overflow: hidden;
+    margin: 0 .25rem 1rem;
+    padding: clamp(1.25rem, 3.5vw, 2rem);
+    border-radius: 32px;
+    background:
+      radial-gradient(circle at 92% 8%, rgba(255,255,255,.7) 0, rgba(255,255,255,0) 38%),
+      linear-gradient(135deg, #FFE2CF 0%, #FFD3C4 45%, #FFC9D6 100%);
+    border: 2px solid #F2B8A6;
+    box-shadow: 0 10px 28px rgba(201,110,96,.18);
+    font-family: "Fredoka", sans-serif;
+    color: #5A2E2A;
+  }
+  .bday-banner[hidden] { display: none; }
+  .bday-today { display: grid; gap: 1rem; }
+  .bday-card { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .5rem 1.25rem; align-items: start; }
+  .bday-card > :not(.bday-cake) { grid-column: 2; }
+  .bday-cake { font-size: clamp(3.5rem, 9vw, 5rem); line-height: 1; grid-column: 1; grid-row: 1 / span 4; align-self: center; }
+  .bday-today > .bday-actions { padding-left: calc(clamp(3.5rem, 9vw, 5rem) * 1.5 + 1.25rem); }
+  .bday-label {
+    justify-self: start; margin: 0; padding: .2rem .9rem; border-radius: 999px;
+    background: rgba(255,255,255,.75); font-weight: 600; font-size: 1.05rem; color: #B04F45;
+  }
+  .bday-who { margin: 0; display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: clamp(1.5rem, 3.6vw, 2rem); }
+  .bday-who .emo { width: 3.2rem; height: 3.2rem; display: grid; place-items: center; border-radius: 50%; background: #FFFFFF; font-size: 1.9rem; }
+  .bday-big { margin: 0; font-weight: 700; font-size: clamp(2.1rem, 5.6vw, 3.3rem); line-height: 1.15; color: #8E2F3C; text-wrap: balance; }
+  .bday-line { margin: 0; font-size: clamp(1.2rem, 2.8vw, 1.45rem); line-height: 1.55; max-width: 44rem; }
+  .bday-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.25rem; margin-top: .25rem; }
+  .bday-btn {
+    min-height: 64px; padding: .5rem 1.75rem;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(1.3rem, 3vw, 1.55rem); color: #5A2E2A;
+    background: linear-gradient(135deg, #FFF1C9, #FFB8C6); border: 2px solid #5A2E2A; border-radius: 999px;
+    box-shadow: 0 5px 0 #5A2E2A; cursor: pointer; transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .bday-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #5A2E2A; }
+  .bday-btn:focus-visible { outline: 3px dashed #5A2E2A; outline-offset: 4px; }
+  .bday-week { margin: 1rem 0 0; padding-top: .85rem; border-top: 2px dashed rgba(176,79,69,.25); font-size: 1.1rem; color: #7A4440; }
+  .bday-banner.week-only .bday-week { margin: 0; padding: 0; border: 0; }
+  @media (max-width: 520px) { .bday-card { grid-template-columns: 1fr; } .bday-card > * { grid-column: 1 !important; } .bday-cake { grid-row: auto; } .bday-today > .bday-actions { padding-left: 0; } }
+
   /* ===== Class Settings tab ===== */
   .panel.settings { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
   .set-notice {
@@ -1291,11 +1408,17 @@
   </svg>
   <div class="wrap">
     <header>
-      <h1 class="class-name"><span class="sparkle" aria-hidden="true">✨</span><span class="en">Salt Class · Youth Group</span></h1>
-      <p class="today en" id="today"></p>
+      <div class="title-block">
+        <h1 class="class-name"><span class="sparkle" aria-hidden="true">✨</span><span class="en">Salt Class · Youth Group</span></h1>
+        <p class="today en" id="today"></p>
+      </div>
+      <div class="account" id="account" aria-label="Account"></div>
     </header>
 
+    <section class="bday-banner" id="bdayBanner" aria-live="polite" hidden></section>
+
     <nav class="tabs" role="tablist" aria-label="Class menu" id="tabs"></nav>
+    <button type="button" class="login-hint" id="loginHint" hidden>🔒 Log in to see more</button>
     <main id="panels"></main>
   </div>
 
@@ -1481,6 +1604,7 @@
       <p class="set-msg" id="bkOutMsg" aria-live="polite">Select all the text and copy it into a note, email or document to keep it safe.</p>
     </div>
 
+    <div class="bk-restore" id="bkRestoreArea" hidden>
     <p class="bk-sub">📥 Bring a Record Back</p>
     <p class="hint">Paste a whole record you saved before. Its last line (starting with #BACKUP) is what brings everything back.</p>
     <textarea class="bk-text paste" id="bkPaste" spellcheck="false" placeholder="Paste the saved record here" aria-label="Paste a saved record"></textarea>
@@ -1488,6 +1612,7 @@
       <button type="button" class="bk-btn restore" id="bkRestore">↺ Bring This Record Back</button>
     </div>
     <p class="set-msg" id="bkInMsg" aria-live="polite"></p>
+    </div>
   </section>
   <div class="tal-toast" id="talToast" role="status" aria-live="polite"></div>
 </template>
@@ -1844,6 +1969,7 @@
 </template>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>
 <script>
 (function () {
   // 오늘 날짜
@@ -1919,7 +2045,7 @@
     panelsEl.appendChild(panel);
   });
 
-  function select(id) {
+  function select(id, remember) {
     TABS.forEach(t => {
       const on = t.id === id;
       const btn = document.getElementById('tab-' + t.id);
@@ -1928,16 +2054,18 @@
       document.getElementById('panel-' + t.id).hidden = !on;
       if (on) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     });
-    try { localStorage.setItem('saltClass:lastTab', id); } catch (e) {}
+    if (remember !== false) { try { localStorage.setItem('saltClass:lastTab', id); } catch (e) {} }
   }
 
   // 키보드 좌우 이동
   tabsEl.addEventListener('keydown', e => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    const idx = TABS.findIndex(t => document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true');
-    const next = (idx + (e.key === 'ArrowRight' ? 1 : -1) + TABS.length) % TABS.length;
-    select(TABS[next].id);
-    document.getElementById('tab-' + TABS[next].id).focus();
+    const shown = TABS.filter(t => !document.getElementById('tab-' + t.id).hidden);
+    if (!shown.length) return;
+    const idx = shown.findIndex(t => document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true');
+    const next = (idx + (e.key === 'ArrowRight' ? 1 : -1) + shown.length) % shown.length;
+    select(shown[next].id);
+    document.getElementById('tab-' + shown[next].id).focus();
   });
 
   // 마지막으로 보던 탭 기억
@@ -2520,13 +2648,14 @@
   const ROSTER_KEY = 'saltClass:roster', CLASSNAME_KEY = 'saltClass:className';
   const DEFAULT_ROSTER = ['New Jersey', 'New York', 'Seattle', 'Ohio', 'Texas'];
   const DEFAULT_CLASS_NAME = 'Salt Class · Youth Group';
-  const CLASS_ROSTER = (() => {
+  function readDeviceRoster() {
     try {
       const v = JSON.parse(localStorage.getItem(ROSTER_KEY) || 'null');
       if (Array.isArray(v)) return v.filter(x => typeof x === 'string' && x.trim()).slice(0, 200);
     } catch (e) {}
     return DEFAULT_ROSTER.slice();
-  })();
+  }
+  const CLASS_ROSTER = [];   // filled once we know who is signed in (see CLASS_AUTH)
 
   // An emoji that fits each name; any other name gets one from POOL
   const KNOWN = {
@@ -2574,7 +2703,7 @@
     try {
       const res = await fetch(CLASS_SB_URL + '/rest/v1/' + table + '?nickname=eq.' + encodeURIComponent(from), {
         method: 'PATCH', signal: ctl.signal,
-        headers: { apikey: CLASS_SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        headers: Object.assign(classAuthHeaders(), { 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
         body: JSON.stringify({ nickname: to })
       });
       return res.ok;
@@ -2585,10 +2714,38 @@
     Object.assign(CLASS_EMOJI, assignEmojis(CLASS_ROSTER));
   }
 
+  // ===== Login state and tab permissions =====
+  // These only decide what the SCREEN shows. The real lock is Supabase's security rules (RLS).
+  const LESSON_TABS = ['home', 'lesson', 'story', 'quiz', 'scramble', 'worship'];
+  const RECORD_TABS = ['attendance', 'talent', 'manage'];
+  const CLASS_AUTH = {
+    ready: false, loggedIn: false, token: null, user: null, member: null, perms: null,
+    role() { return this.member ? this.member.role : null; },
+    audience() { const r = this.role(); return r === 'parent' || r === 'teacher' ? r : 'anyone'; },
+    access(tab) {                       // 0 hidden, 1 view, 2 edit
+      if (this.role() === 'admin') return 2;
+      if (!this.perms) return LESSON_TABS.includes(tab) ? 1 : 0;   // permissions unknown: lessons only
+      const row = this.perms[tab];
+      const v = row ? row[this.audience()] : null;
+      return v === 'edit' ? 2 : v === 'view' ? 1 : 0;
+    },
+    canEdit(tab) { return this.access(tab) === 2; },
+    recordsVisible() { return RECORD_TABS.some(t => this.access(t) >= 1); }
+  };
+  // headers for Supabase: the public key, plus the signed-in person's token when logged in
+  function classAuthHeaders() {
+    const h = { apikey: CLASS_SB_KEY };
+    if (CLASS_AUTH.token) h.Authorization = 'Bearer ' + CLASS_AUTH.token;
+    return h;
+  }
+
   // ===== Attendance tab =====
   function initAttendance() {
     const root = document.getElementById('panel-attendance');
     if (!root) return;
+    const TAB_ID = 'attendance';
+    const moduleVisible = () => CLASS_AUTH.access(TAB_ID) >= 1;
+    const moduleEditable = () => CLASS_AUTH.canEdit(TAB_ID);
 
     const ROSTER = CLASS_ROSTER, EMOJI = CLASS_EMOJI;   // shared class list (also used by Talents)
 
@@ -2614,7 +2771,7 @@
     function loadLocal() {
       try { const v = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
     }
-    function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(counts)); } catch (e) {} }
+    function saveLocal() { if (!CLASS_AUTH.loggedIn || !moduleEditable()) return; try { localStorage.setItem(LS_KEY, JSON.stringify(counts)); } catch (e) {} }
     function setPending(on) { try { on ? localStorage.setItem(LS_PENDING, '1') : localStorage.removeItem(LS_PENDING); } catch (e) {} }
     function hasPending() { try { return localStorage.getItem(LS_PENDING) === '1'; } catch (e) { return false; } }
     function clean(obj) {
@@ -2629,7 +2786,7 @@
       try {
         return await fetch(url, Object.assign({}, opts, {
           signal: ctl.signal,
-          headers: Object.assign({ apikey: SB_KEY, 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+          headers: Object.assign(classAuthHeaders(), { 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
         }));
       } finally { clearTimeout(t); }
     }
@@ -2676,6 +2833,7 @@
       if (dirty) flush();
     }
     function persist() {
+      if (!moduleEditable()) return;
       try {
         saveLocal();
         setPending(true);
@@ -2686,16 +2844,16 @@
 
     // Load from Supabase (or send the device's unsent changes first); add missing nicknames with 0
     async function syncNow() {
-      if (syncing || writing) return;
+      if (syncing || writing || !moduleVisible()) return;
       syncing = true;
       try {
-        if (hasPending()) {
+        if (hasPending() && moduleEditable()) {
           await sbUpsert(allRows(), 'merge-duplicates');
           setPending(false);
         } else {
           const online = await sbLoad();
           const missing = ROSTER.filter(n => !(n in online));
-          if (missing.length) {
+          if (missing.length && moduleEditable()) {
             await sbUpsert(missing.map(n => ({ nickname: n, visits: 0 })), 'ignore-duplicates');
             missing.forEach(n => { online[n] = 0; });
           }
@@ -2762,6 +2920,7 @@
     }
 
     function change(n, d) {
+      if (!moduleEditable()) return;
       if (readOnly) return;
       const next = Math.max(0, (counts[n] || 0) + d);
       if (next === (counts[n] || 0)) return;
@@ -2771,7 +2930,7 @@
     }
     function hideToast() { toast.hidden = true; lastBulk = null; clearTimeout(toastTimer); }
     allBtn.addEventListener('click', () => {
-      if (readOnly) return;
+      if (readOnly || !moduleEditable()) return;
       lastBulk = Object.assign({}, counts);
       const next = Object.assign({}, counts);
       ROSTER.forEach(n => { next[n] = (next[n] || 0) + 1; });
@@ -2798,6 +2957,7 @@
       resetBtn.textContent = RESET_LABEL;
     }
     resetBtn.addEventListener('click', () => {
+      if (!moduleEditable()) return;
       if (readOnly) return;
       if (!resetBtn.classList.contains('armed')) {
         resetBtn.classList.add('armed');
@@ -2841,11 +3001,20 @@
       if (d.added) persist();
     });
 
-    // first paint from this device, then load from Supabase
-    counts = loadLocal();
-    prevShown = Object.assign({}, counts);
+    // what this person may see depends on login (see CLASS_AUTH)
+    function applyAuth() {
+      clearTimeout(retryTimer);
+      setOffline(false);
+      if (!moduleVisible()) { counts = {}; prevShown = {}; render(); return; }
+      counts = CLASS_AUTH.loggedIn ? loadLocal() : {};   // device copy only for signed-in people
+      prevShown = Object.assign({}, counts);
+      render();
+      syncNow();
+    }
+    document.addEventListener('saltclass:auth', applyAuth);
+    counts = {};
+    prevShown = {};
     render();
-    syncNow();
     window.addEventListener('online', () => syncNow());
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
   }
@@ -2855,6 +3024,9 @@
     const root = document.getElementById('panel-talent');
     if (!root) return;
     const ROSTER = CLASS_ROSTER, EMOJI = CLASS_EMOJI;   // same class list as Attendance
+    const TAB_ID = 'talent';
+    const moduleVisible = () => CLASS_AUTH.access(TAB_ID) >= 1;
+    const moduleEditable = () => CLASS_AUTH.canEdit(TAB_ID);
 
     const totalEl = root.querySelector('#talTotal'), topEl = root.querySelector('#talTop'),
           list = root.querySelector('#talList'), resetBtn = root.querySelector('#talReset'),
@@ -2875,7 +3047,7 @@
     function loadLocal() {
       try { const v = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
     }
-    function saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(counts)); } catch (e) {} }
+    function saveLocal() { if (!CLASS_AUTH.loggedIn || !moduleEditable()) return; try { localStorage.setItem(LS_KEY, JSON.stringify(counts)); } catch (e) {} }
     function setPending(on) { try { on ? localStorage.setItem(LS_PENDING, '1') : localStorage.removeItem(LS_PENDING); } catch (e) {} }
     function hasPending() { try { return localStorage.getItem(LS_PENDING) === '1'; } catch (e) { return false; } }
     function num(v) { return Math.max(0, Math.floor(Number(v) || 0)); }
@@ -2886,7 +3058,7 @@
       try {
         return await fetch(url, Object.assign({}, opts, {
           signal: ctl.signal,
-          headers: Object.assign({ apikey: SB_KEY, 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+          headers: Object.assign(classAuthHeaders(), { 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
         }));
       } finally { clearTimeout(t); }
     }
@@ -2928,6 +3100,7 @@
       if (dirty) flush();
     }
     function persist() {
+      if (!moduleEditable()) return;
       try {
         saveLocal();
         setPending(true);
@@ -2936,16 +3109,16 @@
       } catch (e) { /* keep going with what is on screen */ }
     }
     async function syncNow() {
-      if (syncing || writing) return;
+      if (syncing || writing || !moduleVisible()) return;
       syncing = true;
       try {
-        if (hasPending()) {
+        if (hasPending() && moduleEditable()) {
           await sbUpsert(allRows(), 'merge-duplicates');
           setPending(false);
         } else {
           const online = await sbLoad();
           const missing = ROSTER.filter(n => !(n in online));
-          if (missing.length) {
+          if (missing.length && moduleEditable()) {
             await sbUpsert(missing.map(n => ({ nickname: n, talents: 0 })), 'ignore-duplicates');
             missing.forEach(n => { online[n] = 0; });
           }
@@ -3021,6 +3194,7 @@
     }
 
     function change(n, d) {
+      if (!moduleEditable()) return;
       const cur = num(counts[n]);
       const next = Math.max(0, cur + d);
       if (next === cur) return;
@@ -3037,6 +3211,7 @@
     let resetTimer = null;
     function disarm() { clearTimeout(resetTimer); resetBtn.classList.remove('armed'); resetBtn.textContent = RESET_LABEL; }
     resetBtn.addEventListener('click', () => {
+      if (!moduleEditable()) return;
       if (!resetBtn.classList.contains('armed')) {
         resetBtn.classList.add('armed');
         resetBtn.textContent = CONFIRM_LABEL;
@@ -3079,17 +3254,276 @@
       if (d.added) persist();
     });
 
-    counts = loadLocal();
-    prevShown = Object.assign({}, counts);
+    // what this person may see depends on login (see CLASS_AUTH)
+    function applyAuth() {
+      clearTimeout(retryTimer);
+      setOffline(false);
+      if (!moduleVisible()) { counts = {}; prevShown = {}; render(); return; }
+      counts = CLASS_AUTH.loggedIn ? loadLocal() : {};   // device copy only for signed-in people
+      prevShown = Object.assign({}, counts);
+      render();
+      syncNow();
+    }
+    document.addEventListener('saltclass:auth', applyAuth);
+    counts = {};
+    prevShown = {};
     render();
-    syncNow();
     window.addEventListener('online', () => syncNow());
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
   }
   initTalents();
+  // ===== Birthdays: month/day picker in Class Settings + banner above the tabs =====
+  function initBirthdays() {
+    const LS_KEY = 'saltClass:birthdays';               // new key (existing keys untouched)
+    const LS_PENDING = 'saltClass:birthdays:pending';
+    const TABLE = CLASS_SB_URL + '/rest/v1/birthdays';
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const DAYS_IN = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    const banner = document.getElementById('bdayBanner');
+    const moduleVisible = () => CLASS_AUTH.recordsVisible();
+    const moduleEditable = () => CLASS_AUTH.canEdit('manage');
+
+    let bdays = {};   // nickname -> { m, d } or null (cleared)
+    function valid(v) { return v && Number.isInteger(v.m) && Number.isInteger(v.d) && v.m >= 1 && v.m <= 12 && v.d >= 1 && v.d <= DAYS_IN[v.m - 1]; }
+    function loadLocal() {
+      try {
+        const o = JSON.parse(localStorage.getItem(LS_KEY) || '{}'), r = {};
+        if (o && typeof o === 'object') Object.keys(o).forEach(k => { r[k] = valid(o[k]) ? { m: o[k].m, d: o[k].d } : null; });
+        return r;
+      } catch (e) { return {}; }
+    }
+    function saveLocal() { if (!CLASS_AUTH.loggedIn || !moduleEditable()) return; try { localStorage.setItem(LS_KEY, JSON.stringify(bdays)); } catch (e) {} }
+    function setPending(on) { try { on ? localStorage.setItem(LS_PENDING, '1') : localStorage.removeItem(LS_PENDING); } catch (e) {} }
+    function hasPending() { try { return localStorage.getItem(LS_PENDING) === '1'; } catch (e) { return false; } }
+
+    async function sbFetch(url, opts) {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 8000);
+      try {
+        return await fetch(url, Object.assign({}, opts, {
+          signal: ctl.signal,
+          headers: Object.assign(classAuthHeaders(), { 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+        }));
+      } finally { clearTimeout(t); }
+    }
+    async function sbLoad() {
+      const res = await sbFetch(TABLE + '?select=nickname,birth_month,birth_day', { method: 'GET' });
+      if (!res.ok) throw { code: 'sb_' + res.status };
+      const rows = await res.json(), o = {};
+      (Array.isArray(rows) ? rows : []).forEach(r => {
+        if (!r || typeof r.nickname !== 'string') return;
+        const v = { m: Number(r.birth_month), d: Number(r.birth_day) };
+        o[r.nickname] = valid(v) ? v : null;
+      });
+      return o;
+    }
+    async function sbSave() {
+      const rows = Object.keys(bdays).map(n => ({
+        nickname: n, birth_month: bdays[n] ? bdays[n].m : null, birth_day: bdays[n] ? bdays[n].d : null
+      }));
+      if (!rows.length) return;
+      const res = await sbFetch(TABLE + '?on_conflict=nickname', {
+        method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify(rows)
+      });
+      if (!res.ok) throw { code: 'sb_' + res.status };
+    }
+
+    let writing = false, dirty = false, syncing = false, retryTimer = null;
+    function setOffline(off) {
+      CLASS_HOOKS.bdayOffline = off;
+      const b = document.getElementById('setOffline');
+      if (b) b.hidden = !(off || CLASS_HOOKS.settingsOffline);
+      clearTimeout(retryTimer);
+      if (off) retryTimer = setTimeout(syncNow, 20000);
+    }
+    async function flush() {
+      if (writing) return;
+      writing = true; dirty = false;
+      try { await sbSave(); if (!dirty) setPending(false); setOffline(false); }
+      catch (e) { setOffline(true); }
+      writing = false;
+      if (dirty) flush();
+    }
+    function persist() {
+      if (!moduleEditable()) return;
+      try { saveLocal(); setPending(true); dirty = true; flush().catch(() => { writing = false; }); } catch (e) {}
+    }
+    async function syncNow() {
+      if (syncing || writing || !moduleVisible()) return;
+      syncing = true;
+      try {
+        if (hasPending() && moduleEditable()) { await sbSave(); setPending(false); }
+        else {
+          const online = await sbLoad();
+          if (!dirty && !writing && !hasPending()) { bdays = online; saveLocal(); refreshPickers(); renderBanner(); }
+        }
+        setOffline(false);
+      } catch (e) { setOffline(true); }
+      syncing = false;
+    }
+
+    // ---- month / day pickers (used by each row in Class Settings)
+    const pickers = new Set();
+    function refreshPickers() { pickers.forEach(p => { if (!p.box.isConnected) pickers.delete(p); else p.sync(); }); }
+    function picker(box, name) {
+      box.innerHTML =
+        '<select class="bday-select month"></select><select class="bday-select day"></select>';
+      const mSel = box.querySelector('.month'), dSel = box.querySelector('.day');
+      mSel.setAttribute('aria-label', 'Birthday month for ' + name);
+      dSel.setAttribute('aria-label', 'Birthday day for ' + name);
+      mSel.innerHTML = '<option value="">🎂 Month</option>' + MONTHS.map((m, i) => '<option value="' + (i + 1) + '">' + SHORT[i] + '</option>').join('');
+      function fillDays(m, keep) {
+        const max = m ? DAYS_IN[m - 1] : 31;
+        let h = '<option value="">Day</option>';
+        for (let d = 1; d <= max; d++) h += '<option value="' + d + '">' + d + '</option>';
+        dSel.innerHTML = h;
+        if (keep && keep <= max) dSel.value = String(keep);
+      }
+      function paint() {
+        const m = Number(mSel.value) || 0, d = Number(dSel.value) || 0;
+        mSel.classList.toggle('set', !!(m && d)); dSel.classList.toggle('set', !!(m && d));
+        dSel.classList.toggle('wait', !!(m && !d)); mSel.classList.toggle('wait', !!(!m && d));
+      }
+      const p = {
+        box,
+        sync() {
+          const v = bdays[name];
+          mSel.value = v ? String(v.m) : '';
+          fillDays(v ? v.m : 0, v ? v.d : 0);
+          if (!v) dSel.value = '';
+          paint();
+          mSel.disabled = dSel.disabled = !moduleEditable();
+        }
+      };
+      function commit() {
+        if (!moduleEditable()) { p.sync(); return; }
+        const m = Number(mSel.value) || 0, d = Number(dSel.value) || 0;
+        paint();
+        if (m && d) {
+          const cur = bdays[name];
+          if (cur && cur.m === m && cur.d === d) return;
+          bdays = Object.assign({}, bdays, { [name]: { m, d } });
+        } else if (!m && !d) {
+          if (!bdays[name]) return;
+          bdays = Object.assign({}, bdays, { [name]: null });
+        } else return;   // wait until both are chosen
+        persist(); renderBanner();
+      }
+      mSel.addEventListener('change', () => { const keep = Number(dSel.value) || 0; fillDays(Number(mSel.value) || 0, keep); if (!mSel.value) dSel.value = ''; commit(); });
+      dSel.addEventListener('change', commit);
+      p.sync();
+      pickers.add(p);
+    }
+    CLASS_HOOKS.bdayPicker = picker;
+
+    // ---- banner above the tabs
+    function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+    function matches(v, date) {
+      if (!v) return false;
+      let m = v.m, d = v.d;
+      if (m === 2 && d === 29 && !isLeap(date.getFullYear())) d = 28;   // celebrate Feb 29 on Feb 28
+      return date.getMonth() + 1 === m && date.getDate() === d;
+    }
+    function renderBanner() {
+      if (!banner) return;
+      if (!moduleVisible()) { banner.hidden = true; banner.innerHTML = ''; return; }
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const todays = CLASS_ROSTER.filter(n => matches(bdays[n], today));
+      const week = [];
+      const start = new Date(today); start.setDate(today.getDate() - today.getDay());   // Sunday
+      for (let i = 0; i < 7; i++) {
+        const day = new Date(start); day.setDate(start.getDate() + i);
+        if (day.getTime() === today.getTime()) continue;
+        CLASS_ROSTER.forEach(n => { if (matches(bdays[n], day)) week.push({ n, day }); });
+      }
+      if (!todays.length && !week.length) { banner.hidden = true; banner.innerHTML = ''; return; }
+
+      banner.innerHTML = '';
+      banner.classList.toggle('week-only', !todays.length);
+      if (todays.length) {
+        const wrap = document.createElement('div');
+        wrap.className = 'bday-today';
+        todays.forEach(n => {
+          const card = document.createElement('div');
+          card.className = 'bday-card';
+          card.innerHTML =
+            '<span class="bday-cake" aria-hidden="true">🎂</span>' +
+            '<p class="bday-label">Today’s Friend</p>' +
+            '<p class="bday-who"><span class="emo" aria-hidden="true"></span><span class="nm"></span></p>' +
+            '<p class="bday-big"></p>' +
+            '<p class="bday-line"></p>';
+          card.querySelector('.emo').textContent = CLASS_EMOJI[n] || '🙂';
+          card.querySelector('.nm').textContent = n;
+          card.querySelector('.bday-big').textContent = 'Happy birthday, ' + n + '!';
+          card.querySelector('.bday-line').textContent = 'We’re so glad God sent ' + n + ' into the world. Let’s all celebrate together!';
+          wrap.appendChild(card);
+        });
+        const actions = document.createElement('div');
+        actions.className = 'bday-actions';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'bday-btn';
+        btn.textContent = '🎉 Celebrate Together';
+        btn.addEventListener('click', () => {
+          if (window.saltConfetti) { window.saltConfetti(120); setTimeout(() => window.saltConfetti(80), 450); }
+        });
+        actions.appendChild(btn);
+        wrap.appendChild(actions);
+        banner.appendChild(wrap);
+      }
+      if (week.length) {
+        const p = document.createElement('p');
+        p.className = 'bday-week';
+        p.textContent = 'Birthdays this week · ' + week.map(w => w.n + ' (' + MONTHS[w.day.getMonth()] + ' ' + w.day.getDate() + ')').join(' · ');
+        banner.appendChild(p);
+      }
+      banner.hidden = false;
+    }
+
+    // keep up with the shared class list
+    document.addEventListener('saltclass:roster', e => {
+      const r = e && e.detail && e.detail.renamed;
+      if (r && r.from !== r.to && Object.prototype.hasOwnProperty.call(bdays, r.from)) {
+        const moved = Object.assign({}, bdays);
+        moved[r.to] = moved[r.from];
+        delete moved[r.from];
+        bdays = moved;
+        saveLocal();
+        classRenameRow('birthdays', r.from, r.to).then(() => persist(), () => persist());
+      }
+      renderBanner();
+    });
+    CLASS_HOOKS.getBirthdays = () => Object.assign({}, bdays);
+
+    // refresh at midnight and when the tablet wakes up
+    function scheduleMidnight() {
+      const n = new Date(), next = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1, 0, 0, 5);
+      setTimeout(() => { renderBanner(); scheduleMidnight(); }, next - n);
+    }
+
+    function applyAuth() {
+      clearTimeout(retryTimer);
+      bdays = moduleVisible() && CLASS_AUTH.loggedIn ? loadLocal() : {};
+      refreshPickers();
+      renderBanner();
+      if (moduleVisible()) syncNow();
+    }
+    document.addEventListener('saltclass:auth', applyAuth);
+    bdays = {};
+    renderBanner();
+    scheduleMidnight();
+    window.addEventListener('online', () => syncNow());
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { renderBanner(); syncNow(); } });
+  }
+  initBirthdays();
+
   // ===== Class Settings tab =====
   function initSettings() {
     const header = document.querySelector('.class-name .en');
+    const moduleVisible = () => CLASS_AUTH.recordsVisible();
+    const moduleEditable = () => CLASS_AUTH.canEdit('manage');
     const LS_PENDING = 'saltClass:settings:pending';
     const SB_URL = 'https://zsgdirrfpnypupbrzzqm.supabase.co';
     const SB_KEY = 'sb_publishable_FHZ0ElB_V7ITnAKCP1DNIQ_LktU1AUP';   // public (publishable) key only
@@ -3111,6 +3545,7 @@
 
     // ---- local + Supabase storage for the class list and class name
     function saveLocal() {
+      if (!CLASS_AUTH.loggedIn || !moduleEditable()) return;
       try { localStorage.setItem(ROSTER_KEY, JSON.stringify(CLASS_ROSTER)); } catch (e) {}
       try { localStorage.setItem(CLASSNAME_KEY, className); } catch (e) {}
     }
@@ -3122,7 +3557,7 @@
       try {
         return await fetch(url, Object.assign({}, opts, {
           signal: ctl.signal,
-          headers: Object.assign({ apikey: SB_KEY, 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+          headers: Object.assign(classAuthHeaders(), { 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
         }));
       } finally { clearTimeout(t); }
     }
@@ -3165,7 +3600,8 @@
     }
     let writing = false, dirty = false, syncing = false, retryTimer = null;
     function setOffline(off) {
-      if (offlineBadge) offlineBadge.hidden = !off;
+      CLASS_HOOKS.settingsOffline = off;
+      if (offlineBadge) offlineBadge.hidden = !(off || CLASS_HOOKS.bdayOffline);
       clearTimeout(retryTimer);
       if (off) retryTimer = setTimeout(syncNow, 20000);
     }
@@ -3178,6 +3614,7 @@
       if (dirty) flush();
     }
     function persist() {
+      if (!moduleEditable()) return;
       try { saveLocal(); setPending(true); dirty = true; flush().catch(() => { writing = false; }); } catch (e) {}
     }
     function cleanList(arr) {
@@ -3190,14 +3627,14 @@
       return out.slice(0, 200);
     }
     async function syncNow() {
-      if (syncing || writing) return;
+      if (syncing || writing || !moduleVisible()) return;
       syncing = true;
       try {
-        if (hasPending()) {
+        if (hasPending() && moduleEditable()) {
           await sbSave(); setPending(false);
         } else {
           const row = await sbLoad();
-          if (!row.roster.length && CLASS_ROSTER.length && !row.class_name) {
+          if (!row.roster.length && CLASS_ROSTER.length && !row.class_name && moduleEditable()) {
             await sbSave();                       // first time: put this device's list online
           } else if (!dirty && !writing && !hasPending()) {
             const remoteList = cleanList(row.roster);
@@ -3253,10 +3690,13 @@
           '<span class="emo" aria-hidden="true"></span>' +
           '<input class="set-input" type="text" maxlength="50" autocomplete="off">' +
           '<span class="pen" aria-hidden="true">✏️</span>' +
+          '<span class="bday"></span>' +
           '<button type="button" class="set-btn remove">Remove</button>';
         li.querySelector('.emo').textContent = CLASS_EMOJI[n] || '🙂';
+        if (CLASS_HOOKS.bdayPicker) CLASS_HOOKS.bdayPicker(li.querySelector('.bday'), n);
         const input = li.querySelector('.set-input');
         input.value = n;
+        input.readOnly = !moduleEditable();
         input.setAttribute('aria-label', 'Nickname ' + (i + 1) + ', tap to change');
         const commit = () => {
           const name = tidy(input.value);
@@ -3291,6 +3731,7 @@
 
     if (root) {
       function addChild() {
+        if (!moduleEditable()) return;
         const name = tidy(addInput.value);
         const why = problem(name, -1);
         if (why) { say(rosterMsg, why, 'err'); addInput.focus(); return; }
@@ -3314,6 +3755,7 @@
 
       nameInput.value = className;
       function saveClassName() {
+        if (!moduleEditable()) return;
         const v = tidy(nameInput.value);
         if (!v) { say(nameMsg, 'Please type a class name.', 'err'); nameInput.value = className; return; }
         if (v.length > 60) { say(nameMsg, 'Please keep it under 60 letters.', 'err'); return; }
@@ -3336,7 +3778,21 @@
       setRoster(roster, {}, true);
     };
 
-    syncNow();
+    // the class list appears only for people allowed to see records
+    function applyAuth() {
+      clearTimeout(retryTimer);
+      CLASS_HOOKS.settingsOffline = false;
+      if (offlineBadge) offlineBadge.hidden = true;
+      const list = moduleVisible() && CLASS_AUTH.loggedIn ? readDeviceRoster() : [];
+      CLASS_ROSTER.splice(0, CLASS_ROSTER.length, ...list);
+      refreshClassEmoji();
+      if (nameInput) nameInput.readOnly = !moduleEditable();
+      try { document.dispatchEvent(new CustomEvent('saltclass:roster', { detail: {} })); } catch (e) {}
+      render();
+      if (moduleVisible()) syncNow();
+    }
+    document.addEventListener('saltclass:auth', applyAuth);
+
     window.addEventListener('online', () => syncNow());
     document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNow(); });
   }
@@ -3349,6 +3805,12 @@
     const exportBtn = $('bkExport'), out = $('bkOut'), text = $('bkText'), selectBtn = $('bkSelect'),
           copyBtn = $('bkCopy'), outMsg = $('bkOutMsg'), paste = $('bkPaste'), restoreBtn = $('bkRestore'), inMsg = $('bkInMsg');
     const MARK = '#BACKUP ';
+    const restoreArea = $('bkRestoreArea');
+    const canRestore = () => CLASS_AUTH.canEdit('attendance') && CLASS_AUTH.canEdit('talent') && CLASS_AUTH.canEdit('manage');
+    document.addEventListener('saltclass:auth', () => {
+      if (restoreArea) restoreArea.hidden = !canRestore();
+      text.value = ''; out.hidden = true; paste.value = '';
+    });
 
     function say(el, msg, kind) { el.textContent = msg; el.className = 'set-msg' + (kind ? ' ' + kind : ''); }
     function n0(v) { return Math.max(0, Math.floor(Number(v) || 0)); }
@@ -3426,6 +3888,7 @@
     const LABEL = '↺ Bring This Record Back';
     function disarm() { clearTimeout(armTimer); pending = null; restoreBtn.classList.remove('armed'); restoreBtn.textContent = LABEL; }
     restoreBtn.addEventListener('click', () => {
+      if (!canRestore()) return;
       if (!pending) {
         const r = parseRecord(paste.value);
         if (r.error) { say(inMsg, r.error, 'err'); return; }
@@ -3463,7 +3926,236 @@
 
 
 
-  select(start);
+  // ===== Login button, account box and permission-based tabs =====
+  function initLogin() {
+    const box = document.getElementById('account');
+    const hint = document.getElementById('loginHint');
+    const AUTH_CACHE = 'saltClass:authCache';   // last known role/permissions, used only when offline
+    const lib = window.supabase;
+    let sb = null;
+    try {
+      if (lib && lib.createClient) {
+        sb = lib.createClient(CLASS_SB_URL, CLASS_SB_KEY, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+        });
+      }
+    } catch (e) { sb = null; }
+
+    // ---- friendly error messages
+    function friendly(err) {
+      const code = String((err && err.code) || ''), msg = String((err && err.message) || '').toLowerCase(), status = err && err.status;
+      if (code === 'invalid_credentials' || msg.includes('invalid login')) return 'That email or password doesn’t match.';
+      if (code === 'email_not_confirmed' || msg.includes('not confirmed')) return 'This account isn’t ready yet. Please ask your teacher.';
+      if (code === 'user_banned') return 'This account is turned off. Please ask your teacher.';
+      if (code.startsWith('over_') || status === 429) return 'Too many tries. Please wait a minute and try again.';
+      if (code === 'same_password') return 'That’s your current password. Please choose a new one.';
+      if (code === 'weak_password' || msg.includes('password should')) return 'Please choose a longer password (at least 6 characters).';
+      if (code === 'session_not_found' || code === 'reauthentication_needed' || status === 401) return 'Please log in again, then try once more.';
+      if ((err && err.name === 'AuthRetryableFetchError') || status === 0 || msg.includes('fetch') || msg.includes('network')) return 'Couldn’t connect. Check the internet and try again.';
+      return 'Something went wrong. Please try again.';
+    }
+
+    // ---- read role (members) and permissions (tab_permissions)
+    async function get(path) {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 8000);
+      try {
+        const res = await fetch(CLASS_SB_URL + '/rest/v1/' + path, { headers: classAuthHeaders(), signal: ctl.signal });
+        if (!res.ok) throw { status: res.status };
+        return await res.json();
+      } finally { clearTimeout(t); }
+    }
+    async function loadPerms() {
+      const rows = await get('tab_permissions?select=tab,audience,access');
+      const map = {};
+      (Array.isArray(rows) ? rows : []).forEach(r => {
+        if (!r || typeof r.tab !== 'string') return;
+        (map[r.tab] = map[r.tab] || {})[r.audience] = r.access;
+      });
+      return map;
+    }
+    async function loadMember(userId) {
+      if (!userId) return null;
+      const rows = await get('members?select=display_name,role,email&user_id=eq.' + encodeURIComponent(userId));
+      const m = Array.isArray(rows) && rows[0] ? rows[0] : null;
+      return m && ['parent', 'teacher', 'admin'].includes(m.role) ? m : null;
+    }
+    function readCache() { try { return JSON.parse(localStorage.getItem(AUTH_CACHE) || 'null'); } catch (e) { return null; } }
+    function writeCache(v) { try { localStorage.setItem(AUTH_CACHE, JSON.stringify(v)); } catch (e) {} }
+
+    let seq = 0;
+    async function applySession(session) {
+      const my = ++seq;
+      CLASS_AUTH.token = session ? session.access_token : null;
+      CLASS_AUTH.user = session ? session.user : null;
+      CLASS_AUTH.loggedIn = !!session;
+      const uid = session && session.user ? session.user.id : null;
+      let member = null, perms = null, cache = readCache();
+      try { perms = await loadPerms(); }
+      catch (e) { perms = cache && cache.perms ? cache.perms : null; }
+      try { member = await loadMember(uid); }
+      catch (e) { member = cache && uid && cache.userId === uid ? cache.member : null; }
+      if (my !== seq) return;                      // a newer login change arrived meanwhile
+      CLASS_AUTH.member = member;
+      CLASS_AUTH.perms = perms;
+      CLASS_AUTH.ready = true;
+      if (perms) writeCache({ userId: uid, member: uid ? member : null, perms });
+      renderAccount();
+      applyTabs();
+      try { document.dispatchEvent(new CustomEvent('saltclass:auth')); } catch (e) {}
+    }
+
+    // ---- tabs follow the permissions
+    function applyTabs() {
+      let first = null;
+      TABS.forEach(t => {
+        const a = CLASS_AUTH.access(t.id);
+        document.getElementById('tab-' + t.id).hidden = a < 1;
+        document.getElementById('panel-' + t.id).classList.toggle('view-only', a === 1);
+        if (a >= 1 && !first) first = t.id;
+      });
+      if (hint) hint.hidden = CLASS_AUTH.loggedIn;
+      let want = null;
+      try { want = localStorage.getItem('saltClass:lastTab'); } catch (e) {}
+      const current = TABS.find(t => document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true');
+      if (want && CLASS_AUTH.access(want) >= 1) { if (!current || current.id !== want) select(want, false); }
+      else if (!current || CLASS_AUTH.access(current.id) < 1) { if (first) select(first, false); }
+    }
+    CLASS_HOOKS.applyTabs = applyTabs;
+
+    // ---- account box (top right)
+    function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    function closePanel() { const p = box.querySelector('.acct-panel'); if (p) p.hidden = true; }
+    function field(label, type, id, auto) {
+      const wrap = el('label', 'acct-field');
+      wrap.append(el('span', null, label));
+      const input = document.createElement('input');
+      input.type = type; input.id = id; input.autocomplete = auto;
+      wrap.append(input);
+      return { wrap, input };
+    }
+    function loginForm(panel) {
+      panel.innerHTML = '';
+      const form = document.createElement('form');
+      form.className = 'acct-panel-form';
+      form.style.display = 'grid'; form.style.gap = '.75rem';
+      form.append(el('h2', null, 'Log In'));
+      const email = field('Email', 'email', 'loginEmail', 'username');
+      const pass = field('Password', 'password', 'loginPassword', 'current-password');
+      const submit = el('button', 'acct-btn acct-submit', 'Log In');
+      submit.type = 'submit';
+      const msg = el('p', 'acct-msg'); msg.setAttribute('aria-live', 'polite');
+      form.append(email.wrap, pass.wrap, submit, msg, el('p', 'acct-note', 'Your teacher creates accounts for you.'));
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const em = email.input.value.trim(), pw = pass.input.value;
+        if (!em || !pw) { msg.className = 'acct-msg err'; msg.textContent = 'Please type your email and password.'; return; }
+        if (!sb) { msg.className = 'acct-msg err'; msg.textContent = 'Login isn’t available right now. Check the internet and reload the page.'; return; }
+        submit.disabled = true; msg.className = 'acct-msg'; msg.textContent = 'Logging in…';
+        try {
+          const { error } = await sb.auth.signInWithPassword({ email: em, password: pw });
+          if (error) { msg.className = 'acct-msg err'; msg.textContent = friendly(error); }
+          else { pass.input.value = ''; msg.textContent = ''; }
+        } catch (err) { msg.className = 'acct-msg err'; msg.textContent = friendly(err); }
+        submit.disabled = false;
+      });
+      panel.append(form);
+      setTimeout(() => { try { email.input.focus(); } catch (e) {} }, 30);
+    }
+    function passwordForm(panel) {
+      panel.innerHTML = '';
+      const form = document.createElement('form');
+      form.style.display = 'grid'; form.style.gap = '.75rem';
+      form.append(el('h2', null, 'Change Password'));
+      const p1 = field('New password', 'password', 'newPassword', 'new-password');
+      const p2 = field('Type it again', 'password', 'newPassword2', 'new-password');
+      const submit = el('button', 'acct-btn acct-submit', 'Save New Password');
+      submit.type = 'submit';
+      const cancel = el('button', 'acct-btn quiet', 'Cancel');
+      cancel.type = 'button';
+      cancel.addEventListener('click', closePanel);
+      const msg = el('p', 'acct-msg'); msg.setAttribute('aria-live', 'polite');
+      form.append(p1.wrap, p2.wrap, submit, cancel, msg);
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        const a = p1.input.value, b = p2.input.value;
+        if (a.length < 6) { msg.className = 'acct-msg err'; msg.textContent = 'Please choose a longer password (at least 6 characters).'; return; }
+        if (a !== b) { msg.className = 'acct-msg err'; msg.textContent = 'The two passwords don’t match.'; return; }
+        submit.disabled = true; msg.className = 'acct-msg'; msg.textContent = 'Saving…';
+        try {
+          const { error } = await sb.auth.updateUser({ password: a });
+          if (error) { msg.className = 'acct-msg err'; msg.textContent = friendly(error); }
+          else { p1.input.value = ''; p2.input.value = ''; msg.className = 'acct-msg ok'; msg.textContent = '✓ Password changed.'; setTimeout(closePanel, 1500); }
+        } catch (err) { msg.className = 'acct-msg err'; msg.textContent = friendly(err); }
+        submit.disabled = false;
+      });
+      panel.append(form);
+      setTimeout(() => { try { p1.input.focus(); } catch (e) {} }, 30);
+    }
+
+    const ROLE_LABEL = { admin: 'Admin', teacher: 'Teacher', parent: 'Parent' };
+    function renderAccount() {
+      box.innerHTML = '';
+      const panel = el('div', 'acct-panel'); panel.hidden = true;
+      panel.id = 'acctPanel';
+      if (!CLASS_AUTH.loggedIn) {
+        const btn = el('button', 'acct-btn', '🔑 Log In');
+        btn.type = 'button';
+        btn.setAttribute('aria-controls', 'acctPanel');
+        btn.addEventListener('click', () => { if (panel.hidden) { loginForm(panel); panel.hidden = false; } else panel.hidden = true; });
+        box.append(btn, panel);
+        return;
+      }
+      const m = CLASS_AUTH.member;
+      const who = el('div', 'acct-who');
+      const email = CLASS_AUTH.user && CLASS_AUTH.user.email ? CLASS_AUTH.user.email : '';
+      who.append(el('span', 'acct-name', (m && m.display_name) || email || 'Signed in'));
+      const role = m ? m.role : null;
+      who.append(el('span', 'acct-role ' + (role || 'guest'), role ? ROLE_LABEL[role] : 'Not in the class list'));
+      const change = el('button', 'acct-btn quiet', 'Change Password');
+      change.type = 'button';
+      change.setAttribute('aria-controls', 'acctPanel');
+      change.addEventListener('click', () => { if (panel.hidden) { passwordForm(panel); panel.hidden = false; } else panel.hidden = true; });
+      const out = el('button', 'acct-btn quiet', 'Log Out');
+      out.type = 'button';
+      out.addEventListener('click', async () => {
+        out.disabled = true;
+        try { if (sb) await sb.auth.signOut({ scope: 'local' }); } catch (e) {}
+        applySession(null);
+      });
+      box.append(who, change, out, panel);
+    }
+    document.addEventListener('pointerdown', e => {
+      const p = box.querySelector('.acct-panel');
+      if (p && !p.hidden && !box.contains(e.target) && e.target !== hint) p.hidden = true;
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+    if (hint) hint.addEventListener('click', () => {
+      const btn = box.querySelector('.acct-btn');
+      if (btn && !CLASS_AUTH.loggedIn) { btn.click(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    });
+
+    // ---- start: logged out until we know better
+    renderAccount();
+    applyTabs();
+    if (!sb) { applySession(null); return; }
+    let started = false;
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+        CLASS_AUTH.token = session ? session.access_token : null;
+        return;
+      }
+      started = true;
+      setTimeout(() => applySession(session), 0);   // never call Supabase inside this callback
+    });
+    setTimeout(() => {
+      if (started) return;
+      sb.auth.getSession().then(({ data }) => applySession(data ? data.session : null), () => applySession(null));
+    }, 3000);
+  }
+  initLogin();
+
+  if (CLASS_AUTH.access(start) >= 1) select(start, false); else select('lesson', false);
 })();
 </script>
 </body>
