@@ -1426,6 +1426,94 @@
   .opt .ko.en { font-size: clamp(1.45rem, 3.3vw, 1.85rem); color: var(--ink); }
   .q-text.en { font-family: "Fredoka", sans-serif; font-weight: 600; margin-bottom: 1.5rem; }
   .scr-guide.en { font-family: "Fredoka", sans-serif; font-weight: 600; margin-bottom: 1.5rem; }
+
+  /* ===== Curriculum Home ===== */
+  #panels[hidden], .home[hidden] { display: none !important; }
+  .topbar {
+    position: sticky; top: max(10px, env(safe-area-inset-top, 0px)); z-index: 40;
+    width: fit-content; margin: 0 .25rem .5rem;
+  }
+  .home-btn {
+    min-height: 60px; padding: .4rem 1.4rem .4rem 1.1rem;
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.35rem; color: var(--ink);
+    background: rgba(255,255,255,.96); border: 2px solid var(--ink); border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(44,62,80,.16); cursor: pointer;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  }
+  .home-btn .hi { font-size: 1.6rem; line-height: 1; }
+  .home-btn[aria-current="page"] { background: linear-gradient(135deg, var(--peach), var(--accent-soft) 50%, var(--lavender)); box-shadow: 0 4px 0 var(--accent); }
+  .home-btn:active { transform: scale(.97); }
+  .home-btn:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+
+  .home { display: grid; gap: 1.25rem; font-family: "Fredoka", sans-serif; }
+  .home .bday-banner { margin: 0; }
+  .home-hero {
+    position: relative; overflow: hidden; border-radius: 32px;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem);
+    background:
+      radial-gradient(circle at 12% 10%, rgba(255,255,255,.85) 0, rgba(255,255,255,0) 40%),
+      linear-gradient(145deg, #FFF8EC 0%, #FFE3D3 35%, #E9E0F8 75%, #DCEBFA 100%);
+    border: 2px solid rgba(44,62,80,.10); box-shadow: var(--shadow); text-align: center;
+  }
+  .home-kicker { margin: 0 0 .35rem; font-size: 1.1rem; color: var(--ink-soft); font-weight: 500; }
+  .home-title { margin: 0; font-family: "Jua", "Fredoka", sans-serif; font-weight: 400; font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.15; text-wrap: balance; }
+  .home-sub { margin: .5rem 0 0; font-size: 1.15rem; color: var(--ink-soft); }
+  .home-views { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: 1.4rem; }
+  .hv {
+    flex: 1 1 10rem; max-width: 15rem; min-height: 64px; padding: .5rem 1rem;
+    font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1.35rem; color: var(--ink);
+    background: rgba(255,255,255,.9); border: 2px solid var(--line); border-radius: 22px; cursor: pointer;
+  }
+  .hv[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: 0 4px 0 var(--accent); }
+  .hv:active { transform: scale(.97); }
+  .hv:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .home-msg { margin: 0; padding: .9rem 1.2rem; border-radius: 18px; background: #FFF1D6; border: 2px solid #F2C77A; font-size: 1.2rem; text-align: center; }
+  .home-msg[hidden] { display: none; }
+
+  .lgroup { display: grid; gap: .8rem; }
+  .lg-head { margin: .5rem .25rem 0; display: flex; align-items: center; flex-wrap: wrap; gap: .3rem .7rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.45rem; }
+  .lg-head .dot { width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px var(--cbg); flex: none; }
+  .lg-head small { font-weight: 500; font-size: 1.05rem; color: var(--ink-soft); }
+  .lgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+  .lcard {
+    position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .55rem;
+    min-height: 11rem; padding: 1.15rem 1.2rem 1.2rem; text-align: left;
+    font-family: "Fredoka", sans-serif; color: var(--ink);
+    background: #fff; border: 2px solid var(--line); border-left: 10px solid var(--c);
+    border-radius: 24px; box-shadow: 0 6px 18px rgba(44,62,80,.07); cursor: pointer;
+    scroll-margin-top: 6rem; scroll-margin-bottom: 2rem;
+    transition: transform .1s ease, box-shadow .15s ease;
+  }
+  .lcard:hover { box-shadow: 0 10px 24px rgba(44,62,80,.12); }
+  .lcard:active { transform: scale(.98); }
+  .lcard:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .lc-top { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem; font-size: 1.05rem; color: var(--ink-soft); }
+  .lc-num { font-weight: 700; color: var(--cink); background: var(--cbg); border-radius: 999px; padding: .1rem .65rem; }
+  .lc-day { font-weight: 600; color: #8A3B12; background: #FFE2C4; border-radius: 999px; padding: .1rem .65rem; }
+  .lc-title { font-weight: 600; font-size: 1.45rem; line-height: 1.2; }
+  .lc-passage { font-size: 1.15rem; color: var(--ink); }
+  .lc-tag { margin-top: auto; font-weight: 600; font-size: 1rem; color: var(--cink); background: var(--cbg); border: 1.5px solid var(--c); border-radius: 999px; padding: .2rem .8rem; }
+  .lc-mark { display: none; }
+  .lcard.is-today, .lcard.is-next {
+    border: 4px solid var(--ink); border-left: 12px solid var(--c);
+    background: linear-gradient(160deg, #FFFDF5, #FFF1DA);
+    box-shadow: 0 0 0 6px rgba(255,214,107,.55), 0 14px 30px rgba(44,62,80,.18);
+    padding-top: 1rem;
+  }
+  .lcard.is-today .lc-mark, .lcard.is-next .lc-mark {
+    display: inline-block; font-weight: 700; font-size: 1.7rem; letter-spacing: .04em; line-height: 1.1;
+    padding: .3rem 1rem; border-radius: 16px; color: #fff; background: #E0702F;
+  }
+  .lcard.is-next .lc-mark { background: #3D7DCA; }
+
+  .lesson-pending {
+    margin: 1.25rem 0 0; padding: 1.25rem 1.5rem; border-radius: 24px; text-align: center;
+    background: rgba(255,255,255,.9); border: 2px dashed #C7B9A6; font-size: 1.35rem; color: var(--ink);
+  }
+  .cover .lg-title { font-size: clamp(2.1rem, 6vw, 3.4rem); line-height: 1.15; text-wrap: balance; }
+  .cover-generic { padding-bottom: clamp(2.5rem, 6vw, 3.75rem); }
+  .verse-box .lg-read { margin: .35rem 0 0; text-align: center; font-size: 1.15rem; color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -1472,6 +1560,7 @@
     </defs>
   </svg>
   <div class="wrap">
+    <div class="topbar"><button type="button" class="home-btn" id="homeBtn"><span class="hi" aria-hidden="true">🏠</span><span>Home</span></button></div>
     <header>
       <div class="title-block">
         <h1 class="class-name"><span class="sparkle" aria-hidden="true">✨</span><span class="en">Salt Class · Youth Group</span></h1>
@@ -1480,14 +1569,28 @@
       <div class="account" id="account" aria-label="Account"></div>
     </header>
 
-    <section class="bday-banner" id="bdayBanner" aria-live="polite" hidden></section>
-
     <nav class="tabs" role="tablist" aria-label="Class menu" id="tabs"></nav>
     <button type="button" class="login-hint" id="loginHint" hidden>🔒 Log in to see more</button>
+    <section class="home" id="homeView" aria-labelledby="homeTitle" hidden>
+      <section class="bday-banner" id="bdayBanner" aria-live="polite" hidden></section>
+      <div class="home-hero">
+        <p class="home-kicker" id="homeKicker">📚 Curriculum</p>
+        <h2 class="home-title" id="homeTitle">Salt Class · Youth Group</h2>
+        <p class="home-sub" id="homeSub"></p>
+        <div class="home-views" role="group" aria-label="Choose a curriculum view">
+          <button type="button" class="hv" data-view="year" aria-pressed="false">📅 1 Year</button>
+          <button type="button" class="hv" data-view="half" aria-pressed="false">🗓️ 6 Months</button>
+          <button type="button" class="hv" data-view="topics" aria-pressed="false">🧩 Themes</button>
+        </div>
+      </div>
+      <p class="home-msg" id="homeMsg" role="status" hidden></p>
+      <div class="home-list" id="homeList"></div>
+    </section>
     <main id="panels"></main>
   </div>
 
 <template id="lesson-template">
+ <div id="lessonFull">
   <article class="cover">
     <svg class="deco salt1" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>
     <svg class="deco salt2" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-salt"/></svg>
@@ -1549,6 +1652,27 @@
       <p class="total-line en">Total: <strong>45 minutes</strong></p>
     </div>
   </details>
+ </div>
+ <div id="lessonGeneric" hidden>
+  <article class="cover cover-generic">
+    <svg class="deco spk s1" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <svg class="deco spk s2" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <svg class="deco spk s3" aria-hidden="true" viewBox="0 0 40 40"><use href="#i-spark"/></svg>
+    <p class="tag"><span class="en" id="lgTag"></span></p>
+    <h2 class="title-en en lg-title" id="lgTitle"></h2>
+    <p class="sub-en en" id="lgTheme"></p>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="question">
+      <p class="label en">💭 Let’s Think</p>
+      <p class="q-en en" id="lgQ"></p>
+    </div>
+    <section class="verse-box" aria-label="This lesson’s passage">
+      <p class="verse-ref"><span class="en" id="lgPassage"></span></p>
+      <p class="lg-read en">Open your Bible and read it together.</p>
+    </section>
+  </article>
+  <p class="lesson-pending en">🗓️ This lesson’s class flow will be added that week.</p>
+ </div>
 </template>
 
 <template id="scramble-template">
@@ -2177,7 +2301,14 @@
     panelsEl.appendChild(panel);
   });
 
+  let homeActive = false;
   function select(id, remember) {
+    if (homeActive) {
+      homeActive = false;
+      document.getElementById('homeView').hidden = true;
+      panelsEl.hidden = false;
+      document.getElementById('homeBtn').removeAttribute('aria-current');
+    }
     TABS.forEach(t => {
       const on = t.id === id;
       const btn = document.getElementById('tab-' + t.id);
@@ -4440,6 +4571,7 @@
       let want = null;
       try { want = localStorage.getItem('saltClass:lastTab'); } catch (e) {}
       const current = TABS.find(t => document.getElementById('tab-' + t.id).getAttribute('aria-selected') === 'true');
+      if (homeActive) { fixTabFocus(); return; }   // the Curriculum Home is open: don't jump to a tab
       if (want && CLASS_AUTH.access(want) >= 1) { if (!current || current.id !== want) select(want, false); }
       else if (!current || CLASS_AUTH.access(current.id) < 1) { if (first) select(first, false); }
     }
@@ -4578,7 +4710,196 @@
   }
   initLogin();
 
-  if (CLASS_AUTH.access(start) >= 1) select(start, false); else select('lesson', false);
+  // ===== Curriculum Home (not a tab) =====
+  const CURRICULUM = {"year": [{"date": "2027-01-03", "title": "A New Start", "passage": "Isaiah 43:18–19", "theme": "God makes new beginnings", "q": "If you could start one thing over this year, what would it be?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-10", "title": "Made on Purpose", "passage": "Psalm 139:13–16", "theme": "Identity: wonderfully made", "q": "What's one thing about you that God made on purpose?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-17", "title": "Chosen and Loved", "passage": "Ephesians 1:3–8", "theme": "Adopted into God's family", "q": "How does it feel to be picked first — or last?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-24", "title": "A New Creation", "passage": "2 Corinthians 5:17", "theme": "The old is gone, the new has come", "q": "Have you ever wished you could be a different person?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-31", "title": "Christ Lives in Me", "passage": "Galatians 2:20", "theme": "Living by faith in Christ", "q": "Who or what has the most influence on your choices?", "series": "Identity in Christ", "day": ""}, {"date": "2027-02-07", "title": "The Upside-Down Blessing", "passage": "Matthew 5:1–12", "theme": "The Beatitudes", "q": "What does the world say makes someone \"blessed\"?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-14", "title": "Light and Salt — Matthew Ch5", "passage": "Matthew 5:13–16", "theme": "Let people see Jesus through you", "q": "If you never told your friends \"I'm a Christian,\" could they tell by the way you live?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-21", "title": "Love Your Enemies", "passage": "Matthew 5:43–48", "theme": "Love that goes farther", "q": "Who is the hardest person for you to be kind to?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-28", "title": "Don't Worry", "passage": "Matthew 6:25–34", "theme": "Trusting God, seeking His kingdom first", "q": "What do you worry about most right now?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-03-07", "title": "Built on the Rock", "passage": "Matthew 7:24–27", "theme": "Hearing and doing God's Word", "q": "What is your life built on?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-03-14", "title": "The Servant King", "passage": "John 13:1–17", "theme": "Jesus washes the disciples' feet", "q": "Who serves you without being asked?", "series": "Road to Easter", "day": ""}, {"date": "2027-03-21", "title": "The King on a Donkey", "passage": "Matthew 21:1–11", "theme": "Jesus, the humble King", "q": "What kind of hero were people expecting?", "series": "Road to Easter", "day": "Palm Sunday"}, {"date": "2027-03-28", "title": "He Is Risen!", "passage": "Matthew 28:1–10", "theme": "The resurrection", "q": "What changes if Jesus really rose from the dead?", "series": "Road to Easter", "day": "Easter"}, {"date": "2027-04-04", "title": "Doubting Thomas", "passage": "John 20:24–29", "theme": "Faith and honest questions", "q": "Is it okay to have doubts about God?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-04-11", "title": "Breakfast on the Beach", "passage": "John 21:1–14", "theme": "Meeting Jesus in ordinary days", "q": "Where do you meet Jesus on a normal day?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-04-18", "title": "Do You Love Me?", "passage": "John 21:15–19", "theme": "Jesus restores Peter", "q": "Have you ever been given a second chance?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-04-25", "title": "The Road to Emmaus", "passage": "Luke 24:13–35", "theme": "Jesus opens the Scriptures", "q": "When did something true last make your heart \"burn\"?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-05-02", "title": "Waiting for the Promise", "passage": "Acts 1:1–11", "theme": "Jesus' ascension and promise", "q": "What's the hardest thing you've ever had to wait for?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-05-09", "title": "Honor Your Parents", "passage": "Ephesians 6:1–4", "theme": "Honor and respect at home", "q": "What's one way your mom or a mother figure has loved you?", "series": "Spirit & Church", "day": "Mother's Day"}, {"date": "2027-05-16", "title": "The Spirit Comes", "passage": "Acts 2:1–13", "theme": "The Holy Spirit gives power", "q": "What would you do with courage you didn't have yesterday?", "series": "Spirit & Church", "day": "Pentecost"}, {"date": "2027-05-23", "title": "The First Church", "passage": "Acts 2:42–47", "theme": "Life together as God's family", "q": "What makes a group feel like family?", "series": "Spirit & Church", "day": ""}, {"date": "2027-05-30", "title": "The Fruit of the Spirit", "passage": "Galatians 5:22–23", "theme": "Growing Christlike character", "q": "Which fruit is hardest for you to grow?", "series": "Spirit & Church", "day": ""}, {"date": "2027-06-06", "title": "Bold Witness", "passage": "Acts 4:1–20", "theme": "Speaking up about Jesus", "q": "Have you ever been scared to say what you believe?", "series": "Spirit & Church", "day": ""}, {"date": "2027-06-13", "title": "Philip and the Ethiopian", "passage": "Acts 8:26–39", "theme": "Sharing the good news", "q": "Who explained faith to you for the first time?", "series": "Spirit & Church", "day": ""}, {"date": "2027-06-20", "title": "The Father Who Runs", "passage": "Luke 15:11–24", "theme": "God's welcoming love", "q": "What does a good father look like?", "series": "Spirit & Church", "day": "Father's Day"}, {"date": "2027-06-27", "title": "Saul Meets Jesus", "passage": "Acts 9:1–19", "theme": "Anyone can be changed", "q": "Do you think anyone can really change?", "series": "Spirit & Church", "day": ""}, {"date": "2027-07-04", "title": "Free Indeed", "passage": "John 8:31–36", "theme": "True freedom in Christ", "q": "What does it really mean to be free?", "series": "People of Faith", "day": "Independence Day"}, {"date": "2027-07-11", "title": "God Meant It for Good", "passage": "Genesis 50:15–21", "theme": "Joseph: God's plan and forgiveness", "q": "Has something bad ever turned into something good?", "series": "People of Faith", "day": ""}, {"date": "2027-07-18", "title": "Who Am I?", "passage": "Exodus 3:1–12", "theme": "Moses: God's call and our excuses", "q": "What excuse do you use most to avoid hard things?", "series": "People of Faith", "day": ""}, {"date": "2027-07-25", "title": "Be Strong and Courageous", "passage": "Joshua 1:1–9", "theme": "Courage from God's presence", "q": "Where do you need courage this week?", "series": "People of Faith", "day": ""}, {"date": "2027-08-01", "title": "Loyal Love", "passage": "Ruth 1:6–18", "theme": "Ruth's faithfulness", "q": "Who has stuck with you when it was hard?", "series": "People of Faith", "day": ""}, {"date": "2027-08-08", "title": "David and Goliath", "passage": "1 Samuel 17:32–50", "theme": "Trusting God against giants", "q": "What \"giant\" are you facing right now?", "series": "People of Faith", "day": ""}, {"date": "2027-08-15", "title": "A True Friend", "passage": "1 Samuel 18:1–4", "theme": "David and Jonathan's friendship", "q": "What makes someone a true friend?", "series": "People of Faith", "day": ""}, {"date": "2027-08-22", "title": "Standing Firm at School", "passage": "Daniel 1:3–17", "theme": "Living differently with respect", "q": "Where is it hardest to be different at school?", "series": "People of Faith", "day": ""}, {"date": "2027-08-29", "title": "For Such a Time as This", "passage": "Esther 4:10–17", "theme": "God puts us where we are for a reason", "q": "Why do you think God put you where you are?", "series": "People of Faith", "day": ""}, {"date": "2027-09-05", "title": "Teach Us to Pray", "passage": "Matthew 6:5–13", "theme": "The Lord's Prayer", "q": "What makes prayer hard for you?", "series": "Prayer & God's Word", "day": ""}, {"date": "2027-09-12", "title": "A Lamp for My Feet", "passage": "Psalm 119:105–112", "theme": "Loving God's Word", "q": "How often do you open the Bible on your own?", "series": "Prayer & God's Word", "day": ""}, {"date": "2027-09-19", "title": "The Still Small Voice", "passage": "1 Kings 19:9–13", "theme": "Listening for God", "q": "How do you know when God is speaking?", "series": "Prayer & God's Word", "day": ""}, {"date": "2027-09-26", "title": "Jonah Runs Away", "passage": "Jonah 1:1–17", "theme": "Obeying when it's hard", "q": "Have you ever run from something you knew you should do?", "series": "Prayer & God's Word", "day": ""}, {"date": "2027-10-03", "title": "Who Is My Neighbor?", "passage": "Luke 10:25–37", "theme": "The Good Samaritan", "q": "Who is someone others often walk past?", "series": "Jesus Meets People", "day": ""}, {"date": "2027-10-10", "title": "Zacchaeus Comes Down", "passage": "Luke 19:1–10", "theme": "Jesus seeks the lost", "q": "Can anyone be too far from God?", "series": "Jesus Meets People", "day": ""}, {"date": "2027-10-17", "title": "Living Water", "passage": "John 4:7–26", "theme": "The woman at the well", "q": "What are people your age thirsty for?", "series": "Jesus Meets People", "day": ""}, {"date": "2027-10-24", "title": "The Lost Sheep", "passage": "Luke 15:1–7", "theme": "God goes after the one", "q": "Have you ever felt lost in a crowd?", "series": "Jesus Meets People", "day": ""}, {"date": "2027-10-31", "title": "Saved by Grace", "passage": "Ephesians 2:8–10", "theme": "Grace, not earning", "q": "Can you earn God's love?", "series": "Jesus Meets People", "day": "Reformation Day"}, {"date": "2027-11-07", "title": "The Armor of God", "passage": "Ephesians 6:10–18", "theme": "Standing strong in faith", "q": "What attacks your faith the most?", "series": "Jesus Meets People", "day": ""}, {"date": "2027-11-14", "title": "Words That Build Up", "passage": "James 3:3–10", "theme": "The power of our words", "q": "What's something someone said that you still remember?", "series": "Jesus Meets People", "day": ""}, {"date": "2027-11-21", "title": "The One Who Came Back", "passage": "Luke 17:11–19", "theme": "A thankful heart", "q": "What's something you forgot to say thank you for?", "series": "Thanksgiving & Advent", "day": "Thanksgiving Sunday"}, {"date": "2027-11-28", "title": "Prepare the Way", "passage": "Isaiah 40:1–5", "theme": "Advent hope", "q": "What are you really waiting for this Christmas?", "series": "Thanksgiving & Advent", "day": "Advent 1"}, {"date": "2027-12-05", "title": "Mary Says Yes", "passage": "Luke 1:26–38", "theme": "Trusting God's big plans", "q": "What would you do if God asked something huge of you?", "series": "Thanksgiving & Advent", "day": "Advent 2"}, {"date": "2027-12-12", "title": "Joseph's Quiet Courage", "passage": "Matthew 1:18–25", "theme": "Doing right when no one sees", "q": "When is it hard to do the right thing quietly?", "series": "Thanksgiving & Advent", "day": "Advent 3"}, {"date": "2027-12-19", "title": "Good News of Great Joy", "passage": "Luke 2:1–20", "theme": "The birth of Jesus", "q": "What's the best news you've ever received?", "series": "Thanksgiving & Advent", "day": "Christmas Sunday"}, {"date": "2027-12-26", "title": "The Light Has Come", "passage": "John 1:1–14", "theme": "Jesus, the Light of the world (year-end)", "q": "What will you carry from this year into the next?", "series": "Thanksgiving & Advent", "day": ""}], "half": [{"date": "2027-01-03", "title": "A New Start", "passage": "Isaiah 43:18–19", "theme": "God makes new beginnings", "q": "If you could start one thing over this year, what would it be?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-10", "title": "Made on Purpose", "passage": "Psalm 139:13–16", "theme": "Identity: wonderfully made", "q": "What's one thing about you that God made on purpose?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-17", "title": "Chosen and Loved", "passage": "Ephesians 1:3–8", "theme": "Adopted into God's family", "q": "How does it feel to be picked first — or last?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-24", "title": "Christ Lives in Me", "passage": "Galatians 2:20", "theme": "Living by faith in Christ", "q": "Who or what has the most influence on your choices?", "series": "Identity in Christ", "day": ""}, {"date": "2027-01-31", "title": "The Upside-Down Blessing", "passage": "Matthew 5:1–12", "theme": "The Beatitudes", "q": "What does the world say makes someone \"blessed\"?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-07", "title": "Light and Salt — Matthew Ch5", "passage": "Matthew 5:13–16", "theme": "Let people see Jesus through you", "q": "If you never told your friends \"I'm a Christian,\" could they tell by the way you live?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-14", "title": "Love Your Enemies", "passage": "Matthew 5:43–48", "theme": "Love that goes farther", "q": "Who is the hardest person for you to be kind to?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-21", "title": "Don't Worry", "passage": "Matthew 6:25–34", "theme": "Seeking God's kingdom first", "q": "What do you worry about most right now?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-02-28", "title": "Built on the Rock", "passage": "Matthew 7:24–27", "theme": "Hearing and doing God's Word", "q": "What is your life built on?", "series": "Sermon on the Mount", "day": ""}, {"date": "2027-03-07", "title": "The Servant King", "passage": "John 13:1–17", "theme": "Jesus washes the disciples' feet", "q": "Who serves you without being asked?", "series": "Road to Easter", "day": ""}, {"date": "2027-03-14", "title": "It Is Finished", "passage": "John 19:28–30", "theme": "The cross", "q": "What does it mean that Jesus \"finished\" something for you?", "series": "Road to Easter", "day": ""}, {"date": "2027-03-21", "title": "The King on a Donkey", "passage": "Matthew 21:1–11", "theme": "Jesus, the humble King", "q": "What kind of hero were people expecting?", "series": "Road to Easter", "day": "Palm Sunday"}, {"date": "2027-03-28", "title": "He Is Risen!", "passage": "Matthew 28:1–10", "theme": "The resurrection", "q": "What changes if Jesus really rose from the dead?", "series": "Road to Easter", "day": "Easter"}, {"date": "2027-04-04", "title": "Doubting Thomas", "passage": "John 20:24–29", "theme": "Faith and honest questions", "q": "Is it okay to have doubts about God?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-04-11", "title": "The Road to Emmaus", "passage": "Luke 24:13–35", "theme": "Jesus opens the Scriptures", "q": "When did something true last make your heart \"burn\"?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-04-18", "title": "Do You Love Me?", "passage": "John 21:15–19", "theme": "Jesus restores Peter", "q": "Have you ever been given a second chance?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-04-25", "title": "Waiting for the Promise", "passage": "Acts 1:1–11", "theme": "Jesus' ascension and promise", "q": "What's the hardest thing you've ever had to wait for?", "series": "The Risen Jesus", "day": ""}, {"date": "2027-05-02", "title": "Too Young? Not to God", "passage": "1 Timothy 4:12", "theme": "Young people can lead by example", "q": "Have you ever been told you're too young for something?", "series": "Spirit & Church", "day": "Children's Sunday"}, {"date": "2027-05-09", "title": "Honor Your Parents", "passage": "Ephesians 6:1–4", "theme": "Honor and respect at home", "q": "What's one way your mom or a mother figure has loved you?", "series": "Spirit & Church", "day": "Mother's Day"}, {"date": "2027-05-16", "title": "The Spirit Comes", "passage": "Acts 2:1–13", "theme": "The Holy Spirit gives power", "q": "What would you do with courage you didn't have yesterday?", "series": "Spirit & Church", "day": "Pentecost"}, {"date": "2027-05-23", "title": "The First Church", "passage": "Acts 2:42–47", "theme": "Life together as God's family", "q": "What makes a group feel like family?", "series": "Spirit & Church", "day": ""}, {"date": "2027-05-30", "title": "The Fruit of the Spirit", "passage": "Galatians 5:22–23", "theme": "Growing Christlike character", "q": "Which fruit is hardest for you to grow?", "series": "Spirit & Church", "day": ""}, {"date": "2027-06-06", "title": "Bold Witness", "passage": "Acts 4:1–20", "theme": "Speaking up about Jesus", "q": "Have you ever been scared to say what you believe?", "series": "Spirit & Church", "day": ""}, {"date": "2027-06-13", "title": "Saul Meets Jesus", "passage": "Acts 9:1–19", "theme": "Anyone can be changed", "q": "Do you think anyone can really change?", "series": "Spirit & Church", "day": ""}, {"date": "2027-06-20", "title": "The Father Who Runs", "passage": "Luke 15:11–24", "theme": "God's welcoming love", "q": "What does a good father look like?", "series": "Spirit & Church", "day": "Father's Day"}, {"date": "2027-06-27", "title": "Sent Out", "passage": "Matthew 28:18–20", "theme": "The Great Commission (half-year wrap-up)", "q": "If you could tell one friend about Jesus, who would it be?", "series": "Spirit & Church", "day": ""}], "topics": [{"series": "Who Is God?", "lessons": [{"title": "God the Creator", "passage": "Genesis 1:1, 26–31", "theme": "God made everything — and made us in His image", "q": "What in nature makes you think about God?", "series": "Who Is God?"}, {"title": "God Who Knows Me", "passage": "Psalm 139:1–12", "theme": "God knows and is with me everywhere", "q": "Is it comforting or scary that God knows everything about you?", "series": "Who Is God?"}, {"title": "God Is Love", "passage": "1 John 4:7–12", "theme": "Love comes from God", "q": "How would you describe God's love in one word?", "series": "Who Is God?"}, {"title": "God Is Holy", "passage": "Isaiah 6:1–8", "theme": "Holy God, sent people", "q": "What does the word \"holy\" mean to you?", "series": "Who Is God?"}, {"title": "God Is Faithful", "passage": "Lamentations 3:22–24", "theme": "His mercies are new every morning", "q": "When has someone kept a promise to you?", "series": "Who Is God?"}, {"title": "Father, Son and Spirit", "passage": "Matthew 3:13–17", "theme": "The Trinity at Jesus' baptism", "q": "How would you explain the Trinity to a friend?", "series": "Who Is God?"}]}, {"series": "The Parables of Jesus", "lessons": [{"title": "The Sower", "passage": "Matthew 13:1–9, 18–23", "theme": "Hearts that receive God's Word", "q": "What kind of \"soil\" is your heart right now?", "series": "The Parables of Jesus"}, {"title": "The Mustard Seed", "passage": "Matthew 13:31–32", "theme": "Small beginnings, big kingdom", "q": "Can something small really make a big difference?", "series": "The Parables of Jesus"}, {"title": "The Good Samaritan", "passage": "Luke 10:25–37", "theme": "Who is my neighbor?", "q": "Who is someone others often walk past?", "series": "The Parables of Jesus"}, {"title": "The Lost Sheep and the Lost Coin", "passage": "Luke 15:1–10", "theme": "God searches for the lost", "q": "Have you ever lost something you really cared about?", "series": "The Parables of Jesus"}, {"title": "The Prodigal Son", "passage": "Luke 15:11–32", "theme": "The Father's welcome", "q": "Which brother are you more like?", "series": "The Parables of Jesus"}, {"title": "The Talents", "passage": "Matthew 25:14–30", "theme": "Using what God gave you", "q": "What's one gift God gave you that you aren't using yet?", "series": "The Parables of Jesus"}]}, {"series": "People of Faith", "lessons": [{"title": "Abraham Steps Out", "passage": "Genesis 12:1–4", "theme": "Faith that follows", "q": "Would you go somewhere if God didn't tell you where?", "series": "People of Faith"}, {"title": "Joseph: God Meant It for Good", "passage": "Genesis 50:15–21", "theme": "God's plan and forgiveness", "q": "Has something bad ever turned into something good?", "series": "People of Faith"}, {"title": "Moses: Who Am I?", "passage": "Exodus 3:1–12", "theme": "God's call and our excuses", "q": "What excuse do you use most to avoid hard things?", "series": "People of Faith"}, {"title": "Ruth: Loyal Love", "passage": "Ruth 1:6–18", "theme": "Faithfulness in hard times", "q": "Who has stuck with you when it was hard?", "series": "People of Faith"}, {"title": "David and Goliath", "passage": "1 Samuel 17:32–50", "theme": "Trusting God against giants", "q": "What \"giant\" are you facing right now?", "series": "People of Faith"}, {"title": "Daniel in the Lions' Den", "passage": "Daniel 6:10–23", "theme": "Staying faithful under pressure", "q": "Would you keep praying if it got you in trouble?", "series": "People of Faith"}]}, {"series": "The Church and Our Neighbors", "lessons": [{"title": "The First Church", "passage": "Acts 2:42–47", "theme": "Life together as God's family", "q": "What makes a group feel like family?", "series": "The Church and Our Neighbors"}, {"title": "One Body, Many Parts", "passage": "1 Corinthians 12:12–27", "theme": "Everyone belongs and matters", "q": "If the church were a body, which part would you be?", "series": "The Church and Our Neighbors"}, {"title": "Love Your Neighbor", "passage": "Mark 12:28–34", "theme": "The greatest commandments", "q": "What does loving your neighbor look like at school?", "series": "The Church and Our Neighbors"}, {"title": "Light and Salt — Matthew Ch5", "passage": "Matthew 5:13–16", "theme": "Let people see Jesus through you", "q": "If you never told your friends \"I'm a Christian,\" could they tell by the way you live?", "series": "The Church and Our Neighbors"}, {"title": "Serving the Least", "passage": "Matthew 25:31–40", "theme": "Serving Jesus by serving others", "q": "Who is easy to overlook in your world?", "series": "The Church and Our Neighbors"}, {"title": "Go and Make Disciples", "passage": "Matthew 28:18–20", "theme": "Sent into the world", "q": "If you could tell one friend about Jesus, who would it be?", "series": "The Church and Our Neighbors"}]}, {"series": "Following Jesus Every Day", "lessons": [{"title": "Teach Us to Pray", "passage": "Matthew 6:5–13", "theme": "The Lord's Prayer", "q": "What makes prayer hard for you?", "series": "Following Jesus Every Day"}, {"title": "A Lamp for My Feet", "passage": "Psalm 119:105–112", "theme": "Loving God's Word", "q": "How often do you open the Bible on your own?", "series": "Following Jesus Every Day"}, {"title": "Words That Build Up", "passage": "James 3:3–10", "theme": "The power of our words", "q": "What's something someone said that you still remember?", "series": "Following Jesus Every Day"}, {"title": "Don't Worry", "passage": "Matthew 6:25–34", "theme": "Trusting God with tomorrow", "q": "What do you worry about most right now?", "series": "Following Jesus Every Day"}, {"title": "The Armor of God", "passage": "Ephesians 6:10–18", "theme": "Standing strong in faith", "q": "What attacks your faith the most?", "series": "Following Jesus Every Day"}]}]};
+  const SERIES_COLORS = {
+    'Identity in Christ':           ['#F29A3F', '#FFEBD6', '#8A4A0E'],
+    'Sermon on the Mount':          ['#4F9BD9', '#DDEEFB', '#1F5A8C'],
+    'Road to Easter':               ['#A86FD0', '#F0E3FA', '#5E2F82'],
+    'The Risen Jesus':              ['#E2B020', '#FFF3C9', '#7A5C00'],
+    'Spirit & Church':              ['#E2685A', '#FDE3DF', '#8E2C21'],
+    'People of Faith':              ['#3FA77A', '#DDF3E8', '#1D6447'],
+    "Prayer & God's Word":          ['#5C74D6', '#E2E7FB', '#2E3F8C'],
+    'Jesus Meets People':           ['#D9649A', '#FBE1EC', '#86264F'],
+    'Thanksgiving & Advent':        ['#B07A3E', '#F6E8D6', '#6A4116'],
+    'Who Is God?':                  ['#5C74D6', '#E2E7FB', '#2E3F8C'],
+    'The Parables of Jesus':        ['#3FA77A', '#DDF3E8', '#1D6447'],
+    'The Church and Our Neighbors': ['#E2685A', '#FDE3DF', '#8E2C21'],
+    'Following Jesus Every Day':    ['#F29A3F', '#FFEBD6', '#8A4A0E']
+  };
+  // "People of Faith" appears in both lists; in the Themes view it gets its own color
+  const TOPIC_COLORS = { 'People of Faith': ['#A86FD0', '#F0E3FA', '#5E2F82'] };
+  const SALT_AND_LIGHT = 'Matthew 5:13–16';   // the lesson that already has a full class flow
+
+  function initHome() {
+    const home = document.getElementById('homeView');
+    const list = document.getElementById('homeList');
+    const titleEl = document.getElementById('homeTitle');
+    const kicker = document.getElementById('homeKicker');
+    const sub = document.getElementById('homeSub');
+    const msg = document.getElementById('homeMsg');
+    const homeBtn = document.getElementById('homeBtn');
+    const VIEW_KEY = 'saltClass:homeView';
+    let view = 'year';
+    try { const v = localStorage.getItem(VIEW_KEY); if (v === 'year' || v === 'half' || v === 'topics') view = v; } catch (e) {}
+    let firstOpen = true;
+
+    // the class name follows the header (it changes when renamed in Class Settings)
+    const nameSrc = document.querySelector('.class-name .en');
+    function syncName() { titleEl.textContent = (nameSrc && nameSrc.textContent.trim()) || 'Salt Class'; }
+    syncName();
+    if (nameSrc && window.MutationObserver) new MutationObserver(syncName).observe(nameSrc, { childList: true, characterData: true, subtree: true });
+
+    function parse(iso) { const p = iso.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); }
+    function fmt(iso) { return parse(iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); }
+    function fmtShort(iso) { return parse(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
+    function todayDate() { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); }
+    // Today = this Sunday's lesson or the most recent past Sunday's. Before the first lesson: Next = lesson 1.
+    function markFor(lessons) {
+      if (!lessons.length) return null;
+      const t = todayDate();
+      if (t < parse(lessons[0].date)) return { i: 0, kind: 'next' };
+      for (let i = lessons.length - 1; i >= 0; i--) {
+        const d = parse(lessons[i].date);
+        if (d <= t) return Math.round((t - d) / 86400000) < 7 ? { i, kind: 'today' } : null;
+      }
+      return null;
+    }
+    function colorsOf(series) {
+      return (view === 'topics' && TOPIC_COLORS[series]) || SERIES_COLORS[series] || ['#8D99A6', '#EEF1F4', '#3C4955'];
+    }
+    function span(cls, text) { const e = document.createElement('span'); e.className = cls; e.textContent = text; return e; }
+
+    function card(l, label, n, mark) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'lcard' + (mark ? ' is-' + mark + ' lc-marked' : '');
+      const c = colorsOf(l.series);
+      b.style.setProperty('--c', c[0]); b.style.setProperty('--cbg', c[1]); b.style.setProperty('--cink', c[2]);
+      if (mark) b.append(span('lc-mark', mark === 'today' ? '⭐ TODAY' : '👉 NEXT'));
+      const top = span('lc-top', '');
+      top.append(span('lc-num', label));
+      if (l.date) top.append(span('lc-date', fmt(l.date)));
+      if (l.day) top.append(span('lc-day', l.day));
+      b.append(top, span('lc-title', l.title), span('lc-passage', '📖 ' + l.passage), span('lc-tag', l.series));
+      b.addEventListener('click', () => openLesson(l, n));
+      return b;
+    }
+
+    function render() {
+      list.textContent = '';
+      msg.hidden = true;
+      home.querySelectorAll('.hv').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false'));
+      const groups = [];
+      if (view === 'topics') {
+        const count = CURRICULUM.topics.reduce((a, t) => a + t.lessons.length, 0);
+        kicker.textContent = '📚 Curriculum · Themes';
+        sub.textContent = CURRICULUM.topics.length + ' themes · ' + count + ' lessons · use them in any order';
+        CURRICULUM.topics.forEach(t => groups.push({ series: t.series, note: t.lessons.length + ' lessons',
+          items: t.lessons.map((l, k) => ({ l, label: '#' + (k + 1), n: null, mark: null })) }));
+      } else {
+        const L = CURRICULUM[view];
+        const mark = markFor(L);
+        kicker.textContent = view === 'year' ? '📚 Curriculum · 1 Year' : '📚 Curriculum · 6 Months';
+        sub.textContent = L.length + ' lessons · ' + fmtShort(L[0].date) + ' – ' + fmt(L[L.length - 1].date).replace(/^\w+, /, '');
+        L.forEach((l, i) => {
+          let g = groups[groups.length - 1];
+          if (!g || g.series !== l.series) { g = { series: l.series, first: i + 1, items: [] }; groups.push(g); }
+          g.items.push({ l, label: 'Lesson ' + (i + 1), n: i + 1, mark: mark && mark.i === i ? mark.kind : null });
+          g.last = i + 1;
+        });
+        groups.forEach(g => { g.note = g.first === g.last ? 'Lesson ' + g.first : 'Lessons ' + g.first + '–' + g.last; });
+      }
+      groups.forEach(g => {
+        const sec = document.createElement('section');
+        sec.className = 'lgroup';
+        const c = colorsOf(g.series);
+        sec.style.setProperty('--c', c[0]); sec.style.setProperty('--cbg', c[1]);
+        const h = document.createElement('h3');
+        h.className = 'lg-head';
+        const dot = span('dot', ''); dot.setAttribute('aria-hidden', 'true');
+        h.append(dot, document.createTextNode(g.series), document.createElement('small'));
+        h.lastChild.textContent = g.note;
+        const grid = document.createElement('div');
+        grid.className = 'lgrid';
+        g.items.forEach(it => grid.append(card(it.l, it.label, it.n, it.mark)));
+        sec.append(h, grid);
+        list.append(sec);
+      });
+    }
+
+    function openLesson(l, n) {
+      if (CLASS_AUTH.access('lesson') < 1) {
+        msg.textContent = '🔒 Please log in to open the lesson.';
+        msg.hidden = false;
+        msg.scrollIntoView({ block: 'nearest' });
+        return;
+      }
+      const panel = document.getElementById('panel-lesson');
+      const full = panel.querySelector('#lessonFull');
+      const gen = panel.querySelector('#lessonGeneric');
+      const isFull = l.passage === SALT_AND_LIGHT;
+      full.hidden = !isFull;
+      gen.hidden = isFull;
+      if (!isFull) {
+        const bits = [];
+        bits.push(n ? 'Lesson ' + n : l.series);
+        if (l.date) bits.push(fmt(l.date));
+        if (l.day) bits.push(l.day);
+        panel.querySelector('#lgTag').textContent = bits.join(' · ');
+        panel.querySelector('#lgTitle').textContent = l.title;
+        panel.querySelector('#lgTheme').textContent = l.theme;
+        panel.querySelector('#lgQ').textContent = '“' + l.q + '”';
+        panel.querySelector('#lgPassage').textContent = l.passage;
+      }
+      select('lesson');
+      window.scrollTo(0, 0);
+    }
+
+    home.querySelectorAll('.hv').forEach(b => b.addEventListener('click', () => {
+      view = b.dataset.view;
+      try { localStorage.setItem(VIEW_KEY, view); } catch (e) {}
+      render();
+      const m = list.querySelector('.lc-marked');
+      if (m) m.scrollIntoView({ block: 'center' });
+    }));
+
+    function showHome() {
+      homeActive = true;
+      TABS.forEach(t => {
+        const btn = document.getElementById('tab-' + t.id);
+        btn.setAttribute('aria-selected', 'false');
+        document.getElementById('panel-' + t.id).hidden = true;
+      });
+      fixTabFocus();
+      panelsEl.hidden = true;
+      home.hidden = false;
+      homeBtn.setAttribute('aria-current', 'page');
+      if (firstOpen) {
+        firstOpen = false;
+        render();
+        const m = list.querySelector('.lc-marked');
+        if (m) requestAnimationFrame(() => m.scrollIntoView({ block: 'center' }));
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+    homeBtn.addEventListener('click', showHome);
+    return showHome;
+  }
+  // with no tab selected, keep the first visible tab reachable by keyboard
+  function fixTabFocus() {
+    let given = false;
+    TABS.forEach(t => {
+      const btn = document.getElementById('tab-' + t.id);
+      const on = btn.getAttribute('aria-selected') === 'true';
+      btn.tabIndex = on ? 0 : -1;
+      if (on) given = true;
+    });
+    if (!given) { const f = TABS.find(t => !document.getElementById('tab-' + t.id).hidden); if (f) document.getElementById('tab-' + f.id).tabIndex = 0; }
+  }
+  const showHome = initHome();
+  showHome();
 })();
 </script>
 </body>
