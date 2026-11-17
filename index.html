@@ -98,7 +98,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.15rem;
-    padding: 0.5rem 0.6rem;
+    padding: 0.5rem 0.3rem;
     font-family: inherit;
     font-size: 1.2rem;
     color: var(--ink);
@@ -139,13 +139,13 @@
   }
   .panel[hidden] { display: none !important; }
   .panel .big-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
-  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance):not(.talents):not(.settings) h2 {
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance):not(.talents):not(.settings):not(.members) h2 {
     font-family: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     font-weight: 400;
     font-size: 2.2rem;
     margin: 0 0 0.5rem;
   }
-  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance):not(.talents):not(.settings) p {
+  .panel:not(.lesson):not(.story):not(.quiz):not(.scramble):not(.worship):not(.attendance):not(.talents):not(.settings):not(.members) p {
     font-size: 1.45rem;
     color: var(--ink-soft);
     margin: 0;
@@ -898,6 +898,71 @@
   .bk-text.paste { min-height: 9rem; background: #FFFFFF; }
   .bk-sub { margin: 1.5rem 0 .25rem; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.3rem; }
 
+  /* ===== Members tab (admins only) ===== */
+  .panel.members { display: block; min-height: 0; padding: 0; background: transparent; border: 0; box-shadow: none; overflow: visible; text-align: left; }
+  .mb-form { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) minmax(0, .8fr) auto; gap: .6rem; align-items: end; }
+  .mb-field { display: grid; gap: .3rem; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 1rem; min-width: 0; }
+  .mb-input, .mb-select {
+    width: 100%; min-height: 58px; padding: .35rem .8rem; border-radius: 14px;
+    font-family: "Fredoka", sans-serif; font-size: 1.15rem; color: var(--ink);
+    background: #FFFFFF; border: 2px solid #CFC6BB;
+  }
+  .mb-input:focus, .mb-select:focus { outline: none; border-color: var(--ink); }
+  .mb-input.bad { border-color: #D9534F; background: #FFF5F4; }
+  .mb-btn {
+    min-height: 58px; padding: .4rem 1.2rem; border-radius: 999px; cursor: pointer;
+    font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--ink);
+    background: linear-gradient(135deg, #DFF3D8, #B9E2AE); border: 2px solid var(--ink); box-shadow: 0 4px 0 var(--ink);
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .mb-btn.light { background: #FFFFFF; border-color: #C9D3DD; box-shadow: 0 3px 0 #C9D3DD; color: #4F6476; }
+  .mb-btn.danger { background: #FFFFFF; border-color: #E2B4B1; box-shadow: 0 3px 0 #E2B4B1; color: #B6403C; }
+  .mb-btn.yes { background: linear-gradient(135deg, #FFF1C9, #FFD3B8); }
+  .mb-btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  .mb-btn:disabled { opacity: .5; cursor: default; }
+  .mb-btn:focus-visible, .mb-input:focus-visible, .mb-select:focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; }
+  .mb-confirm {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: .75rem;
+    padding: .75rem 1rem; border-radius: 16px; background: #FFF6E0; border: 2px solid #F2D49A;
+    font-family: "Fredoka", sans-serif; font-size: 1.1rem; color: #6E4A12;
+  }
+  .mb-confirm span { flex: 1 1 14rem; }
+  .mb-out { margin-top: 1rem; display: grid; gap: .6rem; }
+  .mb-out[hidden] { display: none; }
+  .mb-out textarea {
+    width: 100%; min-height: 9.5rem; resize: vertical; padding: .9rem 1rem; border-radius: 16px;
+    font-family: "Fredoka", sans-serif; font-size: 1.1rem; line-height: 1.55; color: var(--ink);
+    background: #FFFDF7; border: 2px solid #CFC6BB;
+  }
+  .mb-out .row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+  .mb-small { margin: 0; font-family: "Fredoka", sans-serif; font-size: .98rem; color: var(--ink-soft); }
+  .mb-link { display: grid; gap: .3rem; margin-top: 1rem; }
+  .mb-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+  .mb-row {
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.3fr) minmax(8rem, .7fr) auto; gap: .6rem; align-items: center;
+    padding: .6rem; border-radius: 18px; background: var(--bg);
+  }
+  .mb-row .email { font-family: "Fredoka", sans-serif; font-size: 1.05rem; color: var(--ink-soft); overflow-wrap: anywhere; }
+  .mb-row .you { font-family: "Fredoka", sans-serif; font-size: .9rem; font-weight: 700; color: #5B3E96; background: #E9E0F8; border-radius: 999px; padding: .1rem .6rem; margin-left: .4rem; }
+  .mb-row .acts { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: flex-end; }
+  .mb-row .mb-confirm { grid-column: 1 / -1; margin-top: 0; }
+  .mb-empty { margin: 0; font-family: "Fredoka", sans-serif; color: #9AA7B3; font-size: 1.1rem; }
+  .mb-perm-wrap { overflow-x: auto; }
+  .mb-perm { width: 100%; min-width: 34rem; border-collapse: separate; border-spacing: 0 .45rem; font-family: "Fredoka", sans-serif; }
+  .mb-perm th { text-align: left; font-size: 1rem; color: var(--ink-soft); padding: 0 .5rem; font-weight: 600; }
+  .mb-perm td { background: var(--bg); padding: .45rem .5rem; }
+  .mb-perm td:first-child { border-radius: 14px 0 0 14px; font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
+  .mb-perm td:last-child { border-radius: 0 14px 14px 0; }
+  .mb-perm .mb-select { min-height: 52px; font-size: 1.05rem; }
+  .mb-perm .mb-select.hidden-v { color: #8A97A3; }
+  .mb-perm .mb-select.edit-v { border-color: #9ED3A8; background: #F2FBF3; }
+  .mb-perm .mb-select.saved { border-color: #3E9B52; }
+  @media (max-width: 760px) {
+    .mb-form { grid-template-columns: 1fr; }
+    .mb-row { grid-template-columns: 1fr; }
+    .mb-row .acts { justify-content: flex-start; }
+  }
+
   /* ===== Login (top right) and permission-based tabs ===== */
   header { position: relative; align-items: center; }
   .title-block { display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
@@ -1523,6 +1588,69 @@
     <button type="button" class="att-reset" id="attReset">↺ Start Attendance Over</button>
   </div>
 </template>
+<template id="members-template">
+  <div class="set-notice" role="note">
+    <span class="ic" aria-hidden="true">🛡️</span>
+    <p>Only admins see this tab. Accounts are made here — there is no sign-up page.</p>
+  </div>
+
+  <section class="set-card" aria-labelledby="mbInviteTitle">
+    <h2 id="mbInviteTitle">✉️ Invite Someone</h2>
+    <p class="hint">Make an account and send the person their temporary password.</p>
+    <form class="mb-form" id="mbInviteForm" novalidate>
+      <label class="mb-field">Name
+        <input class="mb-input" id="mbName" type="text" maxlength="60" placeholder="e.g. Squirrel’s mom" autocomplete="off">
+      </label>
+      <label class="mb-field">Email
+        <input class="mb-input" id="mbEmail" type="email" maxlength="254" placeholder="name@example.com" autocomplete="off">
+      </label>
+      <label class="mb-field">Role
+        <select class="mb-select" id="mbRole">
+          <option value="parent">Parent</option>
+          <option value="teacher">Teacher</option>
+          <option value="admin">Admin</option>
+        </select>
+      </label>
+      <button type="submit" class="mb-btn" id="mbInvite">Invite</button>
+    </form>
+    <div id="mbInviteConfirm"></div>
+    <p class="set-msg" id="mbInviteMsg" aria-live="polite"></p>
+
+    <div class="mb-out" id="mbOut" hidden>
+      <textarea id="mbMessage" readonly spellcheck="false" aria-label="Message to send"></textarea>
+      <div class="row">
+        <button type="button" class="mb-btn" id="mbCopy">📋 Copy Message</button>
+        <button type="button" class="mb-btn light" id="mbClose">Close</button>
+      </div>
+      <p class="mb-small">Send this one-to-one by KakaoTalk or text message. Once you close this box, the password can’t be shown again.</p>
+      <p class="set-msg" id="mbCopyMsg" aria-live="polite"></p>
+    </div>
+
+    <label class="mb-field mb-link">Page address used in the message
+      <input class="mb-input" id="mbLink" type="url" placeholder="Paste the web address of this page" autocomplete="off">
+    </label>
+  </section>
+
+  <section class="set-card" aria-labelledby="mbListTitle">
+    <h2 id="mbListTitle">👥 Members</h2>
+    <p class="hint">Tap a name to change it. You can’t change your own role, reset your own password here, or remove yourself.</p>
+    <ul class="mb-list" id="mbList"><li><p class="mb-empty">Loading members…</p></li></ul>
+    <p class="set-msg" id="mbListMsg" aria-live="polite"></p>
+  </section>
+
+  <section class="set-card" aria-labelledby="mbPermTitle">
+    <h2 id="mbPermTitle">🔐 Tab Permissions</h2>
+    <p class="hint">Choose what each group can do. Changes are saved right away.</p>
+    <div class="mb-perm-wrap">
+      <table class="mb-perm">
+        <thead><tr><th scope="col">Tab</th><th scope="col">Anyone</th><th scope="col">Parents</th><th scope="col">Teachers</th></tr></thead>
+        <tbody id="mbPermBody"></tbody>
+      </table>
+    </div>
+    <p class="set-msg" id="mbPermMsg" aria-live="polite"></p>
+    <p class="mb-small">Admins can always use every tab. Changed permissions apply on other devices after they reload the page.</p>
+  </section>
+</template>
 <template id="settings-template">
   <div class="set-notice" role="note">
     <span class="ic" aria-hidden="true">🔒</span>
@@ -1986,7 +2114,8 @@
     { id: 'worship',    icon: '🎵', label: 'Worship' },
     { id: 'attendance', icon: '✅', label: 'Attendance' },
     { id: 'talent',     icon: '🪙', label: 'Talents' },
-    { id: 'manage',     icon: '⚙️', label: 'Class Settings' }
+    { id: 'manage',     icon: '⚙️', label: 'Class Settings' },
+    { id: 'members',    icon: '👥', label: 'Members' }
   ];
 
   const tabsEl = document.getElementById('tabs');
@@ -2014,6 +2143,9 @@
     } else if (t.id === 'attendance') {
       panel.classList.add('attendance');
       panel.innerHTML = document.getElementById('attendance-template').innerHTML;
+    } else if (t.id === 'members') {
+      panel.classList.add('members');
+      panel.innerHTML = document.getElementById('members-template').innerHTML;
     } else if (t.id === 'manage') {
       panel.classList.add('settings');
       panel.innerHTML = document.getElementById('settings-template').innerHTML;
@@ -3926,6 +4058,296 @@
 
 
 
+  // ===== Members tab (admins only): invite, member list, tab permissions =====
+  function initMembers() {
+    const root = document.getElementById('panel-members');
+    if (!root) return;
+    const $ = id => root.querySelector('#' + id);
+    const isAdmin = () => CLASS_AUTH.role() === 'admin';
+    const FN = CLASS_SB_URL + '/functions/v1/manage-member';
+    const LINK_KEY = 'saltClass:shareLink';   // new key: the web address put in invite messages
+    const ROLE_LABEL = { parent: 'Parent', teacher: 'Teacher', admin: 'Admin' };
+    const PERM_TABS = [
+      ['home', 'Curriculum Home', true], ['lesson', 'Lesson', true], ['story', 'Bible Story', true],
+      ['quiz', 'Quiz', true], ['scramble', 'Word Scramble', true], ['worship', 'Worship', true],
+      ['attendance', 'Attendance', false], ['talent', 'Talents', false], ['manage', 'Class Settings', false]
+    ];   // true = nothing to change on that tab, so only Hidden / View
+    const AUDIENCES = ['anyone', 'parent', 'teacher'];
+    const AUD_LABEL = { anyone: 'Anyone', parent: 'Parents', teacher: 'Teachers' };
+
+    const form = $('mbInviteForm'), nameIn = $('mbName'), emailIn = $('mbEmail'), roleIn = $('mbRole'),
+          inviteBtn = $('mbInvite'), inviteConfirm = $('mbInviteConfirm'), inviteMsg = $('mbInviteMsg'),
+          out = $('mbOut'), message = $('mbMessage'), copyBtn = $('mbCopy'), closeBtn = $('mbClose'), copyMsg = $('mbCopyMsg'),
+          linkIn = $('mbLink'), list = $('mbList'), listMsg = $('mbListMsg'), permBody = $('mbPermBody'), permMsg = $('mbPermMsg');
+
+    function say(el, text, kind) { el.textContent = text; el.className = 'set-msg' + (kind ? ' ' + kind : ''); }
+    function friendly(status, body) {
+      if (body && body.message) return body.message;           // the function already speaks plain English
+      if (status === 401) return 'Please log in again, then try once more.';
+      if (status === 403) return 'Only an admin can do this.';
+      if (status === 0) return 'Couldn’t connect. Check the internet and try again.';
+      return 'Couldn’t save. Please try again.';
+    }
+    async function call(url, opts) {
+      const ctl = new AbortController();
+      const t = setTimeout(() => ctl.abort(), 15000);
+      try {
+        const res = await fetch(url, Object.assign({}, opts, {
+          signal: ctl.signal,
+          headers: Object.assign(classAuthHeaders(), { 'Content-Type': 'application/json' }, (opts && opts.headers) || {})
+        }));
+        let body = null;
+        try { body = await res.json(); } catch (e) {}
+        return { ok: res.ok, status: res.status, body };
+      } catch (e) {
+        return { ok: false, status: 0, body: null };
+      } finally { clearTimeout(t); }
+    }
+    const fn = payload => call(FN, { method: 'POST', body: JSON.stringify(payload) });
+
+    // one-more-question box (the viewer can't show confirm() dialogs)
+    function ask(where, text, yesLabel) {
+      return new Promise(resolve => {
+        where.querySelectorAll(':scope > .mb-confirm').forEach(x => x.remove());
+        const box = document.createElement('div');
+        box.className = 'mb-confirm';
+        const s = document.createElement('span'); s.textContent = text;
+        const yes = document.createElement('button'); yes.type = 'button'; yes.className = 'mb-btn yes'; yes.textContent = yesLabel;
+        const no = document.createElement('button'); no.type = 'button'; no.className = 'mb-btn light'; no.textContent = 'Cancel';
+        box.append(s, yes, no);
+        where.appendChild(box);
+        yes.focus();
+        const done = v => { box.remove(); resolve(v); };
+        yes.addEventListener('click', () => done(true));
+        no.addEventListener('click', () => done(false));
+      });
+    }
+
+    // ---- page address used in messages
+    function defaultLink() {
+      try {
+        const u = new URL(location.href);
+        if (u.protocol === 'http:' || u.protocol === 'https:') { u.hash = ''; return u.toString(); }
+      } catch (e) {}
+      return '';
+    }
+    try { linkIn.value = localStorage.getItem(LINK_KEY) || defaultLink(); } catch (e) { linkIn.value = defaultLink(); }
+    linkIn.addEventListener('change', () => { try { localStorage.setItem(LINK_KEY, linkIn.value.trim()); } catch (e) {} });
+
+    // ---- the message to send (shown once, never stored)
+    let lastSend = null;
+    function buildMessage(s) {
+      const link = linkIn.value.trim() || '(paste the page address here)';
+      const first = s.kind === 'reset'
+        ? 'Hello ' + s.name + ', your password for our class tool has been reset.'
+        : 'Hello ' + s.name + ', you’re invited to our class tool.';
+      return first + '\nAddress: ' + link + '\nEmail: ' + s.email + '   Temporary password: ' + s.password +
+             '\nAfter you log in, please change it with “Change Password” at the top right.';
+    }
+    function showMessage(s) {
+      lastSend = s;
+      message.value = buildMessage(s);
+      out.hidden = false;
+      say(copyMsg, '', '');
+      out.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function clearMessage() { lastSend = null; message.value = ''; out.hidden = true; say(copyMsg, '', ''); }
+    linkIn.addEventListener('input', () => { if (lastSend) message.value = buildMessage(lastSend); });
+    closeBtn.addEventListener('click', clearMessage);
+    copyBtn.addEventListener('click', async () => {
+      try { message.focus(); message.select(); message.setSelectionRange(0, message.value.length); } catch (e) {}
+      let ok = false;
+      try { if (navigator.clipboard && navigator.clipboard.writeText) { await navigator.clipboard.writeText(message.value); ok = true; } } catch (e) {}
+      if (!ok) { try { ok = document.execCommand && document.execCommand('copy'); } catch (e) { ok = false; } }
+      say(copyMsg, ok ? '✓ Copied. Paste it into KakaoTalk or a text message.' : 'Copy didn’t work here. The message is selected — please copy it yourself.', ok ? 'ok' : 'err');
+    });
+
+    // ---- ① invite
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!isAdmin()) return;
+      const name = nameIn.value.replace(/\s+/g, ' ').trim(), email = emailIn.value.trim().toLowerCase(), role = roleIn.value;
+      nameIn.classList.toggle('bad', !name); emailIn.classList.toggle('bad', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+      if (!name) { say(inviteMsg, 'Please type a name.', 'err'); nameIn.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say(inviteMsg, 'Please check the email address.', 'err'); emailIn.focus(); return; }
+      if (role !== 'parent') {
+        const ok = await ask(inviteConfirm, 'Really invite ' + name + ' as ' + ROLE_LABEL[role] + '?', 'Yes, invite as ' + ROLE_LABEL[role]);
+        if (!ok) { say(inviteMsg, '', ''); return; }
+      }
+      inviteBtn.disabled = true; say(inviteMsg, 'Inviting…', '');
+      const r = await fn({ action: 'invite', name, email, role });
+      inviteBtn.disabled = false;
+      if (!r.ok || !r.body || !r.body.ok) { say(inviteMsg, friendly(r.status, r.body), 'err'); return; }
+      say(inviteMsg, '✓ ' + name + ' was invited as ' + ROLE_LABEL[role] + '.', 'ok');
+      nameIn.value = ''; emailIn.value = ''; roleIn.value = 'parent';
+      showMessage({ kind: 'invite', name, email, password: r.body.temporary_password });
+      loadMembers();
+    });
+
+    // ---- ② member list
+    let members = [];
+    async function loadMembers() {
+      if (!isAdmin()) return;
+      const r = await call(CLASS_SB_URL + '/rest/v1/members?select=user_id,email,display_name,role,created_at&order=created_at.asc', { method: 'GET' });
+      if (!r.ok || !Array.isArray(r.body)) { list.innerHTML = '<li><p class="mb-empty">Couldn’t load the members. Check the internet and try again.</p></li>'; return; }
+      members = r.body;
+      renderMembers();
+    }
+    async function patchMember(id, fields) {
+      const r = await call(CLASS_SB_URL + '/rest/v1/members?user_id=eq.' + encodeURIComponent(id),
+        { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify(fields) });
+      if (r.ok && Array.isArray(r.body) && r.body.length) return { ok: true };
+      const msg = r.body && r.body.message ? String(r.body.message) : '';
+      if (msg.includes('admin must remain')) return { ok: false, text: 'At least one admin must remain.' };
+      return { ok: false, text: r.status === 0 ? 'Couldn’t connect. Check the internet and try again.' : 'Couldn’t save the change. Please try again.' };
+    }
+    function renderMembers() {
+      list.innerHTML = '';
+      if (!members.length) { list.innerHTML = '<li><p class="mb-empty">No members yet.</p></li>'; return; }
+      const myId = CLASS_AUTH.user ? CLASS_AUTH.user.id : '';
+      members.forEach(m => {
+        const mine = m.user_id === myId;
+        const li = document.createElement('li');
+        li.className = 'mb-row';
+        li.innerHTML =
+          '<input class="mb-input" type="text" maxlength="60" autocomplete="off">' +
+          '<div class="email"></div>' +
+          '<select class="mb-select"><option value="parent">Parent</option><option value="teacher">Teacher</option><option value="admin">Admin</option></select>' +
+          '<div class="acts"></div>';
+        const nameBox = li.querySelector('.mb-input'), roleBox = li.querySelector('.mb-select'), acts = li.querySelector('.acts');
+        nameBox.value = m.display_name || '';
+        nameBox.setAttribute('aria-label', 'Name for ' + m.email + ', tap to change');
+        const em = li.querySelector('.email'); em.textContent = m.email;
+        if (mine) { const y = document.createElement('span'); y.className = 'you'; y.textContent = 'You'; em.appendChild(y); }
+        roleBox.value = m.role;
+        roleBox.setAttribute('aria-label', 'Role for ' + (m.display_name || m.email));
+        roleBox.disabled = mine;
+
+        nameBox.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); nameBox.blur(); } if (e.key === 'Escape') { nameBox.value = m.display_name || ''; nameBox.blur(); } });
+        nameBox.addEventListener('blur', async () => {
+          const v = nameBox.value.replace(/\s+/g, ' ').trim();
+          if (v === (m.display_name || '')) return;
+          if (!v) { nameBox.value = m.display_name || ''; say(listMsg, 'Please type a name.', 'err'); return; }
+          const r = await patchMember(m.user_id, { display_name: v.slice(0, 60) });
+          if (!r.ok) { nameBox.value = m.display_name || ''; say(listMsg, r.text, 'err'); return; }
+          m.display_name = v.slice(0, 60);
+          if (mine && CLASS_AUTH.member) { CLASS_AUTH.member.display_name = m.display_name; if (CLASS_HOOKS.renderAccount) CLASS_HOOKS.renderAccount(); }
+          say(listMsg, '✓ Saved the name ' + m.display_name + '.', 'ok');
+        });
+        roleBox.addEventListener('change', async () => {
+          const to = roleBox.value, from = m.role;
+          if (to === from) return;
+          const up = (to === 'teacher' || to === 'admin') && !(from === 'admin' && to === 'teacher');
+          if (up || to === 'admin') {
+            const ok = await ask(li, 'Really make ' + (m.display_name || m.email) + ' ' + (to === 'admin' ? 'an Admin' : 'a Teacher') + '?', 'Yes, make ' + ROLE_LABEL[to]);
+            if (!ok) { roleBox.value = from; return; }
+          }
+          roleBox.disabled = true;
+          const r = await patchMember(m.user_id, { role: to });
+          roleBox.disabled = false;
+          if (!r.ok) { roleBox.value = from; say(listMsg, r.text, 'err'); return; }
+          m.role = to;
+          say(listMsg, '✓ ' + (m.display_name || m.email) + ' is now ' + ROLE_LABEL[to] + '.', 'ok');
+        });
+
+        if (!mine) {
+          const reset = document.createElement('button'); reset.type = 'button'; reset.className = 'mb-btn light'; reset.textContent = 'Reset Password';
+          const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'mb-btn danger'; remove.textContent = 'Remove';
+          acts.append(reset, remove);
+          reset.addEventListener('click', async () => {
+            const ok = await ask(li, 'Give ' + (m.display_name || m.email) + ' a new temporary password? Their old password will stop working.', 'Yes, reset');
+            if (!ok) return;
+            reset.disabled = true; say(listMsg, 'Resetting…', '');
+            const r = await fn({ action: 'reset_password', user_id: m.user_id });
+            reset.disabled = false;
+            if (!r.ok || !r.body || !r.body.ok) { say(listMsg, friendly(r.status, r.body), 'err'); return; }
+            say(listMsg, '✓ New temporary password made for ' + (m.display_name || m.email) + '.', 'ok');
+            showMessage({ kind: 'reset', name: m.display_name || m.email, email: m.email, password: r.body.temporary_password });
+          });
+          remove.addEventListener('click', async () => {
+            const ok = await ask(li, 'Remove ' + (m.display_name || m.email) + '? Their account will be deleted and they won’t be able to log in.', 'Yes, remove');
+            if (!ok) return;
+            remove.disabled = true; say(listMsg, 'Removing…', '');
+            const r = await fn({ action: 'remove', user_id: m.user_id });
+            remove.disabled = false;
+            if (!r.ok || !r.body || !r.body.ok) { say(listMsg, friendly(r.status, r.body), 'err'); return; }
+            say(listMsg, '✓ ' + (m.display_name || m.email) + ' was removed.', 'ok');
+            if (lastSend && lastSend.email === m.email) clearMessage();
+            loadMembers();
+          });
+        }
+        list.appendChild(li);
+      });
+    }
+
+    // ---- ③ tab permissions
+    let perms = {};
+    async function loadPerms() {
+      const r = await call(CLASS_SB_URL + '/rest/v1/tab_permissions?select=tab,audience,access', { method: 'GET' });
+      if (!r.ok || !Array.isArray(r.body)) { say(permMsg, 'Couldn’t load the permissions. Check the internet and try again.', 'err'); return; }
+      perms = {};
+      r.body.forEach(x => { (perms[x.tab] = perms[x.tab] || {})[x.audience] = x.access; });
+      renderPerms();
+    }
+    function paintSel(sel) {
+      sel.classList.toggle('hidden-v', sel.value === 'hidden');
+      sel.classList.toggle('edit-v', sel.value === 'edit');
+    }
+    function renderPerms() {
+      permBody.innerHTML = '';
+      PERM_TABS.forEach(([tab, label, lessonOnly]) => {
+        const tr = document.createElement('tr');
+        const th = document.createElement('td'); th.textContent = label; tr.appendChild(th);
+        AUDIENCES.forEach(aud => {
+          const td = document.createElement('td');
+          const sel = document.createElement('select');
+          sel.className = 'mb-select';
+          sel.setAttribute('aria-label', label + ' for ' + AUD_LABEL[aud]);
+          const canEdit = !lessonOnly && aud !== 'anyone';
+          sel.innerHTML = '<option value="hidden">Hidden</option><option value="view">View</option>' + (canEdit ? '<option value="edit">Edit</option>' : '');
+          let cur = (perms[tab] && perms[tab][aud]) || 'hidden';
+          if (cur === 'edit' && !canEdit) cur = 'view';
+          sel.value = cur;
+          paintSel(sel);
+          sel.addEventListener('change', async () => {
+            const was = (perms[tab] && perms[tab][aud]) || 'hidden';
+            const to = sel.value;
+            sel.disabled = true; paintSel(sel);
+            const r = await call(CLASS_SB_URL + '/rest/v1/tab_permissions?on_conflict=tab,audience', {
+              method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
+              body: JSON.stringify([{ tab, audience: aud, access: to }])
+            });
+            sel.disabled = false;
+            if (!r.ok || !Array.isArray(r.body) || !r.body.length) {
+              sel.value = was; paintSel(sel);
+              say(permMsg, r.status === 0 ? 'Couldn’t connect. Check the internet and try again.' : 'Couldn’t save that permission. Please try again.', 'err');
+              return;
+            }
+            (perms[tab] = perms[tab] || {})[aud] = to;
+            if (CLASS_AUTH.perms) (CLASS_AUTH.perms[tab] = CLASS_AUTH.perms[tab] || {})[aud] = to;
+            sel.classList.add('saved'); setTimeout(() => sel.classList.remove('saved'), 900);
+            say(permMsg, '✓ Saved: ' + label + ' · ' + AUD_LABEL[aud] + ' → ' + sel.options[sel.selectedIndex].text + '.', 'ok');
+          });
+          td.appendChild(sel);
+          tr.appendChild(td);
+        });
+        permBody.appendChild(tr);
+      });
+    }
+
+    // ---- follow the login
+    document.addEventListener('saltclass:auth', () => {
+      clearMessage();
+      inviteConfirm.innerHTML = '';
+      say(inviteMsg, '', ''); say(listMsg, '', ''); say(permMsg, '', '');
+      if (!isAdmin()) { members = []; list.innerHTML = ''; permBody.innerHTML = ''; return; }
+      list.innerHTML = '<li><p class="mb-empty">Loading members…</p></li>';
+      loadMembers();
+      loadPerms();
+    });
+  }
+  initMembers();
+
   // ===== Login button, account box and permission-based tabs =====
   function initLogin() {
     const box = document.getElementById('account');
@@ -4022,6 +4444,7 @@
       else if (!current || CLASS_AUTH.access(current.id) < 1) { if (first) select(first, false); }
     }
     CLASS_HOOKS.applyTabs = applyTabs;
+    CLASS_HOOKS.renderAccount = () => renderAccount();
 
     // ---- account box (top right)
     function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
